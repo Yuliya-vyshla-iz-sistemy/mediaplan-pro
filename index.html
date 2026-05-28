@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>МедиаПлан Pro — Яндекс.Директ за 60 секунд</title>
+<meta name="description" content="Профессиональный медиаплан для Яндекс.Директ за 60 секунд. 300+ ниш, ИИ-советы Claude и DeepSeek, XLSX-экспорт.">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ══ ТЁМНАЯ ТЕМА (по умолчанию) ══ */
+:root,[data-theme="dark"]{
+  --bg:#07090f;--card:#0d1117;--card2:#111827;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --primary:#3b82f6;--primary-dim:rgba(59,130,246,0.12);
+  --accent:#22d3ee;--accent-dim:rgba(34,211,238,0.10);
+  --green:#10b981;--green-dim:rgba(16,185,129,0.12);
+  --orange:#f59e0b;--red:#ef4444;--purple:#8b5cf6;
+  --text:#e2e8f0;--text2:#94a3b8;--text3:#475569;
+  --nav-bg:rgba(7,9,15,0.88);--orb-op:.22;
+}
+/* ══ СВЕТЛАЯ ТЕМА ══ */
+[data-theme="light"]{
+  --bg:#f0f4f8;--card:#ffffff;--card2:#f1f5f9;
+  --border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);
+  --primary:#2563eb;--primary-dim:rgba(37,99,235,0.10);
+  --accent:#0891b2;--accent-dim:rgba(8,145,178,0.10);
+  --green:#059669;--green-dim:rgba(5,150,105,0.10);
+  --orange:#d97706;--red:#dc2626;--purple:#7c3aed;
+  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
+  --nav-bg:rgba(240,244,248,0.92);--orb-op:.10;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:var(--base-fs,15px)}
+body{background:var(--bg);color:var(--text);font-family:'Onest',sans-serif;overflow-x:hidden;transition:background .3s,color .3s}
+
+/* ══ NAV ══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--nav-bg);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:10px;transition:background .3s}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;white-space:nowrap;text-decoration:none;color:var(--text)}
+.nav-logo span{color:var(--accent)}
+.nav-mid{display:flex;gap:4px;align-items:center}
+.nav-link{color:var(--text2);text-decoration:none;font-size:0.8rem;padding:6px 10px;border-radius:7px;transition:all .2s;white-space:nowrap}
+.nav-link:hover{color:var(--text);background:var(--card2)}
+.nav-right{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.ctrl-btn{background:var(--card2);border:1px solid var(--border2);color:var(--text2);padding:5px 10px;border-radius:7px;font-size:0.78rem;cursor:pointer;transition:all .2s;font-family:'Onest',sans-serif;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.ctrl-btn:hover{border-color:var(--primary);color:var(--text)}
+.fs-grp{display:flex;gap:2px}
+.fs-btn{background:var(--card2);border:1px solid var(--border2);color:var(--text2);width:27px;height:27px;border-radius:6px;cursor:pointer;font-size:0.77rem;transition:all .2s;font-family:'Onest',sans-serif;display:flex;align-items:center;justify-content:center}
+.fs-btn:hover{border-color:var(--primary);color:var(--text)}
+.nav-cta{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff !important;text-decoration:none;padding:7px 16px;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;transition:opacity .2s;white-space:nowrap}
+.nav-cta:hover{opacity:.88}
+
+/* ══ HERO ══ */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:var(--orb-op);transition:opacity .3s}
+.orb1{width:600px;height:600px;background:var(--primary);top:-150px;left:-100px;animation:float1 8s ease-in-out infinite}
+.orb2{width:500px;height:500px;background:var(--accent);bottom:-100px;right:-80px;animation:float2 10s ease-in-out infinite}
+.orb3{width:300px;height:300px;background:var(--purple);top:50%;left:50%;transform:translate(-50%,-50%);animation:float3 6s ease-in-out infinite}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,40px)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,-20px)}}
+@keyframes float3{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-46%,-54%)}}
+.hero-inner{position:relative;z-index:1;max-width:820px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--border2);padding:6px 14px;border-radius:20px;font-size:0.73rem;color:var(--text2);margin-bottom:24px}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,6vw,4.2rem);font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin-bottom:20px}
+h1 .hl{background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(.95rem,2.5vw,1.2rem);color:var(--text2);line-height:1.7;margin-bottom:36px;max-width:600px;margin-left:auto;margin-right:auto}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:52px}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;text-decoration:none;padding:14px 30px;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;transition:all .2s;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer}
+.btn-primary:hover{opacity:.88;transform:translateY(-1px)}
+.btn-outline{background:none;color:var(--text2);text-decoration:none;padding:14px 30px;border-radius:10px;font-family:'Syne',sans-serif;font-weight:600;font-size:1rem;transition:all .2s;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border2)}
+.btn-outline:hover{border-color:var(--primary);color:var(--text)}
+.hero-stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap}
+.hero-stat-v{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:500;color:var(--text)}
+.hero-stat-l{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+
+/* ══ MOCKUP ══ */
+.mockup-section{padding:20px 24px 60px;max-width:900px;margin:0 auto}
+.mockup-wrap{background:var(--card);border:1px solid var(--border2);border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.25)}
+.mockup-bar{background:var(--card2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:8px}
+.dot-r{width:11px;height:11px;border-radius:50%;background:#ff5f56}
+.dot-y{width:11px;height:11px;border-radius:50%;background:#ffbd2e}
+.dot-g{width:11px;height:11px;border-radius:50%;background:#27c93f}
+.url-bar{flex:1;background:var(--card);border:1px solid var(--border);padding:4px 12px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.71rem;color:var(--text3);text-align:center}
+.mockup-body{padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mk{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px;position:relative;overflow:hidden}
+.mk::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.mk1::before{background:var(--primary)}.mk2::before{background:var(--accent)}.mk3::before{background:var(--green)}
+.mk4::before{background:var(--orange)}.mk5::before{background:var(--purple)}.mk6::before{background:var(--green)}
+.mk-l{font-size:.63rem;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.mk-v{font-family:'JetBrains Mono',monospace;font-size:1.25rem;font-weight:500}
+.mk-s{font-size:.63rem;color:var(--text3);margin-top:3px}
+
+/* ══ SECTIONS ══ */
+section{padding:80px 24px;max-width:1100px;margin:0 auto}
+.sec-label{font-size:.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:12px}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;line-height:1.2;margin-bottom:16px}
+.sec-sub{color:var(--text2);font-size:1rem;line-height:1.7;max-width:600px}
+
+/* ══ STEPS ══ */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:40px}
+.step{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;transition:border-color .2s}
+.step:hover{border-color:var(--primary)}
+.step-num{font-family:'JetBrains Mono',monospace;font-size:2.5rem;font-weight:500;color:var(--border2);line-height:1;margin-bottom:10px}
+.step-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:8px}
+.step-text{font-size:.82rem;color:var(--text2);line-height:1.7}
+
+/* ══ FEATURES ══ */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:40px}
+.feat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;transition:border-color .2s}
+.feat:hover{border-color:var(--accent)}
+.feat-icon{font-size:1.8rem;margin-bottom:12px}
+.feat-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:6px}
+.feat-text{font-size:.81rem;color:var(--text2);line-height:1.7}
+
+/* ══ PRICING ══ */
+.free-note{background:var(--green-dim);border:1px solid var(--green);border-radius:10px;padding:12px 18px;font-size:.82rem;color:var(--green);margin-top:16px;display:inline-block}
+.price-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px;text-align:left}
+@media(max-width:700px){.price-cards{grid-template-columns:1fr}}
+.price-card{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:28px;position:relative;transition:border-color .2s}
+.price-card:hover{border-color:var(--primary)}
+.price-card.featured{border-color:var(--accent);background:linear-gradient(135deg,var(--accent-dim),var(--primary-dim))}
+.pc-badge{font-size:.63rem;background:var(--accent);color:#000;font-weight:700;padding:3px 10px;border-radius:10px;position:absolute;top:-12px;left:50%;transform:translateX(-50%);white-space:nowrap}
+.pc-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:6px}
+.pc-price{font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:500;color:var(--text);margin:10px 0 4px}
+.pc-price sup{font-size:1rem;vertical-align:super}
+.pc-period{font-size:.76rem;color:var(--text3);margin-bottom:20px}
+.pc-feats{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.pc-feats li{font-size:.82rem;color:var(--text2);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.pc-feats li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.pc-feats li.no::before{content:'✗';color:var(--text3)}
+.pc-feats li.no{color:var(--text3)}
+.pc-btn{display:block;text-align:center;padding:11px;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;text-decoration:none;transition:all .2s;cursor:pointer;border:none;width:100%}
+.pc-btn-outline{background:none;border:1px solid var(--border2);color:var(--text2)}
+.pc-btn-outline:hover{border-color:var(--primary);color:var(--text)}
+.pc-btn-main{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff}
+.pc-btn-main:hover{opacity:.88}
+
+/* ══ FAQ ══ */
+.faq-list{margin-top:40px;display:flex;flex-direction:column;gap:8px;max-width:720px}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.faq-q{width:100%;background:none;border:none;color:var(--text);padding:16px 18px;text-align:left;font-family:'Onest',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;transition:background .2s}
+.faq-q:hover{background:var(--card2)}
+.faq-arrow{color:var(--text3);font-size:.8rem;transition:transform .25s;flex-shrink:0}
+.faq-a{font-size:.82rem;color:var(--text2);line-height:1.7;padding:0 18px 16px;display:none}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-item.open .faq-a{display:block}
+
+/* ══ CREATORS ══ */
+.creators{display:flex;gap:16px;flex-wrap:wrap;margin-top:40px;justify-content:center}
+.creator{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:20px 24px;display:flex;align-items:center;gap:14px;transition:border-color .2s;text-decoration:none}
+.creator:hover{border-color:var(--accent)}
+.creator-av{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.creator-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;margin-bottom:2px;color:var(--text)}
+.creator-tag{font-size:.77rem;color:var(--accent);font-family:'JetBrains Mono',monospace}
+
+/* ══ FOOTER ══ */
+footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-size:.75rem;color:var(--text3)}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* ══ MOBILE ══ */
+@media(max-width:640px){
+  .mockup-body{grid-template-columns:1fr 1fr}
+  .nav-mid{display:none}
+}
+
+/* ══ AUTHOR CARD ══ */
+.author-card{display:flex;gap:32px;background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:32px;text-align:left;margin-top:32px;align-items:flex-start;flex-wrap:wrap}
+.author-photo-wrap{flex-shrink:0}
+.author-photo{width:180px;border-radius:16px;object-fit:cover;display:block;box-shadow:0 8px 32px rgba(0,0,0,.25)}
+.author-info{flex:1;min-width:220px}
+.author-name{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:4px}
+.author-role{font-size:.82rem;color:var(--accent);font-weight:500;margin-bottom:14px;line-height:1.5}
+.author-bio{font-size:.85rem;color:var(--text2);line-height:1.8;margin-bottom:18px}
+.author-links{display:flex;gap:10px;flex-wrap:wrap}
+.author-badges{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 16px}
+.abadge{font-size:.74rem;font-weight:600;padding:4px 12px;border-radius:20px;white-space:nowrap}
+.abadge-blue{background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary)}
+.abadge-cyan{background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent)}
+.abadge-purple{background:rgba(139,92,246,.12);border:1px solid var(--purple);color:var(--purple)}
+.author-tags{font-size:.8rem;color:var(--text3);letter-spacing:.01em;line-height:2}
+.author-tg,.author-channel{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:9px;font-size:.82rem;font-weight:600;text-decoration:none;transition:all .2s;font-family:'Syne',sans-serif}
+.author-tg{background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary)}
+.author-tg:hover{background:var(--primary);color:#fff}
+.author-channel{background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent)}
+.author-channel:hover{background:var(--accent);color:#000}
+@media(max-width:560px){.author-photo{width:120px}.author-card{gap:20px;padding:22px}}
+
+/* ── AUTHOR CHANNELS ── */
+.author-channels{margin-top:12px}
+.ach-label{font-size:.74rem;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.ach-btns{display:flex;gap:7px;flex-wrap:wrap}
+.ach-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:8px;font-size:.78rem;font-weight:600;text-decoration:none;transition:all .2s;font-family:'Syne',sans-serif;white-space:nowrap}
+.ach-tg{background:rgba(41,182,246,.12);border:1px solid #29b6f6;color:#29b6f6}
+.ach-tg:hover{background:#29b6f6;color:#000}
+.ach-vk{background:rgba(66,133,244,.12);border:1px solid #4285f4;color:#4285f4}
+.ach-vk:hover{background:#4285f4;color:#fff}
+.ach-max{background:rgba(139,92,246,.12);border:1px solid var(--purple);color:var(--purple)}
+.ach-max:hover{background:var(--purple);color:#fff}
+
+/* ── FOOTER ── */
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:12px;padding:28px 24px}
+.footer-logo-wrap{opacity:.65;transition:opacity .2s}
+.footer-logo-wrap:hover{opacity:1}
+.footer-logo{width:38px;height:38px;border-radius:8px;object-fit:contain}
+.footer-copy{font-size:.75rem;color:var(--text3)}
+.footer-copy a{color:var(--accent);text-decoration:none}
+.footer-copy a:hover{text-decoration:underline}
+.footer-channel{text-align:center}
+.footer-ch-label{font-size:.72rem;color:var(--text3);display:block;margin-bottom:7px}
+.footer-ch-links{display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">МедиаПлан <span>Pro</span></a>
+  <div class="nav-mid">
+    <a class="nav-link" href="#features">Возможности</a>
+    <a class="nav-link" href="#pricing">Тарифы</a>
+    <a class="nav-link" href="#faq">FAQ</a>
+  </div>
+  <div class="nav-right">
+    <!-- Размер шрифта -->
+    <div class="fs-grp">
+      <button class="fs-btn" onclick="changeFS(-1)" title="Уменьшить шрифт">A−</button>
+      <button class="fs-btn" onclick="changeFS(1)"  title="Увеличить шрифт">A+</button>
+    </div>
+    <!-- Тема -->
+    <button class="ctrl-btn" id="theme-btn" onclick="toggleTheme()">🌙 Тёмная</button>
+    <a class="nav-cta" href="app.html">Попробовать →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-orb orb3"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-badge"><div class="badge-dot"></div> 300+ ниш · Яндекс.Директ · 2025–2026</div>
+    <h1>Медиаплан за<br><span class="hl">60 секунд</span></h1>
+    <p class="hero-sub">Профессиональный расчёт бюджета, кликов, лидов, ROMI и LTV для Яндекс.Директ. ИИ-советы от Claude и DeepSeek, XLSX-экспорт, UTM-конструктор — всё в одном инструменте.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="app.html">⚡ Попробовать бесплатно</a>
+      <a class="btn-outline" href="#pricing">💰 Тарифы</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-v">300+</div><div class="hero-stat-l">Ниш и подниш</div></div>
+      <div class="hero-stat"><div class="hero-stat-v">12</div><div class="hero-stat-l">Вкладок с данными</div></div>
+      <div class="hero-stat"><div class="hero-stat-v">60с</div><div class="hero-stat-l">На медиаплан</div></div>
+      <div class="hero-stat"><div class="hero-stat-v">0 ₽</div><div class="hero-stat-l">Первый расчёт</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MOCKUP -->
+<div class="mockup-section">
+  <div class="mockup-wrap">
+    <div class="mockup-bar">
+      <div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div>
+      <div class="url-bar">mediaplan.pro/app.html</div>
+    </div>
+    <div class="mockup-body">
+      <div class="mk mk1"><div class="mk-l">Бюджет</div><div class="mk-v" style="color:var(--primary)">₽100 000</div><div class="mk-s">в месяц</div></div>
+      <div class="mk mk2"><div class="mk-l">Кликов</div><div class="mk-v" style="color:var(--accent)">4 830</div><div class="mk-s">Поиск + РСЯ</div></div>
+      <div class="mk mk3"><div class="mk-l">Лидов</div><div class="mk-v" style="color:var(--green)">193</div><div class="mk-s">CPL ₽518</div></div>
+      <div class="mk mk4"><div class="mk-l">Продаж</div><div class="mk-v" style="color:var(--orange)">58</div><div class="mk-s">CR 30%</div></div>
+      <div class="mk mk5"><div class="mk-l">Выручка</div><div class="mk-v" style="color:var(--purple)">₽2.9M</div><div class="mk-s">чек ₽50 000</div></div>
+      <div class="mk mk6"><div class="mk-l">ROMI</div><div class="mk-v" style="color:var(--green)">+910%</div><div class="mk-s">прибыльно ✓</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- КАК РАБОТАЕТ -->
+<section>
+  <div class="sec-label">Как работает</div>
+  <div class="sec-title">Медиаплан за 3 шага</div>
+  <div class="sec-sub">Никаких сложных настроек. Выберите нишу, введите бюджет — получите готовый профессиональный расчёт.</div>
+  <div class="steps">
+    <div class="step"><div class="step-num">01</div><div class="step-title">Выберите нишу</div><div class="step-text">Поиск по 300+ нишам: стоматология, ремонт, юристы, доставка еды и многое другое. Все данные — реальная статистика рынка РФ.</div></div>
+    <div class="step"><div class="step-num">02</div><div class="step-title">Введите параметры</div><div class="step-text">Бюджет, регион, средний чек, маржа, LTV. Выберите один или несколько городов — как в Яндекс.Вордстате.</div></div>
+    <div class="step"><div class="step-num">03</div><div class="step-title">Получите медиаплан</div><div class="step-text">12 вкладок: KPI, сезонность, структура кампаний, ключи, минус-слова, UTM, ROMI, LTV, ИИ-советы, чек-лист и отчёт.</div></div>
+    <div class="step"><div class="step-num">04</div><div class="step-title">Скачайте отчёт</div><div class="step-text">Excel одним кликом или красивый PDF для клиента. Всё готово к презентации.</div></div>
+  </div>
+</section>
+
+<!-- ВОЗМОЖНОСТИ -->
+<section id="features">
+  <div class="sec-label">Возможности</div>
+  <div class="sec-title">Всё для запуска Директа</div>
+  <div class="feat-grid">
+    <div class="feat"><div class="feat-icon">📈</div><div class="feat-title">Прогноз KPI</div><div class="feat-text">Клики, лиды, CPL, продажи, выручка и ROMI с учётом региональных коэффициентов и сезонности по месяцам.</div></div>
+    <div class="feat"><div class="feat-icon">📅</div><div class="feat-title">Сезонность</div><div class="feat-text">Годовой прогноз с помесячной разбивкой. Знайте заранее, когда бюджет нужно увеличивать, а когда переходить на ретаргетинг.</div></div>
+    <div class="feat"><div class="feat-icon">🏗</div><div class="feat-title">Структура кампаний</div><div class="feat-text">Готовая структура Поиск + РСЯ с генератором объявлений. 3 варианта с AIDA, социальным доказательством и срочностью.</div></div>
+    <div class="feat"><div class="feat-icon">🔑</div><div class="feat-title">Ключевые слова</div><div class="feat-text">Горячие, тёплые и ценовые группы с прямыми ссылками в Яндекс.Вордстат для проверки частотности.</div></div>
+    <div class="feat"><div class="feat-icon">🔗</div><div class="feat-title">UTM-конструктор</div><div class="feat-text">Автосборка UTM-ссылок с динамическими параметрами Яндекс.Директ: source_type, source, position_type, position.</div></div>
+    <div class="feat"><div class="feat-icon">🤖</div><div class="feat-title">ИИ-советы: Claude + DeepSeek</div><div class="feat-text">Персональные рекомендации по вашей нише от двух нейросетей на выбор. Офферы, ошибки, стратегия масштабирования.</div></div>
+    <div class="feat"><div class="feat-icon">💰</div><div class="feat-title">ROMI и LTV-анализ</div><div class="feat-text">P&amp;L таблица, гауге ROMI, LTV-анализ — максимально допустимая CPL и прибыль с учётом повторных покупок.</div></div>
+    <div class="feat"><div class="feat-icon">💹</div><div class="feat-title">Калькулятор прибыли</div><div class="feat-text">Ползунки CPC, конверсия, бюджет, чек, маржа — видите мгновенный пересчёт ROMI и прибыли.</div></div>
+    <div class="feat"><div class="feat-icon">📊</div><div class="feat-title">Справочник KPI 2025/2026</div><div class="feat-text">Средние конверсии по 50+ нишам за 2025 и 2026 год. Отличный ориентир при защите бюджета перед клиентом.</div></div>
+  </div>
+</section>
+
+<!-- ТАРИФЫ -->
+<section id="pricing" style="text-align:center">
+  <div class="sec-label">Тарифы</div>
+  <div class="sec-title">Начните бесплатно</div>
+  <div class="sec-sub" style="margin:0 auto 8px">Первый расчёт — без регистрации и оплаты.</div>
+  <div class="free-note">🎁 1 полный расчёт — бесплатно, без регистрации</div>
+  <div class="price-cards">
+
+    <div class="price-card">
+      <div class="pc-name">☕ Базовый</div>
+      <div class="pc-price"><sup>₽</sup>299</div>
+      <div class="pc-period">в месяц</div>
+      <ul class="pc-feats">
+        <li>7 расчётов в месяц</li>
+        <li>Все 300+ ниш</li>
+        <li>XLSX-экспорт</li>
+        <li>UTM-конструктор</li>
+        <li>ИИ-советы: Claude и DeepSeek</li>
+        <li class="no">Приоритетная поддержка</li>
+      </ul>
+      <a class="pc-btn pc-btn-outline" href="app.html">Начать</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="pc-badge">⭐ САМЫЙ ПОПУЛЯРНЫЙ</div>
+      <div class="pc-name">⚡ Про</div>
+      <div class="pc-price"><sup>₽</sup>599</div>
+      <div class="pc-period">в месяц</div>
+      <ul class="pc-feats">
+        <li>Безлимитные расчёты</li>
+        <li>Все 300+ ниш</li>
+        <li>XLSX-экспорт и PDF</li>
+        <li>UTM-конструктор</li>
+        <li>ИИ-советы: Claude и DeepSeek</li>
+        <li>Приоритетная поддержка</li>
+      </ul>
+      <a class="pc-btn pc-btn-main" href="app.html">Выбрать Про</a>
+    </div>
+
+    <div class="price-card">
+      <div class="pc-name">🏆 Про Год</div>
+      <div class="pc-price"><sup>₽</sup>5 999</div>
+      <div class="pc-period">за 12 месяцев · 499 ₽/мес · скидка 17%</div>
+      <ul class="pc-feats">
+        <li>Безлимитные расчёты</li>
+        <li>Всё из тарифа Про</li>
+        <li>Экономия 1 189 ₽/год</li>
+        <li>Новые ниши первым</li>
+        <li>Доступ к бета-функциям</li>
+        <li>Персональные консультации</li>
+      </ul>
+      <a class="pc-btn pc-btn-outline" href="app.html">Выбрать</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="max-width:800px">
+  <div class="sec-label">Вопросы и ответы</div>
+  <div class="sec-title">FAQ</div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Можно ли пользоваться бесплатно? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Да! Первый расчёт — абсолютно бесплатно, без регистрации. Вы получаете полный медиаплан со всеми 12 вкладками. После первого расчёта понадобится подписка.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Какие ИИ-нейросети используются? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">В инструменте доступны два ИИ на выбор: <b>Claude</b> (Anthropic) — используется напрямую без ключа, и <b>DeepSeek</b> — потребуется бесплатный API-ключ с платформы DeepSeek. Оба дают практичные советы по вашей нише на русском языке.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Насколько точны прогнозы? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Данные основаны на реальной статистике кампаний в Яндекс.Директ по рынку РФ. Отклонение от реальных показателей — ±25–35%, что является нормой для любого медиапланирования. Используйте как стартовую точку, корректируйте по фактическим данным.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Как работает оплата через ЮКассу? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Оплата картой, СБП или ЮMoney через защищённую форму ЮКассы. После оплаты подписка активируется мгновенно. Поддерживаются все российские банки.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Можно ли отменить подписку? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Да, в любой момент — напишите в Telegram. Деньги за текущий период не возвращаются, но подписка действует до конца оплаченного срока.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Как скачать медиаплан? <span class="faq-arrow">▾</span></button>
+      <div class="faq-a">Вкладка «Отчёт» → кнопки «Скачать XLSX» (таблица Excel) и «Печать / PDF» (документ для клиента). Оба формата доступны сразу после расчёта.</div>
+    </div>
+  </div>
+</section>
+
+<!-- СОЗДАТЕЛЬ -->
+<section style="text-align:center;max-width:760px;margin:0 auto">
+  <div class="sec-label">Об авторе</div>
+  <div class="sec-title">Создатель проекта</div>
+
+  <div class="author-card">
+    <div class="author-photo-wrap">
+      <img class="author-photo" src="https://cdn.jsdelivr.net/gh/Yuliya-vyshla-iz-sistemy/mediaplan-pro@main/photo.jpg" alt="Юлия Пощева">
+    </div>
+    <div class="author-info">
+      <div class="author-name">Юлия Пощева</div>
+      <div class="author-role">Реклама в Яндексе · Нейросети · Автоматизация бизнеса</div>
+      <div class="author-badges">
+        <span class="abadge abadge-blue">🎯 Яндекс.Директ</span>
+        <span class="abadge abadge-cyan">🤖 Нейросети</span>
+        <span class="abadge abadge-purple">⚡ Автоматизация</span>
+      </div>
+      <p class="author-bio">
+        Устали тратить часы на то, что AI делает за 10 минут?<br><br>
+        Я — педагог с 23-летним опытом, которая вышла из системы и научилась зарабатывать в digital. Объясняю сложное просто.<br><br>
+        МедиаПлан Pro — инструмент, который я создала для себя и своих клиентов: профессиональный расчёт медиаплана для Яндекс.Директ за 60 секунд, а теперь делюсь с вами.
+      </p>
+      <div class="author-links">
+        <a class="author-tg" href="https://t.me/Yuliya_Poshheva" target="_blank" rel="noopener">✉️ @Yuliya_Poshheva</a>
+      </div>
+      <div class="author-channels">
+        <div class="ach-label">Канал «Вышла из системы»:</div>
+        <div class="ach-btns">
+          <a class="ach-btn ach-tg" href="https://t.me/vyshla_iz_sistemy" target="_blank" rel="noopener">✈️ Telegram</a>
+          <a class="ach-btn ach-vk" href="https://vk.com/vyshla_iz_sistemy" target="_blank" rel="noopener">🔵 ВКонтакте</a>
+          <a class="ach-btn ach-max" href="https://max.ru/join/nXUHh4SsyMrkE6bHIWU5lYTx_XHq37CofWci7KRDeag" target="_blank" rel="noopener">💬 Макс</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div style="text-align:center;padding:60px 24px">
+  <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:16px">Готовы попробовать?</div>
+  <div style="color:var(--text2);margin-bottom:28px;font-size:.95rem">Первый расчёт — бесплатно. Без регистрации.</div>
+  <a class="btn-primary" href="app.html" style="display:inline-flex">⚡ Открыть МедиаПлан Pro</a>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo-wrap">
+      <img src="https://cdn.jsdelivr.net/gh/Yuliya-vyshla-iz-sistemy/mediaplan-pro@main/logo.jpg" alt="BC" class="footer-logo">
+    </div>
+    <p class="footer-copy">© 2025–2026 МедиаПлан Pro &nbsp;·&nbsp;
+      Автор: <a href="https://t.me/Yuliya_Poshheva" target="_blank">@Yuliya_Poshheva</a>
+      &nbsp;·&nbsp; Все права защищены &nbsp;·&nbsp; ИНН: 662330877581
+    </p>
+    <div class="footer-channel">
+      <span class="footer-ch-label">Канал «Вышла из системы»:</span>
+      <div class="footer-ch-links">
+        <a class="ach-btn ach-tg" href="https://t.me/vyshla_iz_sistemy" target="_blank" rel="noopener">✈️ Telegram</a>
+        <a class="ach-btn ach-vk" href="https://vk.com/vyshla_iz_sistemy" target="_blank" rel="noopener">🔵 ВКонтакте</a>
+        <a class="ach-btn ach-max" href="https://max.ru/join/nXUHh4SsyMrkE6bHIWU5lYTx_XHq37CofWci7KRDeag" target="_blank" rel="noopener">💬 Макс</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── FAQ ──
+function toggleFaq(b){ b.closest('.faq-item').classList.toggle('open'); }
+
+// ── ТЕМА: сохраняется между визитами ──
+let _theme = localStorage.getItem('mp_land_theme') || 'dark';
+let _fs    = parseInt(localStorage.getItem('mp_land_fs') || '15');
+
+(function init(){
+  _applyTheme(_theme);
+  _applyFS(_fs);
+})();
+
+function toggleTheme(){
+  _theme = _theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('mp_land_theme', _theme);
+  _applyTheme(_theme);
+}
+function _applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  const btn = document.getElementById('theme-btn');
+  if(btn) btn.textContent = t === 'dark' ? '🌙 Тёмная' : '☀️ Светлая';
+}
+
+// ── ШРИФТ ──
+function changeFS(d){
+  _fs = Math.max(12, Math.min(20, _fs + d));
+  localStorage.setItem('mp_land_fs', _fs);
+  _applyFS(_fs);
+}
+function _applyFS(s){
+  document.documentElement.style.setProperty('--base-fs', s + 'px');
+}
+</script>
+</body>
+</html>
