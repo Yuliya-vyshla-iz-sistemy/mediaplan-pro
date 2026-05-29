@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com;
+  connect-src 'self' https://api.anthropic.com https://api.deepseek.com https://*.supabase.co https://*.supabase.io https://yookassa.ru https://*.yookassa.ru https://api.yookassa.ru;
+  img-src 'self' data: blob:;
+  frame-ancestors 'none';
+  worker-src blob:;
+">
+<!-- © МедиаПлан Pro — авторская разработка @Yuliya_Poshheva & @vyshla_iz_sistemy
+     Данные (ниши, CPC, конверсии, офферы) являются интеллектуальной собственностью автора.
+     Копирование и использование без разрешения запрещено. -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>МедиаПлан Pro — Яндекс.Директ</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root,[data-theme="dark"]{--bg:#07090f;--card:#0d1117;--card2:#111827;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--primary:#3b82f6;--primary-dim:rgba(59,130,246,0.15);--accent:#22d3ee;--accent-dim:rgba(34,211,238,0.12);--green:#10b981;--green-dim:rgba(16,185,129,0.12);--orange:#f59e0b;--orange-dim:rgba(245,158,11,0.12);--red:#ef4444;--red-dim:rgba(239,68,68,0.12);--purple:#8b5cf6;--text:#e2e8f0;--text2:#94a3b8;--text3:#475569;--sel-bg:#111827;--sel-c:#e2e8f0}
+[data-theme="light"]{--bg:#f0f4f8;--card:#fff;--card2:#f1f5f9;--border:rgba(0,0,0,0.08);--border2:rgba(0,0,0,0.14);--primary:#2563eb;--primary-dim:rgba(37,99,235,0.1);--accent:#0891b2;--accent-dim:rgba(8,145,178,0.1);--green:#059669;--green-dim:rgba(5,150,105,0.1);--orange:#d97706;--orange-dim:rgba(217,119,6,0.1);--red:#dc2626;--red-dim:rgba(220,38,38,0.1);--purple:#7c3aed;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--sel-bg:#fff;--sel-c:#0f172a}
+*{margin:0;padding:0;box-sizing:border-box}html{font-size:var(--base-fs,15px)}
+body{background:var(--bg);color:var(--text);font-family:'Onest',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+header{padding:14px 0 0;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
+.hi{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;gap:10px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px}
+.logo img{width:36px;height:36px;border-radius:8px;object-fit:cover}
+.logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:-0.02em}
+.logo-text span{color:var(--accent)}.logo-sub{font-size:0.63rem;color:var(--text3);margin-top:1px}
+.hc{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cb{background:var(--card2);border:1px solid var(--border2);color:var(--text2);padding:5px 11px;border-radius:7px;font-size:0.74rem;cursor:pointer;transition:all .2s;font-family:'Onest',sans-serif}
+.cb:hover{border-color:var(--primary);color:var(--text)}
+.fsr{display:flex;align-items:center;gap:3px}
+.fsb{background:var(--card2);border:1px solid var(--border2);color:var(--text2);width:25px;height:25px;border-radius:5px;cursor:pointer;font-size:0.78rem;transition:all .2s;font-family:'Onest',sans-serif}
+.fsb:hover{border-color:var(--primary);color:var(--text)}
+.badge{background:var(--green-dim);border:1px solid var(--green);color:var(--green);font-size:0.63rem;font-family:'JetBrains Mono',monospace;padding:2px 8px;border-radius:20px}
+.ss{padding:16px 0 0;position:relative}.sw{position:relative;margin-bottom:6px}
+.si{width:100%;background:var(--card);border:1px solid var(--border2);color:var(--text);padding:11px 14px 11px 40px;border-radius:11px;font-family:'Onest',sans-serif;font-size:0.87rem;outline:none;transition:border-color .2s}
+.si:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-dim)}
+.sico{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
+#sr{background:var(--card);border:1px solid var(--border2);border-radius:10px;display:none;margin-top:4px;max-height:260px;overflow-y:auto;position:absolute;width:100%;z-index:200}
+.sri{padding:9px 13px;cursor:pointer;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--border);transition:background .15s}
+.sri:last-child{border-bottom:none}.sri:hover{background:var(--card2)}
+.src{font-size:0.67rem;color:var(--text3);background:var(--card2);padding:2px 7px;border-radius:10px;white-space:nowrap}
+.srn{font-size:0.84rem;color:var(--text)}
+.sep{display:flex;align-items:center;gap:8px;margin:10px 0 4px;color:var(--text3);font-size:0.74rem}
+.sep::before,.sep::after{content:'';flex:1;height:1px;background:var(--border)}
+.fs{padding:12px 0}.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(192px,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:5px;position:relative}
+.field label{font-size:0.71rem;color:var(--text2);font-weight:500;letter-spacing:0.04em;text-transform:uppercase}
+.field select,.field input{background:var(--sel-bg)!important;border:1px solid var(--border2);color:var(--sel-c)!important;padding:9px 12px;border-radius:9px;font-family:'Onest',sans-serif;font-size:0.85rem;outline:none;transition:border-color .2s}
+.field select option{background:var(--sel-bg)!important;color:var(--sel-c)!important}
+.field select:focus,.field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-dim)}
+.ff{grid-column:1/-1}
+#snw{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.snb{background:var(--card2);border:1px solid var(--border2);color:var(--text2);padding:6px 12px;border-radius:7px;font-size:0.77rem;cursor:pointer;transition:all .2s;font-family:'Onest',sans-serif}
+.snb:hover{border-color:var(--primary);color:var(--text)}
+.snb.active{background:var(--primary-dim);border-color:var(--primary);color:var(--primary);font-weight:500}
+.at{display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--text2);font-size:0.79rem;margin-top:6px;transition:color .2s}
+.at:hover{color:var(--text)}.at svg{transition:transform .3s}.at.open svg{transform:rotate(180deg)}
+#af{display:none;margin-top:11px}
+#af.show{display:grid;grid-template-columns:repeat(auto-fit,minmax(192px,1fr));gap:12px}
+.calcbtn{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border:none;padding:12px 26px;border-radius:11px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:opacity .2s,transform .2s;margin-top:12px}
+.calcbtn:hover{opacity:.9;transform:translateY(-1px)}
+/* REGION */
+.reg-btn{width:100%;background:var(--sel-bg);border:1px solid var(--border2);color:var(--sel-c);padding:9px 12px;border-radius:9px;font-family:'Onest',sans-serif;font-size:0.85rem;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;transition:border-color .2s}
+.reg-btn:hover,.reg-btn.open{border-color:var(--primary)}
+.reg-panel{position:absolute;top:calc(100% + 4px);left:0;z-index:500;background:var(--card);border:1px solid var(--border2);border-radius:11px;width:300px;max-height:360px;overflow-y:auto;padding:10px;display:none;box-shadow:0 8px 32px rgba(0,0,0,0.35)}
+.reg-panel.show{display:block}
+.reg-actions{display:flex;gap:6px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.reg-act-btn{background:var(--card2);border:1px solid var(--border2);color:var(--text2);padding:3px 10px;border-radius:5px;font-size:0.71rem;cursor:pointer;font-family:'Onest',sans-serif;transition:all .2s}
+.reg-act-btn:hover{border-color:var(--primary);color:var(--primary)}
+.reg-district{margin-bottom:6px}
+.rdt{display:flex;align-items:center;gap:6px;padding:5px 4px;cursor:pointer;font-size:0.79rem;font-weight:600;color:var(--accent);border-radius:5px;transition:background .15s;user-select:none}
+.rdt:hover{background:var(--card2)}.rdt-arrow{font-size:0.65rem;transition:transform .2s;display:inline-block}
+.rdt.collapsed .rdt-arrow{transform:rotate(-90deg)}
+.reg-cities{padding-left:8px}.reg-cities.hidden{display:none}
+.rcity{display:flex;align-items:center;gap:7px;padding:4px 4px;font-size:0.8rem;color:var(--text);cursor:pointer;border-radius:5px;transition:background .15s}
+.rcity:hover{background:var(--card2)}.rcity input{accent-color:var(--primary);cursor:pointer;width:14px;height:14px;flex-shrink:0}
+.reg-mult-badge{font-size:0.65rem;color:var(--text3);margin-left:auto;font-family:'JetBrains Mono',monospace}
+/* RESULTS */
+#results{display:none;margin-bottom:40px}#results.show{display:block}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:18px;overflow-x:auto;padding-bottom:1px}
+.tb{background:none;border:none;color:var(--text2);padding:8px 11px;font-family:'Onest',sans-serif;font-size:0.76rem;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.tb.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}.tb:hover:not(.active){color:var(--text)}
+.tp{display:none}.tp.active{display:block}
+.kr{display:grid;grid-template-columns:repeat(auto-fit,minmax(142px,1fr));gap:8px;margin-bottom:16px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:12px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi.blue::before{background:var(--primary)}.kpi.cyan::before{background:var(--accent)}.kpi.green::before{background:var(--green)}.kpi.orange::before{background:var(--orange)}.kpi.purple::before{background:var(--purple)}.kpi.red::before{background:var(--red)}
+.kl{font-size:0.67rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.kv{font-family:'JetBrains Mono',monospace;font-size:1.18rem;font-weight:500}.ks{font-size:0.67rem;color:var(--text3);margin-top:2px}
+.sc3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:12px}
+.sc.base{border-color:var(--primary);background:var(--primary-dim)}.sct{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text2);margin-bottom:7px}
+.sc.base .sct{color:var(--primary)}.scr{display:flex;justify-content:space-between;font-size:0.79rem;padding:2px 0}
+.scr span:last-child{font-family:'JetBrains Mono',monospace;font-weight:500}
+.tw{background:var(--card);border:1px solid var(--border);border-radius:11px;overflow:auto;margin-bottom:12px}
+.dt{width:100%;border-collapse:collapse;font-size:0.79rem}
+.dt th{background:var(--card2);color:var(--text2);font-weight:500;padding:8px 11px;text-align:left;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid var(--border)}
+.dt td{padding:8px 11px;border-bottom:1px solid var(--border);color:var(--text)}.dt tr:last-child td{border-bottom:none}
+.dt tr:hover td{background:rgba(128,128,128,0.04)}.dt .n{font-family:'JetBrains Mono',monospace;font-size:0.77rem}
+.bc{display:flex;align-items:flex-end;gap:4px;height:115px;padding:0 2px}
+.bw{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px}
+.bar{width:100%;border-radius:3px 3px 0 0;min-height:3px}.bl{font-size:0.57rem;color:var(--text3);text-align:center}.bv{font-family:'JetBrains Mono',monospace;font-size:0.54rem;color:var(--text2)}
+.ct{font-size:0.79rem}.cl{padding:4px 0 4px 12px;border-left:2px solid var(--border)}
+.cn{padding:4px 8px;border-radius:5px;display:flex;align-items:center;gap:6px;transition:background .15s}
+.cn:hover{background:rgba(128,128,128,0.04)}.cn.l0{font-weight:600;color:var(--primary)}.cn.l1{color:var(--accent)}.cn.l2{color:var(--text)}.cn.l3{color:var(--text2);font-size:0.74rem}
+.nb{background:var(--card2);border:1px solid var(--border2);border-radius:9px;padding:13px;margin-bottom:11px;font-family:'JetBrains Mono',monospace;font-size:0.77rem;color:var(--text2);line-height:1.8;word-break:break-word}
+.cab{background:var(--red-dim);border:1px solid var(--red);color:var(--red);padding:6px 14px;border-radius:7px;font-size:0.77rem;cursor:pointer;font-family:'Onest',sans-serif;transition:all .2s;margin-bottom:12px}
+.cab:hover{background:var(--red);color:#fff}.cab.copied{background:var(--green-dim)!important;border-color:var(--green)!important;color:var(--green)!important}
+.utmc{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:15px;margin-bottom:13px}
+.ufr{display:grid;grid-template-columns:140px 1fr;gap:8px;align-items:center;margin-bottom:8px}
+.ufl{font-size:0.74rem;color:var(--text2);font-weight:500}
+.ufi{background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:7px 11px;border-radius:7px;font-family:'JetBrains Mono',monospace;font-size:0.74rem;outline:none;width:100%}
+.ufi:focus{border-color:var(--primary)}
+.utm-dyn{background:var(--orange-dim);border:1px solid var(--orange);border-radius:8px;padding:10px 13px;margin-top:10px;font-size:0.74rem;color:var(--text2);line-height:1.6}
+.utm-dyn b{color:var(--orange)}
+.ur{background:var(--card2);border:1px solid var(--accent);border-radius:8px;padding:11px 13px;margin-top:9px;font-family:'JetBrains Mono',monospace;font-size:0.69rem;color:var(--accent);word-break:break-all;line-height:1.7}
+.cpb{background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent);padding:5px 11px;border-radius:6px;font-size:0.73rem;cursor:pointer;font-family:'Onest',sans-serif;margin-top:7px;transition:all .2s}
+.cpb:hover{background:var(--accent);color:#000}.cpb.copied{background:var(--green-dim)!important;border-color:var(--green)!important;color:var(--green)!important}
+.kwg{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:13px;margin-bottom:11px}
+.kwgt{font-size:0.84rem;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:7px}
+.kwgd{font-size:0.73rem;color:var(--text2);margin-bottom:9px}
+.kwi{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border)}.kwi:last-child{border-bottom:none}
+.kwn{font-size:0.81rem;color:var(--text);display:flex;align-items:center;gap:7px}
+.kwb{font-size:0.64rem;padding:1px 6px;border-radius:10px;background:var(--card2);color:var(--text3)}
+.wsl{font-size:0.69rem;color:var(--accent);text-decoration:none;padding:3px 8px;border:1px solid var(--accent);border-radius:5px;white-space:nowrap;transition:background .2s}.wsl:hover{background:var(--accent);color:#000}
+.cob{display:flex;align-items:center;gap:9px;margin-bottom:13px;background:var(--card2);border-radius:9px;padding:10px 13px;flex-wrap:wrap}
+.cobadge{font-size:0.77rem;font-weight:600;padding:3px 10px;border-radius:6px}
+.comp-low{background:var(--green-dim);color:var(--green)}.comp-mid{background:var(--orange-dim);color:var(--orange)}.comp-high{background:var(--red-dim);color:var(--red)}
+.adv{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:13px;margin-bottom:11px}
+.advtag{font-size:0.69rem;background:var(--primary-dim);color:var(--primary);border:1px solid var(--primary);padding:2px 8px;border-radius:5px;display:inline-block;margin-bottom:9px}
+.adh1{font-size:0.98rem;font-weight:600;color:var(--primary);margin-bottom:3px}.adh2{font-size:0.86rem;font-weight:500;color:var(--text);margin-bottom:5px}
+.adtxt{font-size:0.79rem;color:var(--text2);margin-bottom:5px}.adlnk{font-size:0.73rem;color:var(--accent)}
+.adwhy{background:var(--orange-dim);border-left:3px solid var(--orange);padding:7px 10px;border-radius:0 6px 6px 0;font-size:0.73rem;color:var(--text2);margin-top:7px}.adwhy b{color:var(--orange)}
+.aic{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:15px;margin-bottom:12px}
+.ait{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.aicont{color:var(--text2);font-size:0.82rem;line-height:1.7}.aicont b{color:var(--text)}
+.apr{display:flex;gap:7px;margin-bottom:11px;flex-wrap:wrap}
+.apb{background:var(--card2);border:1px solid var(--border2);color:var(--text2);padding:6px 12px;border-radius:7px;font-size:0.77rem;cursor:pointer;transition:all .2s;font-family:'Onest',sans-serif}
+.apb.active{background:var(--primary-dim);border-color:var(--primary);color:var(--primary);font-weight:500}
+.akr{margin-bottom:8px;display:none}.akr.show{display:flex;gap:7px}
+.aki{flex:1;background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:7px 11px;border-radius:7px;font-family:'JetBrains Mono',monospace;font-size:0.74rem;outline:none}.aki:focus{border-color:var(--primary)}
+.aiir{display:flex;gap:7px;margin-top:11px}
+.aiinp{flex:1;background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:8px 12px;border-radius:9px;font-family:'Onest',sans-serif;font-size:0.82rem;outline:none}.aiinp:focus{border-color:var(--primary)}
+.aibtn{background:var(--primary);color:#fff;border:none;padding:8px 15px;border-radius:9px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:600;font-size:0.81rem;white-space:nowrap;transition:opacity .2s}.aibtn:hover{opacity:.85}.aibtn:disabled{opacity:.5;cursor:not-allowed}
+.stitle{font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:7px}
+.stitle::after{content:'';flex:1;height:1px;background:var(--border)}
+.expr{display:flex;gap:7px;flex-wrap:wrap}
+.expb{background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:8px 14px;border-radius:9px;cursor:pointer;font-family:'Onest',sans-serif;font-size:0.81rem;display:flex;align-items:center;gap:6px;transition:border-color .2s,color .2s}.expb:hover{border-color:var(--primary);color:var(--primary)}
+.cls{margin-bottom:15px}.clst{font-size:0.78rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:7px;padding-bottom:3px;border-bottom:1px solid var(--border)}
+.cli{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:0.81rem;color:var(--text2);cursor:pointer;transition:color .2s}.cli:last-child{border-bottom:none}
+.cli.done{color:var(--text3);text-decoration:line-through}.cli input{margin-top:2px;accent-color:var(--primary);cursor:pointer;flex-shrink:0}
+.clcnt{font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--text2);margin-bottom:11px}.clcnt span{color:var(--green);font-weight:500}
+.hbt{display:flex;gap:6px;margin-bottom:13px}
+.hbtb{background:var(--card2);border:1px solid var(--border2);color:var(--text2);padding:6px 13px;border-radius:7px;cursor:pointer;font-size:0.79rem;font-family:'Onest',sans-serif;transition:all .2s}
+.hbtb.active{background:var(--primary-dim);border-color:var(--primary);color:var(--primary);font-weight:500}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:4px;border-radius:4px;background:var(--border2);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer}
+.cslw{margin-bottom:13px}.csll{display:flex;justify-content:space-between;font-size:0.79rem;color:var(--text2);margin-bottom:5px}
+.csll span:last-child{font-family:'JetBrains Mono',monospace;color:var(--text);font-weight:500}
+.crr{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px;margin:15px 0}
+.ck{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:10px;text-align:center}
+.ckv{font-family:'JetBrains Mono',monospace;font-size:1.08rem;font-weight:500;color:var(--text)}.ckl{font-size:0.67rem;color:var(--text2);margin-top:3px;text-transform:uppercase}
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:1000;align-items:center;justify-content:center}.mo.show{display:flex}
+.md{background:var(--card);border:1px solid var(--border2);border-radius:15px;padding:22px;max-width:670px;width:90%;max-height:80vh;overflow-y:auto;position:relative}
+.mdc{position:absolute;top:13px;right:13px;background:none;border:none;color:var(--text2);font-size:1.1rem;cursor:pointer;width:27px;height:27px;border-radius:5px;transition:background .2s}.mdc:hover{background:var(--card2);color:var(--text)}
+.md h2{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:15px}
+.is{display:flex;gap:11px;margin-bottom:13px;padding-bottom:13px;border-bottom:1px solid var(--border)}.is:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.inum{width:25px;height:25px;border-radius:50%;background:var(--primary-dim);color:var(--primary);font-size:0.78rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ib h4{font-size:0.86rem;font-weight:600;margin-bottom:2px}.ib p{font-size:0.78rem;color:var(--text2);line-height:1.6}
+footer{border-top:1px solid var(--border);padding:14px 0;margin-top:18px;text-align:center;font-size:0.73rem;color:var(--text3)}
+footer a{color:var(--accent);text-decoration:none}footer a:hover{text-decoration:underline}
+@media(max-width:640px){.sc3{grid-template-columns:1fr}.kr{grid-template-columns:repeat(2,1fr)}.tabs{gap:1px}.tb{padding:7px 7px;font-size:0.7rem}.ufr{grid-template-columns:1fr}.reg-panel{width:260px}}
+@media print{.no-print{display:none!important}body{background:#fff;color:#000}.tp{display:block!important}}
+
+/* ── MONETIZATION ── */
+.pw-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:2000;display:none;align-items:center;justify-content:center;padding:16px}
+.pw-overlay.show{display:flex}
+.pw-box{background:var(--card);border:1px solid var(--border2);border-radius:18px;padding:28px 24px;max-width:560px;width:100%;position:relative;max-height:90vh;overflow-y:auto}
+.pw-close{position:absolute;top:13px;right:13px;background:none;border:none;color:var(--text3);font-size:1.1rem;cursor:pointer;width:28px;height:28px;border-radius:5px;transition:all .2s}
+.pw-close:hover{background:var(--card2);color:var(--text)}
+.pw-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:6px}
+.pw-sub{font-size:0.83rem;color:var(--text2);margin-bottom:22px;line-height:1.6}
+@keyframes progressAnim{0%{transform:translateX(-100%)}100%{transform:translateX(250%)}}
+.plans{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px}
+@media(max-width:560px){.plans{grid-template-columns:1fr}}
+.plan{background:var(--card2);border:1px solid var(--border2);border-radius:12px;padding:16px;text-align:center;transition:border-color .2s;cursor:pointer;position:relative}
+.plan:hover{border-color:var(--primary)}
+.plan.featured{border-color:var(--accent);background:var(--accent-dim)}
+.plan-badge{font-size:0.6rem;background:var(--accent);color:#000;padding:2px 8px;border-radius:10px;position:absolute;top:-9px;left:50%;transform:translateX(-50%);white-space:nowrap;font-weight:700}
+.plan-name{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;margin-bottom:4px}
+.plan-price{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:500;color:var(--text);margin:6px 0}
+.plan-price span{font-size:0.72rem;color:var(--text3);font-family:'Onest',sans-serif}
+.plan-feats{font-size:0.72rem;color:var(--text2);line-height:1.9}
+.plan-btn{width:100%;background:var(--primary);color:#fff;border:none;padding:9px;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;margin-top:12px;transition:opacity .2s}
+.plan-btn:hover{opacity:.85}
+.plan.featured .plan-btn{background:var(--accent);color:#000}
+.pw-demo-left{background:var(--orange-dim);border:1px solid var(--orange);border-radius:10px;padding:12px 14px;margin-bottom:20px;font-size:0.81rem;color:var(--orange);text-align:center}
+.auth-tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:20px}
+.auth-tab{background:none;border:none;color:var(--text2);padding:8px 14px;font-family:'Onest',sans-serif;font-size:0.82rem;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.auth-tab.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+.auth-field{display:flex;flex-direction:column;gap:5px;margin-bottom:13px}
+.auth-field label{font-size:0.72rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.04em}
+.auth-input{background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:9px 12px;border-radius:8px;font-family:'Onest',sans-serif;font-size:0.85rem;outline:none;transition:border-color .2s}
+.auth-input:focus{border-color:var(--primary)}
+.auth-btn{width:100%;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border:none;padding:11px;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:opacity .2s;margin-top:6px}
+.auth-btn:hover{opacity:.88}
+.auth-msg{font-size:0.78rem;text-align:center;margin-top:10px;min-height:20px}
+.auth-msg.err{color:var(--red)}.auth-msg.ok{color:var(--green)}
+.user-bar{display:flex;align-items:center;gap:7px;background:var(--card2);border:1px solid var(--border2);padding:6px 11px;border-radius:8px;font-size:0.77rem;color:var(--text2)}
+.user-bar .email{color:var(--text);font-weight:500;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logout-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:0.75rem;padding:2px 6px;border-radius:4px;transition:all .2s}
+.logout-btn:hover{color:var(--red);background:var(--red-dim)}
+.tier-pro{background:var(--green-dim);border:1px solid var(--green);color:var(--green)}
+.tier-basic{background:var(--orange-dim);border:1px solid var(--orange);color:var(--orange)}
+.pay-loading{text-align:center;padding:30px;color:var(--text2);font-size:0.85rem}
+
+/* ── APP FOOTER ── */
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px 0}
+.footer-logo-wrap{opacity:.6;transition:opacity .2s}
+.footer-logo-wrap:hover{opacity:1}
+.footer-logo{width:34px;height:34px;border-radius:7px;object-fit:contain}
+.footer-copy{font-size:.72rem;color:var(--text3)}
+.footer-channel{text-align:center}
+.footer-ch-label{font-size:.7rem;color:var(--text3);display:block;margin-bottom:7px}
+.footer-ch-links{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.ach-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;font-size:.76rem;font-weight:600;text-decoration:none;transition:all .2s;font-family:'Syne',sans-serif;white-space:nowrap}
+.ach-tg{background:rgba(41,182,246,.12);border:1px solid #29b6f6;color:#29b6f6}
+.ach-tg:hover{background:#29b6f6;color:#000}
+.ach-vk{background:rgba(66,133,244,.12);border:1px solid #4285f4;color:#4285f4}
+.ach-vk:hover{background:#4285f4;color:#fff}
+.ach-max{background:rgba(139,92,246,.12);border:1px solid var(--purple);color:var(--purple)}
+.ach-max:hover{background:var(--purple);color:#fff}
+
+/* ── WELCOME POPUP ── */
+.wl-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:3000;display:none;align-items:center;justify-content:center;padding:16px;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.wl-box{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:32px 28px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.wl-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:6px}
+.wl-sub{font-size:.82rem;color:var(--text2);text-align:center;margin-bottom:22px;line-height:1.6}
+.wl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
+@media(max-width:560px){.wl-grid{grid-template-columns:1fr 1fr}}
+.wl-feat{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px}
+.wl-icon{font-size:1.4rem;margin-bottom:7px}
+.wl-fname{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;margin-bottom:4px}
+.wl-fdesc{font-size:.72rem;color:var(--text2);line-height:1.6}
+.wl-start{width:100%;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border:none;padding:13px;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;transition:opacity .2s}
+.wl-start:hover{opacity:.88}
+.wl-skip{display:block;text-align:center;margin-top:10px;font-size:.74rem;color:var(--text3);cursor:pointer;text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="mo" id="im">
+  <div class="md">
+    <button class="mdc" onclick="closeI()">✕</button>
+    <h2>❓ Как пользоваться МедиаПлан Pro</h2>
+    <div class="is"><div class="inum">1</div><div class="ib"><h4>Выберите нишу</h4><p>Используйте поиск вверху — начните вводить название. Или выберите категорию из списка, затем кликните на подниша (всего 30+ категорий и 150+ подниш).</p></div></div>
+    <div class="is"><div class="inum">2</div><div class="ib"><h4>Выберите регион</h4><p>Кликните на кнопку «Регион / Город» — откроется панель как в Яндекс.Вордстате. Выберите один или несколько городов с помощью чекбоксов. При выборе нескольких регионов расчёт ведётся по среднему коэффициенту.</p></div></div>
+    <div class="is"><div class="inum">3</div><div class="ib"><h4>Введите параметры</h4><p>Укажите бюджет в месяц и средний чек. В «Расширенных параметрах» — маржа, LTV (сколько месяцев клиент покупает повторно), процент закрытия сделок.</p></div></div>
+    <div class="is"><div class="inum">4</div><div class="ib"><h4>Нажмите «Рассчитать медиаплан»</h4><p>Инструмент рассчитает прогноз кликов, лидов, CPL, ROMI и LTV. Результаты появятся во вкладках ниже.</p></div></div>
+    <div class="is"><div class="inum">5</div><div class="ib"><h4>Изучите вкладки</h4><p>📈 Прогноз — основные KPI и 3 сценария · 📅 Сезонность — помесячная разбивка · 🏗 Кампании — структура + генератор объявлений · 🔑 Ключи — запросы с кнопкой → Wordstat · 🚫 Минус-слова с кнопкой копирования · 🔗 UTM-конструктор с параметрами Яндекса · 💰 ROMI и LTV-анализ · 💹 Калькулятор прибыли · 📚 Справочник KPI 2025/2026 · 🤖 ИИ-советы · ✅ Чек-лист · 📄 Отчёт</p></div></div>
+    <div class="is"><div class="inum">6</div><div class="ib"><h4>💹 Калькулятор прибыли</h4><p>Играйте с цифрами — находите свой идеальный сценарий. Двигайте ползунки CPC, конверсии, бюджета, чека и маржи — мгновенно видите как меняется ROMI.</p></div></div>
+    <div class="is"><div class="inum">7</div><div class="ib"><h4>🔗 UTM-конструктор</h4><p>Заполните поля — инструмент автоматически собирает UTM-ссылку и добавляет динамические параметры Яндекс.Директ: {source_type}, {source}, {position_type}, {position}. Нажмите кнопку — ссылка скопируется в буфер обмена.</p></div></div>
+    <div class="is"><div class="inum">8</div><div class="ib"><h4>📚 Справочник KPI</h4><p>Средние показатели конверсии по 50+ нишам за 2025 и 2026 год — используйте как ориентир при прогнозировании.</p></div></div>
+    <div class="is"><div class="inum">9</div><div class="ib"><h4>Скачайте отчёт</h4><p>Вкладка «Отчёт» → «Скачать XLSX» для таблицы или «Печать / PDF» для красивого документа клиенту.</p></div></div>
+  </div>
+</div>
+
+<div class="wrap">
+<header>
+  <div class="hi">
+    <div class="logo">
+      <div><div class="logo-text">МедиаПлан <span>Pro</span></div><div class="logo-sub">Яндекс.Директ · 300+ ниш · Безлимитно</div></div>
+    </div>
+    <div class="hc no-print">
+      <button class="cb" onclick="openI()">❓ Инструкция</button>
+      <div class="fsr"><button class="fsb" onclick="chFS(-1)">A−</button><button class="fsb" onclick="chFS(1)">A+</button></div>
+      <button class="cb" onclick="togTheme()" id="thbtn">🌙 Тёмная</button>
+      <div class="badge" id="tier-badge">✓ ДЕМО</div>
+      <div id="auth-btn-wrap">
+        <button class="cb" id="auth-open-btn" onclick="openAuth()">👤 Войти</button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="ss no-print">
+  <div class="sw"><span class="sico">🔍</span><input class="si" id="ns" placeholder="Быстрый поиск ниши — напишите, например: стоматология, ремонт, йога…" oninput="searchN(this.value)" onblur="setTimeout(()=>hideSR(),200)"></div>
+  <div id="sr"></div><div class="sep">или выберите из каталога</div>
+</div>
+<div class="fs no-print">
+  <div class="fg">
+    <div class="field"><label>Категория</label><select id="cat" onchange="updSN()"><option value="">— выберите —</option></select></div>
+    <div class="field ff"><label>Подниша</label><div id="snw"><span style="color:var(--text3);font-size:0.79rem">Сначала выберите категорию или воспользуйтесь поиском</span></div></div>
+    <div class="field">
+      <label>Регион / Город</label>
+      <button class="reg-btn" id="reg-btn" onclick="toggleReg(event)"><span id="reg-display">Москва (×1.0)</span><span style="font-size:0.7rem;color:var(--text3)">▾</span></button>
+      <div class="reg-panel" id="reg-panel"></div>
+    </div>
+    <div class="field"><label>Бюджет в месяц (₽)</label><input type="number" id="bud" value="100000" min="1000" step="1000"></div>
+    <div class="field"><label>Средний чек (₽)</label><input type="number" id="chk" value="" placeholder="авто" min="0"></div>
+    <div class="field"><label>Стартовый месяц</label><select id="sm"><option value="0">Январь</option><option value="1">Февраль</option><option value="2" selected>Март</option><option value="3">Апрель</option><option value="4">Май</option><option value="5">Июнь</option><option value="6">Июль</option><option value="7">Август</option><option value="8">Сентябрь</option><option value="9">Октябрь</option><option value="10">Ноябрь</option><option value="11">Декабрь</option></select></div>
+  </div>
+  <div class="at" id="at" onclick="togAdv()"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>Расширенные параметры</div>
+  <div id="af">
+    <div class="field"><label>Маржа бизнеса (%)</label><input type="number" id="mrg" value="35" min="1" max="100"></div>
+    <div class="field"><label>LTV (мес)</label><input type="number" id="ltvm" value="3" min="1" max="60"></div>
+    <div class="field"><label>Лиды → продажи (%)</label><input type="number" id="cr" value="30" min="1" max="100"></div>
+    <div class="field"><label>URL сайта (для UTM)</label><input type="text" id="surl" value="https://yourdomain.ru"></div>
+  </div>
+  <div id="demo-banner" style="display:none">
+    <div style="background:var(--orange-dim);border:1px solid var(--orange);border-radius:9px;padding:9px 13px;font-size:0.77rem;color:var(--orange);margin-top:10px;line-height:1.6">
+      ⚡ <b>Демо-режим:</b> у вас <span id="demo-left">1</span> бесплатный расчёт.
+      После — нужна подписка. &nbsp;<a href="#" onclick="openPaywall();return false" style="color:var(--orange);text-decoration:underline;font-weight:600">Открыть тарифы →</a>
+    </div>
+  </div>
+  <button class="calcbtn" onclick="calcWithGate()">⚡ Рассчитать медиаплан</button>
+</div>
+<div id="results">
+  <div class="tabs no-print">
+    <button class="tb active" onclick="swTab(0)">📈 Прогноз</button>
+    <button class="tb" onclick="swTab(1)">📅 Сезонность</button>
+    <button class="tb" onclick="swTab(2)">🏗 Кампании</button>
+    <button class="tb" onclick="swTab(3)">🔑 Ключи</button>
+    <button class="tb" onclick="swTab(4)">🚫 Минус-слова</button>
+    <button class="tb" onclick="swTab(5)">🔗 UTM</button>
+    <button class="tb" onclick="swTab(6)">💰 ROMI</button>
+    <button class="tb" onclick="swTab(7)">💹 Калькулятор прибыли</button>
+    <button class="tb" onclick="swTab(8)">📚 Справочник KPI</button>
+    <button class="tb" onclick="swTab(9)">🤖 ИИ-советы</button>
+    <button class="tb" onclick="swTab(10)">✅ Чек-лист</button>
+    <button class="tb" onclick="swTab(11)">📄 Отчёт</button>
+  </div>
+  <div class="tp active" id="t0"><div class="kr" id="krow"></div><div class="sc3" id="sc3"></div><div class="stitle">Разбивка по каналам</div><div class="tw"><table class="dt" id="cht"></table></div><div id="ntips" style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:13px;font-size:0.81rem;color:var(--text2);line-height:1.8"></div></div>
+  <div class="tp" id="t1"><div class="stitle">Годовой прогноз (с учётом сезонности)</div><div style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:15px;margin-bottom:12px"><div class="bc" id="sch"></div></div><div class="tw"><table class="dt" id="sct"></table></div></div>
+  <div class="tp" id="t2"><div class="stitle">Структура кампаний</div><div style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:15px;margin-bottom:12px"><div class="ct" id="ctree"></div></div><div class="stitle">Генератор объявлений</div><div id="advs"></div><div class="stitle">Стратегия ставок</div><div class="tw"><table class="dt"><thead><tr><th>Стратегия</th><th>Когда применять</th></tr></thead><tbody><tr><td>Ручное управление</td><td>Первые 2–4 недели</td></tr><tr><td>Оптим. конверсий</td><td>После 20+ конверсий</td></tr><tr><td>Целевой ROAS</td><td>После 50+ конверсий</td></tr></tbody></table></div></div>
+  <div class="tp" id="t3"><div id="kws"></div></div>
+  <div class="tp" id="t4">
+    <div class="stitle">Нишевые минус-слова</div>
+    <button class="cab" id="cpneg-niche" onclick="cpNeg('nn','cpneg-niche','нишевые')">📋 Скопировать нишевые</button>
+    <div class="nb" id="nn"></div>
+    <div class="stitle">Общие минус-слова</div>
+    <button class="cab" id="cpneg-common" onclick="cpNeg('nc','cpneg-common','общие')">📋 Скопировать общие</button>
+    <div class="nb" id="nc"></div>
+  </div>
+  <div class="tp" id="t5">
+    <div class="stitle">UTM-конструктор</div>
+    <div class="utmc">
+      <div class="ufr"><span class="ufl">URL сайта</span><input class="ufi" id="uu" value="https://yourdomain.ru" oninput="bUTM()"></div>
+      <div class="ufr"><span class="ufl">utm_source</span><input class="ufi" id="us" value="yandex" oninput="bUTM()"></div>
+      <div class="ufr"><span class="ufl">utm_medium</span><input class="ufi" id="um" value="cpc" oninput="bUTM()"></div>
+      <div class="ufr"><span class="ufl">utm_campaign</span><input class="ufi" id="uc" value="" oninput="bUTM()"></div>
+      <div class="ufr"><span class="ufl">utm_content</span><input class="ufi" id="uct" value="{ad_id}" oninput="bUTM()"></div>
+      <div class="ufr"><span class="ufl">utm_term</span><input class="ufi" id="ut" value="{keyword}" oninput="bUTM()"></div>
+      <div class="utm-dyn"><b>⚡ Динамические параметры Яндекс.Директ (добавляются автоматически):</b><br><span style="font-family:'JetBrains Mono',monospace;font-size:0.71rem">&amp;type={source_type}&amp;source={source}&amp;block={position_type}&amp;position={position}</span></div>
+      <div class="ur" id="ures">Заполните поля выше</div>
+      <button class="cpb" id="cpb-utm" onclick="cpUTM()">📋 Скопировать ссылку</button>
+    </div>
+  </div>
+  <div class="tp" id="t6"><div style="display:flex;justify-content:center;margin-bottom:15px"><svg id="rg" width="280" height="195"></svg></div><div class="stitle">P&amp;L Таблица</div><div class="tw"><table class="dt" id="pnl"></table></div><div class="stitle">LTV-анализ</div><div id="ltvb" style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:15px;font-size:0.81rem;color:var(--text2);line-height:1.9"></div></div>
+  <div class="tp" id="t7">
+    <div class="aic">
+      <div class="ait">💹 Калькулятор прибыли</div>
+      <div style="font-size:0.77rem;color:var(--text3);margin-bottom:13px">Играйте с цифрами — находите свой идеальный сценарий</div>
+      <div class="cslw"><div class="csll"><span>💰 CPC (₽)</span><span id="sv-cpc">100 ₽</span></div><input type="range" id="sl-cpc" min="10" max="1000" value="100" oninput="upCalc()"></div>
+      <div class="cslw"><div class="csll"><span>📊 Конверсия сайта (%)</span><span id="sv-cr">3.0%</span></div><input type="range" id="sl-cr" min="1" max="200" value="30" oninput="upCalc()"></div>
+      <div class="cslw"><div class="csll"><span>📅 Бюджет (₽/мес)</span><span id="sv-bud">100 000 ₽</span></div><input type="range" id="sl-bud" min="10000" max="3000000" value="100000" step="10000" oninput="upCalc()"></div>
+      <div class="cslw"><div class="csll"><span>🛒 Средний чек (₽)</span><span id="sv-chk">50 000 ₽</span></div><input type="range" id="sl-chk" min="500" max="10000000" value="50000" step="500" oninput="upCalc()"></div>
+      <div class="cslw"><div class="csll"><span>📈 Маржа (%)</span><span id="sv-mrg">35%</span></div><input type="range" id="sl-mrg" min="5" max="90" value="35" oninput="upCalc()"></div>
+      <div class="crr" id="crr"></div>
+      <div style="background:var(--card2);border-radius:9px;padding:11px;font-size:0.79rem;color:var(--text2)" id="cvrd"></div>
+    </div>
+  </div>
+  <div class="tp" id="t8"><div class="stitle">Справочник KPI по нишам</div><div class="hbt"><button class="hbtb active" onclick="swHB(0)">📊 2025 год</button><button class="hbtb" onclick="swHB(1)">📊 2026 год</button></div><div id="hbtw"></div></div>
+  <div class="tp" id="t9">
+    <div class="aic"><div class="ait"><span class="dot"></span> Рекомендации по нише</div><div class="aicont" id="prai"></div></div>
+    <div class="aic no-print">
+      <div class="ait">🤖 Спросить нейросеть</div>
+      <div style="font-size:0.74rem;color:var(--text3);margin-bottom:10px">Выберите нейросеть и задайте вопрос по кампании</div>
+      <div class="apr"><button class="apb active" onclick="selAI('deepseek')" id="pd">🌊 DeepSeek</button></div>
+      <!-- DeepSeek key managed server-side -->
+      <div class="aiir"><input class="aiinp" id="aiq" placeholder="Например: какие офферы лучше работают в моей нише?"><button class="aibtn" onclick="askAI()" id="aisb">Спросить</button></div>
+      <div id="air" style="margin-top:11px;font-size:0.81rem;color:var(--text2);line-height:1.7;display:none"></div>
+    </div>
+  </div>
+  <div class="tp" id="t10"><div class="clcnt">Выполнено: <span id="cld">0</span> из <span id="clt">0</span></div><div id="clc"></div></div>
+  <div class="tp" id="t11"><div class="no-print expr" style="margin-bottom:15px"><button class="expb" onclick="expXLSX()">📥 Скачать XLSX</button><button class="expb" onclick="window.print()">🖨 Печать / PDF</button></div><div id="rpt" style="font-size:0.81rem"></div></div>
+</div>
+</div>
+<footer class="wrap">
+  <div class="footer-inner">
+    <div class="footer-logo-wrap">
+      <img src="data:image/png;base64,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" alt="BC" class="footer-logo">
+    </div>
+    <p class="footer-copy">© 2025–2026 МедиаПлан Pro &nbsp;·&nbsp;
+      Автор: <a href="https://t.me/Yuliya_Poshheva" target="_blank">@Yuliya_Poshheva</a>
+      &nbsp;·&nbsp; Все права защищены
+    </p>
+    <div class="footer-channel">
+      <span class="footer-ch-label">Канал «Вышла из системы»:</span>
+      <div class="footer-ch-links">
+        <a class="ach-btn ach-tg" href="https://t.me/vyshla_iz_sistemy" target="_blank" rel="noopener">✈️ Telegram</a>
+        <a class="ach-btn ach-vk" href="https://vk.com/vyshla_iz_sistemy" target="_blank" rel="noopener">🔵 ВКонтакте</a>
+        <a class="ach-btn ach-max" href="https://max.ru/join/nXUHh4SsyMrkE6bHIWU5lYTx_XHq37CofWci7KRDeag" target="_blank" rel="noopener">💬 Макс</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║         PAYWALL MODAL                   ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="pw-overlay" id="pw-modal">
+  <div class="pw-box">
+    <button class="pw-close" onclick="closePaywall()">✕</button>
+    <div id="pw-content">
+      <div class="pw-title">🚀 Полный доступ</div>
+      <div class="pw-sub" id="pw-sub-text">Демо-расчёт использован. Выберите тариф — и считайте без ограничений.</div>
+      <div class="pw-demo-left" id="pw-demo-msg" style="display:none">
+        Вы использовали <b>1 бесплатный расчёт</b>. Для продолжения нужна подписка.
+      </div>
+      <div class="plans">
+        <div class="plan" onclick="startPayment('basic')">
+          <div class="plan-name">☕ Базовый</div>
+          <div class="plan-price">299 ₽<span>/мес</span></div>
+          <div class="plan-feats">✓ 7 расчётов/мес<br>✓ Все ниши<br>✓ XLSX-экспорт<br>✗ ИИ-советы</div>
+          <button class="plan-btn">Выбрать</button>
+        </div>
+        <div class="plan featured" onclick="startPayment('pro')">
+          <div class="plan-badge">⭐ ПОПУЛЯРНЫЙ</div>
+          <div class="plan-name">⚡ Про</div>
+          <div class="plan-price">599 ₽<span>/мес</span></div>
+          <div class="plan-feats">✓ Безлимитно<br>✓ ИИ-советы DeepSeek<br>✓ Приоритет поддержки<br>✓ Новые ниши первым</div>
+          <button class="plan-btn">Выбрать</button>
+        </div>
+        <div class="plan" onclick="startPayment('annual')">
+          <div class="plan-name">🏆 Про (год)</div>
+          <div class="plan-price">5 999 ₽<span>/год</span></div>
+          <div class="plan-feats">✓ Безлимитно 12 мес<br>✓ Всё из Про<br>✓ Скидка 17%<br>✓ 499 ₽/мес</div>
+          <button class="plan-btn">Выбрать</button>
+        </div>
+      </div>
+      <div id="pw-payment-area" style="display:none">
+        <div class="pay-loading" id="pay-loading">⏳ Создаю платёж...</div>
+      </div>
+      <div style="text-align:center;margin-top:6px">
+        <a href="#" onclick="openAuth();closePaywall();return false" style="font-size:0.76rem;color:var(--text3);text-decoration:underline">Уже есть аккаунт? Войдите →</a>
+      </div>
+      <div style="text-align:center;margin-top:8px">
+        <a href="#" onclick="restoreSubscription();return false" style="font-size:0.73rem;color:var(--text3);text-decoration:underline">🔄 Уже оплатили? Восстановить доступ</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗ -->
+<!-- ║         AUTH MODAL                      ║ -->
+<!-- ╚══════════════════════════════════════════╝ -->
+<div class="pw-overlay" id="auth-modal">
+  <div class="pw-box" style="max-width:400px">
+    <button class="pw-close" onclick="closeAuth()">✕</button>
+    <div class="pw-title">👤 Вход / Регистрация</div>
+    <div class="pw-sub">Для сохранения истории и доступа к подпискам</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Войти</button>
+      <button class="auth-tab" id="tab-reg" onclick="switchAuthTab('reg')">Регистрация</button>
+    </div>
+    <div id="auth-login-form">
+      <div class="auth-field"><label>Email</label><input class="auth-input" id="login-email" type="email" placeholder="you@example.com"></div>
+      <div class="auth-field"><label>Пароль</label><input class="auth-input" id="login-pass" type="password" placeholder="••••••••"></div>
+      <button class="auth-btn" onclick="doLogin()">Войти</button>
+      <div style="text-align:center;margin-top:10px;font-size:0.75rem;color:var(--text3)">или</div>
+      <button class="auth-btn" style="background:var(--card2);color:var(--text);border:1px solid var(--border2);margin-top:8px" onclick="doMagicLink()">✉️ Войти по ссылке на email</button>
+    </div>
+    <div id="auth-reg-form" style="display:none">
+      <div class="auth-field"><label>Email</label><input class="auth-input" id="reg-email" type="email" placeholder="you@example.com"></div>
+      <div class="auth-field"><label>Пароль</label><input class="auth-input" id="reg-pass" type="password" placeholder="Минимум 8 символов"></div>
+      <button class="auth-btn" onclick="doRegister()">Создать аккаунт</button>
+    </div>
+    <div class="auth-msg" id="auth-msg"></div>
+    <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);font-size:0.71rem;color:var(--text3);text-align:center">
+      Регистрируясь, вы соглашаетесь с условиями использования
+    </div>
+  </div>
+</div>
+
+<script>
+
+/* =============================================================
+   МедиаПлан Pro — Авторская разработка
+   © Yuliya Poshheva (@Yuliya_Poshheva), 2025–2026
+   Все права защищены. Данные о нишах, CPC, конверсиях,
+   офферах и структурах кампаний являются интеллектуальной
+   собственностью автора. Копирование, воспроизведение и
+   коммерческое использование без письменного разрешения
+   автора ЗАПРЕЩЕНО.
+   ============================================================= */
+
+const RT=[
+  {d:"Москва и область",r:[{n:"Москва",v:"moscow",m:1.0},{n:"Московская область",v:"mo",m:0.85}]},
+  {d:"Северо-Запад",r:[{n:"Санкт-Петербург",v:"spb",m:0.78},{n:"Ленинградская область",v:"lo",m:0.65},{n:"Мурманская обл.",v:"mur",m:0.40},{n:"Архангельская обл.",v:"arh",m:0.38},{n:"Карелия",v:"kar",m:0.38},{n:"Вологодская обл.",v:"vol",m:0.36},{n:"Псковская обл.",v:"pskov",m:0.34},{n:"Новгородская обл.",v:"nvg",m:0.34}]},
+  {d:"Центральный",r:[{n:"Воронеж",v:"vrn",m:0.45},{n:"Ярославль",v:"yar",m:0.42},{n:"Тула",v:"tula",m:0.42},{n:"Рязань",v:"ryazan",m:0.40},{n:"Тверь",v:"tver",m:0.38},{n:"Белгород",v:"belgorod",m:0.40},{n:"Курск",v:"kursk",m:0.38},{n:"Брянск",v:"bryansk",m:0.35},{n:"Калуга",v:"kaluga",m:0.38},{n:"Иваново",v:"ivanovo",m:0.35},{n:"Орёл",v:"orel",m:0.35},{n:"Владимир",v:"vladimir",m:0.38},{n:"Липецк",v:"lipetsk",m:0.38},{n:"Тамбов",v:"tambov",m:0.34},{n:"Смоленск",v:"smolensk",m:0.35},{n:"Кострома",v:"kostroma",m:0.35}]},
+  {d:"Юг",r:[{n:"Краснодар",v:"krd",m:0.55},{n:"Ростов-на-Дону",v:"rostov",m:0.52},{n:"Волгоград",v:"vlg",m:0.42},{n:"Сочи",v:"sochi",m:0.52},{n:"Ставрополь",v:"stav",m:0.40},{n:"Астрахань",v:"astr",m:0.38},{n:"Краснодарский край",v:"krdkr",m:0.50}]},
+  {d:"Поволжье",r:[{n:"Казань",v:"kazan",m:0.55},{n:"Нижний Новгород",v:"nn",m:0.50},{n:"Самара",v:"samara",m:0.48},{n:"Уфа",v:"ufa",m:0.48},{n:"Саратов",v:"saratov",m:0.40},{n:"Тольятти",v:"tolyatti",m:0.42},{n:"Пенза",v:"penza",m:0.38},{n:"Ульяновск",v:"ulyanovsk",m:0.38},{n:"Чебоксары",v:"cheb",m:0.36}]},
+  {d:"Уральский",r:[{n:"Екатеринбург",v:"ekb",m:0.62},{n:"Челябинск",v:"chel",m:0.45},{n:"Пермь",v:"perm",m:0.45},{n:"Тюмень",v:"tyumen",m:0.52},{n:"Нижний Тагил",v:"ntag",m:0.38},{n:"Магнитогорск",v:"magn",m:0.35},{n:"Курган",v:"kurgan",m:0.32}]},
+  {d:"Сибирский",r:[{n:"Новосибирск",v:"nsk",m:0.58},{n:"Красноярск",v:"krs",m:0.45},{n:"Омск",v:"omsk",m:0.40},{n:"Иркутск",v:"irkutsk",m:0.42},{n:"Томск",v:"tomsk",m:0.42},{n:"Кемерово",v:"kemerovo",m:0.40},{n:"Барнаул",v:"barnaul",m:0.38},{n:"Новокузнецк",v:"nkz",m:0.38},{n:"Улан-Удэ",v:"uud",m:0.35}]},
+  {d:"Дальневосточный",r:[{n:"Хабаровск",v:"hab",m:0.45},{n:"Владивосток",v:"vlad",m:0.48},{n:"Якутск",v:"yakutsk",m:0.38},{n:"Благовещенск",v:"blag",m:0.35},{n:"Южно-Сахалинск",v:"sakhal",m:0.40}]},
+  {d:"Россия (вся)",r:[{n:"Россия (вся)",v:"russia",m:0.52}]},
+];
+const MN=['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
+const CNEG=['бесплатно','своими руками','diy','скачать','реферат','форум','вакансии','работа','стажировка','youtube','видео урок','что такое','wikipedia','отзывы форум'];
+const CLD=[
+  {s:"Подготовка",i:["Оценили сайт клиента и дали рекомендации по повышению конверсии","Разработали рекламную стратегию исходя из бюджета клиента","Сделали медиаплан и декомпозицию"]},
+  {s:"Семантика",i:["Создали mind map семантического ядра","Собрали семантическое ядро (СЯ)","Создали список минус-слов на уровень кампании/групп","Сделали группировку ключевых слов по смыслам и частотности"]},
+  {s:"Объявления",i:["Прописали релевантные объявления под каждую группу ключей","Прописали релевантные URL под каждое объявление","Задали нужные типы соответствия ключевым словам","Добавили все расширения (быстрые ссылки, уточнения, цены, промоакции)"]},
+  {s:"Настройки кампании",i:["Задали ставки или настроили автоматическую стратегию","Задали параметры (расписание показов, местоположение)","Задали корректировки ставок","Установили суточное ограничение бюджета","Добавили визитку / карточку организации","Прописали UTM метки","Подключили Яндекс.Метрику","Настроили конверсии и импортировали в рекламный аккаунт"]},
+  {s:"После запуска — проверяем ежедневно первую неделю",i:["Реальные поисковые запросы","Процент отказов","Процент конверсии","Время на сайте"]},
+  {s:"🎉 Финал",i:["Погладили себя по голове и сказали «Какой / какая я молодец!»"]},
+];
+const KPI25=[
+  {n:"Недвижимость (Новостройки)",a:1.3,b:4.0},{n:"Строительство домов",a:1.0,b:5.0},{n:"Ремонт квартир",a:2.0,b:10.0},{n:"Кухни на заказ",a:2.8,b:15.0},{n:"Натяжные потолки",a:4.5,b:18.0},
+  {n:"Автосервис (СТО)",a:5.5,b:45.0},{n:"Шиномонтаж",a:12.0,b:80.0},{n:"Продажа Авто (Дилеры)",a:1.8,b:6.0},{n:"Пригон авто из-за границы",a:2.5,b:8.0},{n:"Грузоперевозки / Переезды",a:5.0,b:30.0},
+  {n:"Эвакуатор / Техпомощь",a:15.0,b:70.0},{n:"Аренда спецтехники",a:3.5,b:25.0},{n:"Стоматология (Имплантация)",a:3.0,b:15.0},{n:"Стоматология (Лечение)",a:6.0,b:40.0},{n:"Медицинские клиники",a:4.0,b:12.0},
+  {n:"Психология / Психотерапия",a:5.0,b:25.0},{n:"Наркология",a:8.0,b:35.0},{n:"Салон красоты / Бьюти",a:7.0,b:50.0},{n:"Лазерная эпиляция",a:6.0,b:45.0},{n:"Барбершоп",a:9.0,b:60.0},
+  {n:"Юридические услуги",a:3.0,b:12.0},{n:"Банкротство физлиц",a:4.0,b:18.0},{n:"Интернет-магазин",a:1.5,b:70.0},{n:"Обучение / Курсы",a:4.0,b:15.0},{n:"IT-курсы",a:3.5,b:20.0},
+  {n:"Онлайн-школы",a:4.5,b:18.0},{n:"B2B Услуги",a:1.5,b:12.0},{n:"Фитнес-клуб",a:5.0,b:35.0},{n:"Йога / Пилатес",a:7.0,b:45.0},{n:"Доставка еды",a:8.0,b:60.0},
+  {n:"Суши / Роллы",a:7.0,b:55.0},{n:"Клининг",a:8.5,b:40.0},{n:"Вскрытие замков",a:18.0,b:90.0},{n:"Ремонт бытовой техники",a:7.5,b:55.0},{n:"Детские праздники",a:8.0,b:45.0},
+  {n:"Ветеринарная клиника",a:6.0,b:40.0},{n:"Страхование (ОСАГО/КАСКО)",a:8.0,b:65.0},{n:"SEO / Контекст",a:2.5,b:15.0},{n:"Разработка сайтов",a:2.8,b:18.0},{n:"Маркетплейсы (WB/Ozon)",a:3.0,b:20.0},
+  {n:"Кондиционеры (монтаж)",a:4.5,b:28.0},{n:"Ритуальные услуги",a:10.0,b:60.0},{n:"Ювелирные изделия",a:2.0,b:30.0},{n:"Полиграфия",a:5.5,b:35.0},{n:"Доставка цветов",a:9.0,b:55.0},
+  {n:"Дизайн интерьера",a:2.0,b:12.0},{n:"Франшизы (продажа)",a:1.5,b:8.0},{n:"Коворкинг",a:6.0,b:40.0},{n:"Страхование жизни/ДМС",a:3.5,b:18.0},{n:"IP-телефония / АТС",a:4.0,b:22.0},
+  {n:"Переводы",a:5.0,b:30.0},{n:"HR / Подбор персонала",a:2.5,b:15.0},{n:"Промышленное оборудование",a:1.2,b:8.0},
+];
+const KPI26=KPI25.map(k=>({n:k.n,a:+(k.a*1.05).toFixed(1),b:+(k.b*1.03).toFixed(1)}));
+/* PROPRIETARY DATA — see copyright notice above */
+
+const C={
+"Стоматология":[
+  {name:"Имплантация зубов",cpc:180,ctrS:7.2,ctrR:1.1,crMin:3,crMax:6,split:65,check:80000,s:[0.75,0.78,0.92,1.0,1.05,1.02,0.85,0.82,1.08,1.1,1.0,0.72],neg:["бесплатно","цена сравнить","самому"],utm:"implant",struct:["Поиск_Имплантация","Поиск_Конкуренты","РСЯ_Ретаргетинг"],hooks:["Имплант за 1 день — гарантия 10 лет","Бесплатная консультация + КТ","Рассрочка 0% на 24 месяца","Импланты от 39 900 ₽"],keys:["имплантация зубов цена","импланты зубов","стоимость импланта","имплант зуба под ключ"]},
+  {name:"Лечение зубов",cpc:75,ctrS:7.8,ctrR:1.3,crMin:5,crMax:10,split:60,check:8000,s:[0.85,0.88,0.95,1.0,1.0,0.95,0.88,0.88,1.05,1.08,1.0,0.82],neg:["бесплатно","ОМС","полис"],utm:"treatment",struct:["Поиск_Лечение_Зубов","Поиск_Кариес","РСЯ_Ретаргетинг"],hooks:["Лечение без боли за 1 час","Микроскоп — видим то, что другие пропускают","Гарантия 2 года на пломбы","Работаем без выходных"],keys:["лечение зубов цена","лечение кариеса","пломба на зуб","лечение каналов"]},
+  {name:"Удаление зубов",cpc:65,ctrS:8.0,ctrR:1.0,crMin:5,crMax:10,split:75,check:5000,s:[0.85,0.88,0.95,0.98,1.0,0.92,0.88,0.88,1.05,1.08,1.0,0.82],neg:["бесплатно","ОМС"],utm:"extraction",struct:["Поиск_Удаление_Срочно","Поиск_Зуб_Мудрости"],hooks:["Удаление без боли за 20 минут","Зуб мудрости от 3 500 ₽","Открыты 7 дней в неделю"],keys:["удаление зуба цена","удалить зуб мудрости","удаление корня зуба"]},
+  {name:"Ортодонт",cpc:90,ctrS:6.5,ctrR:1.2,crMin:4,crMax:8,split:55,check:45000,s:[0.8,0.82,0.95,1.1,1.05,0.9,0.78,0.82,1.15,1.1,0.95,0.72],neg:["бесплатно","дома"],utm:"orthodont",struct:["Поиск_Ортодонт","Поиск_Прикус","РСЯ_Ретаргетинг"],hooks:["Исправление прикуса без брекетов","Консультация ортодонта — бесплатно","Лечение детей и взрослых"],keys:["ортодонт консультация","исправление прикуса","неправильный прикус лечение"]},
+  {name:"Брекеты и элайнеры",cpc:95,ctrS:6.8,ctrR:1.2,crMin:4,crMax:8,split:55,check:55000,s:[0.8,0.82,0.95,1.1,1.05,0.9,0.75,0.8,1.15,1.1,0.95,0.72],neg:["сравнить цены","сам"],utm:"braces",struct:["Поиск_Брекеты","Поиск_Элайнеры","РСЯ_Ретаргетинг"],hooks:["Невидимые элайнеры за 1 визит","Брекеты от 18 000 ₽","Рассрочка 0%"],keys:["брекеты цена","элайнеры стоимость","выравнивание зубов"]},
+  {name:"Протезирование зубов",cpc:130,ctrS:6.5,ctrR:1.0,crMin:3,crMax:5,split:60,check:70000,s:[0.78,0.8,0.9,1.0,1.0,0.95,0.82,0.8,1.05,1.1,0.98,0.72],neg:["протез самому","дёшево"],utm:"prosthetics",struct:["Поиск_Протезы","Поиск_Коронки","РСЯ_60+"],hooks:["Зубные протезы за 1 день","Коронка из циркония","Бесплатный осмотр"],keys:["протезирование зубов","зубные коронки цена","съёмный протез"]},
+  {name:"Отбеливание зубов",cpc:55,ctrS:7.5,ctrR:1.4,crMin:6,crMax:12,split:45,check:12000,s:[0.8,0.9,1.05,1.1,1.15,1.0,0.85,0.85,1.0,1.0,0.95,0.8],neg:["паста","полоски","дома"],utm:"whitening",struct:["Поиск_Отбеливание","РСЯ_Красота"],hooks:["Улыбка на 8 тонов белее за 1 час","Zoom — без боли","Отбеливание+чистка −30%"],keys:["отбеливание зубов цена","zoom отбеливание"]},
+  {name:"Виниры",cpc:145,ctrS:5.8,ctrR:1.2,crMin:3,crMax:6,split:55,check:60000,s:[0.82,0.85,0.95,1.1,1.1,1.0,0.88,0.9,1.05,1.08,0.95,0.72],neg:["сам","фото"],utm:"veneers",struct:["Поиск_Виниры","РСЯ_Премиум"],hooks:["Голливудская улыбка за 5 дней","Ультратонкие E-max","Цифровой дизайн — бесплатно"],keys:["виниры на зубы цена","виниры стоимость","керамические виниры"]},
+  {name:"Детская стоматология",cpc:70,ctrS:6.0,ctrR:1.3,crMin:5,crMax:9,split:50,check:8000,s:[0.7,0.75,0.9,1.05,1.1,0.85,0.75,0.85,1.2,1.1,0.95,0.7],neg:["бесплатно","ОМС","полис"],utm:"kids_dental",struct:["Поиск_Детская_Стоматология","РСЯ_Родители"],hooks:["Лечим без боли и страха","Стоматолог-сказочник","Первый визит — бесплатно"],keys:["детская стоматология","детский стоматолог запись","лечение зубов детям"]},
+],
+"Медицина":[
+  {name:"МРТ / КТ",cpc:90,ctrS:7.5,ctrR:1.1,crMin:6,crMax:12,split:60,check:6000,s:[0.9,0.88,0.95,0.98,0.95,0.9,0.82,0.85,1.0,1.05,1.08,0.92],neg:["бесплатно","ОМС","полис"],utm:"mri",struct:["Поиск_МРТ","Поиск_МРТ_Части","РСЯ_Ретаргетинг"],hooks:["МРТ за 60 минут — результат сразу","Открыты до 22:00","Скидка 15% на повторное"],keys:["мрт головного мозга цена","кт брюшной полости","мрт позвоночника","мрт срочно"]},
+  {name:"Анализы и лаборатория",cpc:45,ctrS:8.0,ctrR:1.5,crMin:8,crMax:15,split:50,check:2500,s:[0.85,0.88,1.1,1.05,1.0,0.92,0.85,0.88,1.0,1.05,1.05,0.88],neg:["расшифровка","норма"],utm:"lab",struct:["Поиск_Анализы","РСЯ_Здоровье"],hooks:["Результат за 1 день","Выезд на дом","Комплекс 30 показателей"],keys:["сдать анализы цена","анализы на гормоны","лаборатория рядом"]},
+  {name:"Косметология",cpc:85,ctrS:6.5,ctrR:1.3,crMin:5,crMax:10,split:50,check:15000,s:[0.82,0.88,1.05,1.1,1.1,1.0,0.9,0.95,1.05,1.08,1.0,0.78],neg:["самому","дома"],utm:"cosmo",struct:["Поиск_Ботокс","Поиск_Филлеры","РСЯ_Женщины"],hooks:["Ботокс от 4 500 ₽","Контурная пластика","За 20 минут"],keys:["ботокс цена","филлеры губы","биоревитализация","мезотерапия лица"]},
+  {name:"Психология",cpc:55,ctrS:5.5,ctrR:1.3,crMin:5,crMax:10,split:45,check:4000,s:[0.85,0.88,0.95,1.0,0.98,0.88,0.82,0.85,1.1,1.12,1.05,0.82],neg:["бесплатно","книга","форум"],utm:"psychology",struct:["Поиск_Психолог","РСЯ_Тревога"],hooks:["Первая сессия −50%","Онлайн и оффлайн","КПТ — доказанная методика"],keys:["психолог консультация","психолог онлайн","психологическая помощь"]},
+  {name:"Психотерапия",cpc:70,ctrS:5.2,ctrR:1.2,crMin:4,crMax:9,split:50,check:6000,s:[0.85,0.88,0.95,1.0,0.98,0.88,0.82,0.85,1.1,1.12,1.05,0.82],neg:["бесплатно","форум","книга"],utm:"psychotherapy",struct:["Поиск_Психотерапевт","Поиск_Депрессия","РСЯ_Стресс"],hooks:["Работа с тревогой, депрессией, ПА","Опыт 15 лет","Анонимно и конфиденциально"],keys:["психотерапевт консультация","лечение депрессии","панические атаки"]},
+  {name:"Наркология",cpc:130,ctrS:8.5,ctrR:1.8,crMin:7,crMax:14,split:70,check:25000,s:[0.9,0.9,0.95,0.98,0.95,0.92,0.88,0.9,1.0,1.05,1.05,0.98],neg:["бесплатно","народные"],utm:"narcology",struct:["Поиск_Вывод_Запоя","Поиск_Кодирование"],hooks:["Вывод из запоя за 1 час","Анонимно","Выезд круглосуточно"],keys:["вывод из запоя на дому","кодирование от алкоголя","нарколог на дом"]},
+  {name:"Педиатрия",cpc:55,ctrS:7.0,ctrR:1.5,crMin:7,crMax:13,split:50,check:4500,s:[0.82,0.85,0.92,1.05,1.05,0.9,0.82,0.88,1.15,1.12,1.0,0.78],neg:["бесплатно","ОМС"],utm:"pediatrics",struct:["Поиск_Педиатр","РСЯ_Мамы"],hooks:["Детский врач без очередей","Приём в день","От 1 900 ₽"],keys:["педиатр платный","детский врач запись","педиатр на дом"]},
+],
+"Ремонт и строительство":[
+  {name:"Ремонт квартир под ключ",cpc:75,ctrS:6.0,ctrR:1.1,crMin:3,crMax:6,split:55,check:400000,s:[0.72,0.75,0.95,1.1,1.12,1.08,1.0,1.0,1.08,1.1,0.92,0.68],neg:["diy","видео","своими руками"],utm:"renovation",struct:["Поиск_Ремонт_Квартир","Поиск_Дизайн","РСЯ_Новостройка"],hooks:["Ремонт под ключ — сдача в срок","Бесплатный замер и смета","Гарантия 3 года"],keys:["ремонт квартиры под ключ цена","капитальный ремонт","косметический ремонт"]},
+  {name:"Натяжные потолки",cpc:42,ctrS:7.5,ctrR:1.4,crMin:6,crMax:12,split:50,check:18000,s:[0.75,0.78,0.95,1.1,1.12,1.05,0.95,0.95,1.08,1.1,0.92,0.7],neg:["плёнку купить","сам монтаж"],utm:"stretch",struct:["Поиск_Натяжные_Потолки","РСЯ_Ремонт"],hooks:["Потолок за 1 день от 350 ₽/м²","Гарантия 15 лет","Замер — бесплатно"],keys:["натяжные потолки цена","натяжной потолок монтаж"]},
+  {name:"Сантехника",cpc:55,ctrS:7.8,ctrR:1.3,crMin:5,crMax:10,split:65,check:15000,s:[0.88,0.9,0.98,1.0,1.0,0.95,0.9,0.9,1.02,1.05,1.0,0.9],neg:["видео","сам"],utm:"plumbing",struct:["Поиск_Сантехник","Поиск_Ванна"],hooks:["Сантехник за 1 час","Без выходных","Цены фиксированы"],keys:["сантехник вызов","установка ванны цена","замена труб"]},
+  {name:"Электрика",cpc:52,ctrS:7.5,ctrR:1.2,crMin:5,crMax:10,split:65,check:12000,s:[0.88,0.88,0.98,1.0,1.0,0.95,0.9,0.9,1.02,1.05,1.0,0.9],neg:["сам","схема","видео"],utm:"electro",struct:["Поиск_Электрик","Поиск_Щиток"],hooks:["Электрик за 1 час от 800 ₽","Замена проводки под ключ","Гарантия 2 года"],keys:["электрик вызов","замена проводки цена"]},
+  {name:"Строительство домов",cpc:120,ctrS:4.5,ctrR:0.8,crMin:2,crMax:4,split:60,check:3500000,s:[0.45,0.5,0.85,1.1,1.15,1.1,1.05,1.0,1.05,0.9,0.7,0.45],neg:["проект скачать","самострой"],utm:"house",struct:["Поиск_Дом_Ключ","Поиск_Каркас","РСЯ_Загород"],hooks:["Дом под ключ за 90 дней","Гарантия 10 лет","Бесплатный проект"],keys:["строительство дома под ключ","каркасный дом цена","дом из бруса"]},
+  {name:"Клининг / Уборка",cpc:35,ctrS:8.5,ctrR:1.8,crMin:8,crMax:18,split:45,check:5000,s:[0.85,0.88,1.05,1.08,1.1,1.05,0.9,0.88,1.0,1.05,1.05,0.92],neg:["сам","средство купить"],utm:"cleaning",struct:["Поиск_Уборка","Поиск_После_Ремонта"],hooks:["Уборка за 2 часа","Первая уборка −30%","Работаем без выходных"],keys:["клининг уборка квартиры","генеральная уборка цена"]},
+],
+"Недвижимость":[
+  {name:"Риэлтор / Продажа квартир",cpc:140,ctrS:5.0,ctrR:0.8,crMin:2,crMax:4,split:60,check:250000,s:[0.7,0.75,0.95,1.1,1.12,1.02,0.88,0.88,1.08,1.1,0.9,0.68],neg:["сам продать","без риэлтора"],utm:"realtor",struct:["Поиск_Риэлтор","Поиск_Оценка","РСЯ_Переезд"],hooks:["Продадим за 30 дней","Оценка — бесплатно","0% комиссия с покупателя"],keys:["риэлтор продажа квартиры","купля продажа квартиры"]},
+  {name:"Ипотека",cpc:185,ctrS:5.5,ctrR:0.9,crMin:2,crMax:5,split:65,check:50000,s:[0.75,0.8,0.98,1.1,1.05,0.98,0.85,0.88,1.08,1.12,0.95,0.72],neg:["калькулятор сам","расчёт онлайн"],utm:"mortgage",struct:["Поиск_Ипотека","Поиск_Рефинансирование"],hooks:["Ипотека от 8.5% за 1 день","Одобрение за 2 часа","20+ банков"],keys:["ипотека на квартиру","ипотечный брокер","рефинансирование ипотеки"]},
+  {name:"Новостройки / Застройщик",cpc:200,ctrS:5.0,ctrR:0.8,crMin:1,crMax:3,split:60,check:700000,s:[0.7,0.75,0.95,1.1,1.12,1.05,0.9,0.9,1.1,1.12,0.95,0.68],neg:["б/у","вторичка"],utm:"newbuild",struct:["Поиск_Новостройки","РСЯ_Ипотека"],hooks:["Квартиры от застройщика","Рассрочка 0% до ввода","Трейд-ин"],keys:["новостройки купить квартиру","квартира от застройщика"]},
+],
+"Образование":[
+  {name:"IT-курсы / Программирование",cpc:80,ctrS:5.5,ctrR:1.1,crMin:4,crMax:8,split:45,check:45000,s:[0.82,0.85,1.05,1.08,1.05,0.92,0.75,0.88,1.15,1.12,1.0,0.78],neg:["бесплатно","ютуб","пиратский"],utm:"itcourse",struct:["Поиск_IT_Курсы","РСЯ_Студенты"],hooks:["Смени профессию за 6 месяцев","Трудоустройство — гарантия","Оплата после первой зарплаты"],keys:["курсы программирования","обучение python","курс веб разработчик"]},
+  {name:"Иностранные языки",cpc:52,ctrS:6.5,ctrR:1.3,crMin:5,crMax:10,split:45,check:20000,s:[0.75,0.78,1.0,1.08,1.05,0.85,0.7,0.88,1.2,1.18,1.0,0.75],neg:["бесплатно","дуолинго","сам"],utm:"languages",struct:["Поиск_Английский","РСЯ_Путешественники"],hooks:["Заговорите за 3 месяца","Онлайн и оффлайн"],keys:["курсы английского языка","английский онлайн"]},
+  {name:"Репетиторы / ЕГЭ",cpc:58,ctrS:7.5,ctrR:1.5,crMin:6,crMax:14,split:60,check:10000,s:[0.7,0.72,0.88,1.05,1.1,0.75,0.6,0.85,1.25,1.2,1.08,0.72],neg:["бесплатно","решебник","ответы"],utm:"tutor",struct:["Поиск_Репетитор","РСЯ_Родители"],hooks:["ЕГЭ от 90 баллов","Опыт 15 лет","Пробный урок бесплатно"],keys:["репетитор по математике","репетитор егэ","подготовка к огэ"]},
+  {name:"Автошкола",cpc:65,ctrS:7.0,ctrR:1.3,crMin:5,crMax:10,split:55,check:35000,s:[0.82,0.85,1.05,1.1,1.1,1.0,0.9,0.92,1.08,1.08,0.9,0.75],neg:["пдд бесплатно","билеты"],utm:"driving",struct:["Поиск_Автошкола","Поиск_Права"],hooks:["Права за 2 месяца","Кредит 0%","Сдача с первого раза 85%"],keys:["автошкола цена","курсы вождения","получить права"]},
+  {name:"Онлайн-школы",cpc:70,ctrS:5.8,ctrR:1.2,crMin:4,crMax:9,split:42,check:25000,s:[0.82,0.85,1.05,1.08,1.05,0.88,0.72,0.88,1.2,1.15,1.05,0.8],neg:["бесплатно","ютуб","пиратский"],utm:"online_school",struct:["Поиск_Онлайн_Школа","Поиск_Курс_Онлайн","РСЯ_Студенты"],hooks:["Обучение онлайн с нуля до результата","Сертификат государственного образца","Рассрочка 0%","Пробный урок — бесплатно"],keys:["онлайн школа обучение","дистанционные курсы","курс онлайн сертификат"]},
+],
+"Фитнес и спорт":[
+  {name:"Фитнес-клуб",cpc:48,ctrS:6.5,ctrR:1.3,crMin:5,crMax:11,split:45,check:12000,s:[1.15,1.05,1.02,0.95,1.08,0.85,0.72,0.85,1.1,1.05,0.95,0.88],neg:["бесплатно","дома"],utm:"fitness",struct:["Поиск_Фитнес","РСЯ_ЗОЖ"],hooks:["Первая неделя — бесплатно","Годовой абонемент −40%"],keys:["фитнес клуб абонемент","спортзал цена","тренажёрный зал рядом"]},
+  {name:"Персональный тренер",cpc:42,ctrS:6.8,ctrR:1.4,crMin:6,crMax:12,split:45,check:8000,s:[1.1,1.05,1.0,0.95,1.05,0.88,0.75,0.88,1.08,1.05,0.95,0.85],neg:["онлайн бесплатно","сам"],utm:"pt",struct:["Поиск_Тренер","РСЯ_Фитнес"],hooks:["Результат за 8 недель — гарантия","Онлайн и оффлайн"],keys:["персональный тренер цена","индивидуальные тренировки"]},
+  {name:"Йога / Пилатес",cpc:32,ctrS:7.0,ctrR:1.5,crMin:7,crMax:15,split:40,check:6000,s:[1.05,1.0,1.0,0.98,1.0,0.92,0.82,0.88,1.1,1.08,0.98,0.88],neg:["ютуб","дома","бесплатно"],utm:"yoga",struct:["Поиск_Йога","РСЯ_Женщины"],hooks:["Первое занятие — бесплатно","Группы до 10 человек"],keys:["йога студия цена","занятия йогой","пилатес запись"]},
+  {name:"Единоборства",cpc:35,ctrS:6.5,ctrR:1.3,crMin:5,crMax:11,split:48,check:7000,s:[0.92,0.95,1.0,1.02,1.05,0.9,0.8,0.88,1.1,1.1,1.0,0.82],neg:["бесплатно","ютуб"],utm:"martial",struct:["Поиск_Бокс","РСЯ_Спорт"],hooks:["Первое занятие — бесплатно","Мастер спорта"],keys:["секция бокса","мма тренировки","карате для детей"]},
+],
+"Красота и салоны":[
+  {name:"Маникюр и педикюр",cpc:28,ctrS:8.0,ctrR:1.8,crMin:8,crMax:18,split:38,check:3500,s:[0.85,0.88,1.0,1.05,1.12,1.0,0.92,0.95,1.05,1.08,1.08,1.0],neg:["купить","обучение"],utm:"nails",struct:["Поиск_Маникюр","РСЯ_Женщины"],hooks:["Маникюр с покрытием от 1 200 ₽","Держится 3 недели"],keys:["маникюр цена","педикюр запись","гель лак маникюр"]},
+  {name:"Наращивание ресниц",cpc:32,ctrS:7.5,ctrR:1.6,crMin:7,crMax:16,split:38,check:4000,s:[0.85,0.9,1.02,1.08,1.12,1.0,0.9,0.95,1.08,1.1,1.05,0.98],neg:["клей купить","обучение"],utm:"lashes",struct:["Поиск_Ресницы","РСЯ_Красота"],hooks:["Ресницы, которые заметят все","Коррекция через 3 недели"],keys:["наращивание ресниц цена","ресницы запись"]},
+  {name:"Парикмахерская",cpc:22,ctrS:8.5,ctrR:2.0,crMin:8,crMax:20,split:35,check:2500,s:[0.88,0.9,1.0,1.05,1.1,1.0,0.92,0.95,1.05,1.08,1.05,0.98],neg:["дома","ножницы"],utm:"hair",struct:["Поиск_Парикмахерская","РСЯ_Красота"],hooks:["Стрижка от 900 ₽","Топ-стилист"],keys:["парикмахерская запись","стрижка цена","окрашивание волос"]},
+  {name:"Лазерная эпиляция",cpc:48,ctrS:6.8,ctrR:1.3,crMin:6,crMax:12,split:42,check:8000,s:[0.82,0.88,1.05,1.12,1.18,1.08,0.95,0.95,1.02,1.05,0.95,0.82],neg:["крем купить","дома"],utm:"epil",struct:["Поиск_ЛЭ","Поиск_Шугаринг"],hooks:["Навсегда — диодный лазер","Пробная зона бесплатно"],keys:["лазерная эпиляция цена","шугаринг цена"]},
+  {name:"Перманентный макияж",cpc:55,ctrS:6.5,ctrR:1.3,crMin:5,crMax:10,split:42,check:12000,s:[0.85,0.9,1.0,1.08,1.1,0.98,0.88,0.92,1.08,1.1,1.02,0.9],neg:["обучение","оборудование"],utm:"pmu",struct:["Поиск_Брови","Поиск_Губы"],hooks:["Брови на 2 года","Мастер с 500+ работами"],keys:["перманентный макияж бровей","татуаж бровей цена","пудровые брови"]},
+],
+"Юридические услуги":[
+  {name:"Семейные споры / Развод",cpc:95,ctrS:7.0,ctrR:1.2,crMin:4,crMax:8,split:62,check:30000,s:[0.85,0.88,1.0,1.05,1.05,1.0,0.92,0.92,1.05,1.08,1.0,0.85],neg:["бесплатно","форум","сам"],utm:"divorce",struct:["Поиск_Развод","Поиск_Алименты"],hooks:["Развод без суда за 30 дней","Первая консультация бесплатно"],keys:["юрист по разводу","раздел имущества","алименты взыскать"]},
+  {name:"Гражданский юрист",cpc:85,ctrS:6.5,ctrR:1.1,crMin:4,crMax:8,split:60,check:25000,s:[0.85,0.88,1.0,1.05,1.05,1.0,0.92,0.92,1.05,1.08,1.0,0.85],neg:["бесплатно","шаблон","форум"],utm:"civil",struct:["Поиск_Гражданский_Юрист","РСЯ_Споры"],hooks:["Защита ваших прав в суде","Первая консультация бесплатно","Оплата по результату"],keys:["гражданский юрист","подать иск в суд","защита прав потребителя"]},
+  {name:"Банкротство физлиц",cpc:110,ctrS:7.5,ctrR:1.4,crMin:5,crMax:10,split:65,check:100000,s:[0.82,0.85,1.0,1.05,1.05,1.0,0.92,0.92,1.05,1.1,1.02,0.85],neg:["сам","закон скачать"],utm:"bankrupt",struct:["Поиск_Банкротство","Поиск_Долги"],hooks:["Спишем долги за 8 мес","Рассрочка на услуги"],keys:["банкротство физических лиц","списание долгов"]},
+  {name:"Уголовный адвокат",cpc:165,ctrS:6.5,ctrR:1.0,crMin:3,crMax:6,split:70,check:80000,s:[0.88,0.88,0.98,1.02,1.02,1.0,0.95,0.95,1.05,1.08,1.02,0.9],neg:["бесплатно","онлайн"],utm:"criminal",struct:["Поиск_Адвокат","Поиск_Задержан"],hooks:["Адвокат через 30 минут","24/7 конфиденциально"],keys:["уголовный адвокат","адвокат по уголовным делам"]},
+  {name:"Юрист для бизнеса",cpc:120,ctrS:4.5,ctrR:0.7,crMin:2,crMax:4,split:65,check:50000,s:[0.82,0.85,1.0,1.05,1.05,0.98,0.9,0.9,1.08,1.1,1.02,0.8],neg:["бесплатно","шаблон"],utm:"bizlaw",struct:["Поиск_Юрист_Бизнес","Поиск_ООО"],hooks:["Юрист без найма в штат","Регистрация ООО за 1 день"],keys:["юрист для бизнеса","регистрация ООО"]},
+],
+"Авто":[
+  {name:"Автосервис / СТО",cpc:55,ctrS:7.5,ctrR:1.4,crMin:6,crMax:12,split:62,check:12000,s:[0.85,0.88,1.05,1.1,1.08,1.0,0.92,0.92,1.05,1.08,1.0,0.88],neg:["сам","видео"],utm:"sto",struct:["Поиск_СТО","РСЯ_Авто"],hooks:["Диагностика — бесплатно","Ремонт за 1 день"],keys:["автосервис рядом","ремонт автомобиля","сто запись"]},
+  {name:"Шиномонтаж",cpc:32,ctrS:9.0,ctrR:1.8,crMin:8,crMax:20,split:65,check:4000,s:[0.38,0.38,0.42,0.72,0.75,0.55,0.45,0.45,0.75,1.4,1.3,0.5],neg:["купить шины","б/у"],utm:"tire",struct:["Поиск_Шиномонтаж","Поиск_Хранение"],hooks:["За 30 минут","Хранение от 1 200 ₽"],keys:["шиномонтаж рядом","замена резины цена"]},
+  {name:"Автовыкуп",cpc:90,ctrS:6.5,ctrR:1.2,crMin:4,crMax:8,split:62,check:50000,s:[0.82,0.85,1.0,1.08,1.1,1.02,0.92,0.92,1.05,1.08,0.95,0.78],neg:["сам продать","авито"],utm:"buyout",struct:["Поиск_Автовыкуп","Поиск_Срочно"],hooks:["Деньги за 1 час","Цена выше рынка на 5%"],keys:["автовыкуп срочно","продать авто срочно"]},
+  {name:"Пригон авто из-за границы",cpc:110,ctrS:5.8,ctrR:0.9,crMin:3,crMax:6,split:65,check:200000,s:[0.75,0.78,0.98,1.1,1.15,1.1,1.05,1.05,1.05,1.0,0.85,0.72],neg:["самому","форум"],utm:"carimport",struct:["Поиск_Пригон_Авто","Поиск_Авто_Корея","Поиск_Авто_Китай"],hooks:["Из Кореи/Китая под ключ","Растаможка включена","Экономия до 30% vs дилер"],keys:["пригон авто из кореи","автомобили из китая","параллельный импорт авто"]},
+  {name:"Автомойка / Детейлинг",cpc:28,ctrS:8.5,ctrR:1.8,crMin:8,crMax:20,split:50,check:3000,s:[0.78,0.78,1.08,1.15,1.15,1.05,0.98,0.98,1.05,1.08,0.92,0.78],neg:["сам"],utm:"wash",struct:["Поиск_Мойка","Поиск_Детейлинг"],hooks:["Мойка за 500 ₽","Детейлинг от 5 000 ₽"],keys:["автомойка рядом","детейлинг цена"]},
+  {name:"Страхование КАСКО/ОСАГО",cpc:45,ctrS:8.5,ctrR:1.6,crMin:6,crMax:14,split:60,check:15000,s:[0.88,0.9,1.0,1.05,1.05,1.0,0.9,0.9,1.05,1.1,1.02,0.9],neg:["сам онлайн"],utm:"osago",struct:["Поиск_ОСАГО","Поиск_КАСКО"],hooks:["ОСАГО за 10 минут","Дешевле прямых тарифов"],keys:["осаго купить онлайн","каско дешево"]},
+],
+"IT и технологии":[
+  {name:"Разработка сайтов",cpc:95,ctrS:5.5,ctrR:1.0,crMin:3,crMax:7,split:55,check:120000,s:[0.85,0.88,1.0,1.05,1.05,0.98,0.88,0.88,1.1,1.1,1.02,0.82],neg:["конструктор бесплатно","тильда сам"],utm:"webdev",struct:["Поиск_Разработка","Поиск_Лендинг"],hooks:["Сайт за 14 дней — гарантия","Конверсия +30%"],keys:["разработка сайта цена","создание сайта","лендинг заказать"]},
+  {name:"SEO-продвижение",cpc:85,ctrS:5.0,ctrR:0.9,crMin:2,crMax:5,split:55,check:40000,s:[0.85,0.88,1.0,1.05,1.05,0.98,0.88,0.88,1.1,1.1,1.02,0.82],neg:["сам","шаблон"],utm:"seo",struct:["Поиск_SEO","Поиск_Аудит"],hooks:["Топ-10 за 3 месяца","Отчёт еженедельно"],keys:["seo продвижение сайта","раскрутка сайта"]},
+  {name:"Контекстная реклама",cpc:100,ctrS:5.5,ctrR:1.0,crMin:3,crMax:6,split:55,check:30000,s:[0.85,0.88,1.0,1.05,1.05,0.98,0.88,0.88,1.1,1.1,1.02,0.82],neg:["бесплатно","сам"],utm:"context",struct:["Поиск_Директ","РСЯ_Маркетинг"],hooks:["ROI рекламы ×3 — гарантия","Без % от бюджета"],keys:["настройка яндекс директ","контекстная реклама цена"]},
+  {name:"CRM и автоматизация",cpc:120,ctrS:4.5,ctrR:0.8,crMin:2,crMax:5,split:55,check:80000,s:[0.82,0.85,1.0,1.05,1.05,0.98,0.88,0.88,1.1,1.12,1.05,0.82],neg:["бесплатно","что такое"],utm:"crm",struct:["Поиск_CRM","Поиск_Bitrix"],hooks:["CRM под ключ за 7 дней","Обучение включено"],keys:["внедрение crm","bitrix24 настройка"]},
+],
+"Туризм":[
+  {name:"Турагентство",cpc:60,ctrS:6.8,ctrR:1.3,crMin:5,crMax:10,split:48,check:75000,s:[0.72,0.78,0.95,1.05,1.2,1.25,1.2,1.15,1.05,0.85,0.72,0.8],neg:["самостоятельно","советы форум"],utm:"agency",struct:["Поиск_Турагентство","Поиск_Путёвки","РСЯ_Путешественники"],hooks:["Подберём тур за 30 минут","Лучшая цена — гарантируем","Страховка в подарок"],keys:["турагентство туры","купить путёвку","туристическое агентство"]},
+  {name:"Туры и путёвки",cpc:55,ctrS:7.0,ctrR:1.3,crMin:5,crMax:10,split:45,check:80000,s:[0.72,0.78,0.95,1.05,1.2,1.25,1.2,1.15,1.05,0.85,0.72,0.8],neg:["сам","советы"],utm:"tours",struct:["Поиск_Туры","Поиск_Горящие","РСЯ_Путешественники"],hooks:["Тур в рассрочку","Горящие от 25 000 ₽"],keys:["туры в турцию","путёвка египет","купить тур онлайн"]},
+  {name:"Визовый центр",cpc:65,ctrS:7.5,ctrR:1.4,crMin:5,crMax:10,split:60,check:12000,s:[0.72,0.78,0.98,1.05,1.2,1.15,1.12,1.1,1.08,0.88,0.78,0.78],neg:["сам","бесплатная"],utm:"visa",struct:["Поиск_Виза","Поиск_Визовый"],hooks:["Виза за 3 дня","Поможем при отказе"],keys:["визовый центр","оформление визы","виза шенген"]},
+],
+"Детские услуги":[
+  {name:"Частный детский сад",cpc:55,ctrS:6.5,ctrR:1.3,crMin:4,crMax:9,split:45,check:30000,s:[0.72,0.75,0.92,1.1,1.1,0.85,0.72,0.85,1.25,1.2,1.0,0.72],neg:["бесплатно","ОМС","гос"],utm:"kinder",struct:["Поиск_Садик","РСЯ_Мамы"],hooks:["Группа 8 детей","Питание 5 раз","Пробный день бесплатно"],keys:["частный детский сад","садик для детей"]},
+  {name:"Организация детских праздников",cpc:38,ctrS:8.0,ctrR:1.6,crMin:7,crMax:15,split:45,check:25000,s:[0.65,0.7,0.85,1.0,1.1,1.05,0.9,0.85,0.95,1.0,1.05,1.15],neg:["сам","сценарий бесплатно"],utm:"kidsparty",struct:["Поиск_Детский_Праздник","Поиск_Аниматоры","РСЯ_Родители"],hooks:["Праздник под ключ от 8 000 ₽","Аниматоры — педагоги","Фото + видео в подарок"],keys:["аниматоры на детский праздник","организация дня рождения ребёнка"]},
+  {name:"Развивашки / Подготовка к школе",cpc:32,ctrS:7.5,ctrR:1.5,crMin:6,crMax:13,split:42,check:8000,s:[0.78,0.8,0.95,1.1,1.1,0.88,0.72,0.88,1.25,1.2,1.05,0.78],neg:["бесплатно","дома"],utm:"preschool",struct:["Поиск_Развивашки","Поиск_Подготовка_Школа"],hooks:["Программа 9 месяцев","Монтессори","Первое занятие бесплатно"],keys:["подготовка к школе","развивающие занятия для детей"]},
+  {name:"Детские кружки",cpc:28,ctrS:7.5,ctrR:1.5,crMin:6,crMax:14,split:40,check:5500,s:[0.72,0.75,0.92,1.1,1.1,0.85,0.72,0.85,1.25,1.2,1.0,0.72],neg:["бесплатно","ютуб","дома"],utm:"circles",struct:["Поиск_Кружки","РСЯ_Родители"],hooks:["Рисование, лепка, музыка — всё","Первый месяц −20%"],keys:["кружки для детей","рисование для детей"]},
+  {name:"Детские спортивные секции",cpc:30,ctrS:7.2,ctrR:1.4,crMin:6,crMax:13,split:42,check:6000,s:[0.75,0.78,0.95,1.08,1.1,0.88,0.78,0.88,1.2,1.18,1.02,0.75],neg:["бесплатно","дворовая"],utm:"kidsport",struct:["Поиск_Секция","РСЯ_Родители"],hooks:["С 3 лет — плавание, гимнастика, футбол","Пробное занятие бесплатно"],keys:["спортивная секция для детей","детское плавание"]},
+  {name:"Логопед / Дефектолог",cpc:38,ctrS:7.0,ctrR:1.4,crMin:6,crMax:12,split:50,check:5000,s:[0.78,0.8,0.95,1.08,1.1,0.88,0.72,0.85,1.2,1.18,1.05,0.78],neg:["бесплатно","ОМС","сам"],utm:"speech",struct:["Поиск_Логопед","РСЯ_Родители"],hooks:["Исправим речь за 3 мес","Первичная консультация бесплатно"],keys:["логопед для ребёнка","занятия с логопедом"]},
+  {name:"Детский лагерь",cpc:42,ctrS:6.5,ctrR:1.3,crMin:5,crMax:10,split:45,check:45000,s:[0.35,0.38,0.55,0.88,1.2,1.25,1.2,0.95,0.55,0.38,0.32,0.32],neg:["бесплатно","ОМС"],utm:"camp",struct:["Поиск_Лагерь","РСЯ_Родители"],hooks:["Смена на море от 35 000 ₽","Ранняя запись −15%"],keys:["детский лагерь путёвка","летний лагерь для детей"]},
+],
+"Ветеринария":[
+  {name:"Ветеринарная клиника",cpc:52,ctrS:7.5,ctrR:1.4,crMin:6,crMax:12,split:58,check:5000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.95,0.95,1.05,1.08,1.02,0.92],neg:["бесплатно","дома","народные"],utm:"vet",struct:["Поиск_Ветклиника","РСЯ_Питомцы"],hooks:["Приём без записи 7 дней","УЗИ, рентген на месте"],keys:["ветеринарная клиника","ветеринар срочно","вызов ветеринара на дом"]},
+  {name:"Груминг",cpc:28,ctrS:7.8,ctrR:1.6,crMin:6,crMax:14,split:42,check:2500,s:[0.85,0.88,1.05,1.1,1.12,1.05,1.0,1.0,1.05,1.05,0.95,0.88],neg:["самому","дома"],utm:"grooming",struct:["Поиск_Груминг","РСЯ_Собаки"],hooks:["Стрижка от 800 ₽","Приезжаем домой"],keys:["груминг собак цена","стрижка кошек"]},
+  {name:"Отель для животных",cpc:32,ctrS:7.5,ctrR:1.5,crMin:6,crMax:14,split:45,check:2000,s:[0.8,0.82,0.98,1.05,1.2,1.25,1.2,1.18,1.05,0.88,0.8,0.82],neg:["бесплатно","частная"],utm:"pethotel",struct:["Поиск_Передержка","Поиск_Отель_Кошек"],hooks:["Ваш питомец как дома","Видеотрансляция 24/7"],keys:["передержка собак цена","зоогостиница","отель для кошек"]},
+],
+"Грузоперевозки":[
+  {name:"Газель / Грузовое такси",cpc:40,ctrS:8.5,ctrR:1.8,crMin:8,crMax:18,split:65,check:4000,s:[0.88,0.88,1.05,1.1,1.1,1.05,1.0,1.0,1.05,1.05,0.95,0.88],neg:["сам","купить"],utm:"gazelle",struct:["Поиск_Газель","Поиск_Переезд"],hooks:["Газель с грузчиками от 1 200 ₽/час","Диспетчер 24/7"],keys:["газель с грузчиками","грузовое такси"]},
+  {name:"Переезд квартиры / Офиса",cpc:38,ctrS:8.0,ctrR:1.6,crMin:6,crMax:14,split:60,check:15000,s:[0.75,0.78,1.05,1.12,1.12,1.05,0.95,0.95,1.1,1.1,0.92,0.72],neg:["сам","аренда авто"],utm:"moving",struct:["Поиск_Переезд","Поиск_Переезд_Офис"],hooks:["Переезд за 1 день","Страховка грузов"],keys:["переезд квартиры цена","грузчики переезда"]},
+],
+"Свадьба и события":[
+  {name:"Свадебное агентство",cpc:58,ctrS:5.5,ctrR:1.0,crMin:3,crMax:7,split:45,check:300000,s:[0.38,0.45,0.72,0.95,1.1,1.2,1.15,1.1,1.05,0.85,0.62,0.38],neg:["сам","сценарий"],utm:"wedding",struct:["Поиск_Свадьба","РСЯ_Помолвленные"],hooks:["Свадьба под ключ","Консультация бесплатно"],keys:["свадебное агентство","организация свадьбы","тамада на свадьбу"]},
+  {name:"Фотограф / Видеооператор",cpc:42,ctrS:7.0,ctrR:1.3,crMin:5,crMax:10,split:42,check:40000,s:[0.38,0.42,0.72,0.95,1.1,1.2,1.18,1.12,1.05,0.85,0.62,0.38],neg:["бесплатно","любитель"],utm:"photo",struct:["Поиск_Фотограф","РСЯ_Свадьба"],hooks:["500+ свадеб в портфолио","Фото + видео"],keys:["свадебный фотограф цена","видеооператор свадьба"]},
+  {name:"Корпоративные мероприятия",cpc:80,ctrS:5.0,ctrR:0.9,crMin:2,crMax:5,split:55,check:250000,s:[0.55,0.65,0.82,0.95,0.98,0.9,0.82,0.85,1.05,1.15,1.2,0.65],neg:["бесплатно","сами"],utm:"corp",struct:["Поиск_Корпоратив","Поиск_Тимбилдинг"],hooks:["От 50 человек под ключ","Фотоальбом в подарок"],keys:["организация корпоратива","тимбилдинг мероприятие"]},
+],
+"Барбершоп":[
+  {name:"Барбершоп / Мужские стрижки",cpc:30,ctrS:8.2,ctrR:1.7,crMin:7,crMax:16,split:40,check:2200,s:[0.92,0.92,1.0,1.05,1.1,1.05,1.0,1.0,1.05,1.08,1.05,0.95],neg:["дома","машинка","ножницы"],utm:"barber",struct:["Поиск_Барбершоп","Поиск_Стрижка","РСЯ_Мужчины"],hooks:["Стрижка + борода от 900 ₽","Запись онлайн за 1 минуту","Виски в зале"],keys:["барбершоп запись","мужская стрижка цена","стрижка бороды"]},
+],
+"SMM и маркетинг":[
+  {name:"SMM продвижение",cpc:75,ctrS:5.0,ctrR:0.9,crMin:3,crMax:7,split:50,check:35000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.92,0.92,1.08,1.1,1.02,0.85],neg:["бесплатно","сам","шаблон"],utm:"smm",struct:["Поиск_SMM","Поиск_Инстаграм"],hooks:["Ведение соцсетей от 15 000 ₽","Рост подписчиков"],keys:["smm продвижение","ведение инстаграм"]},
+  {name:"Таргетированная реклама",cpc:85,ctrS:5.2,ctrR:1.0,crMin:3,crMax:7,split:52,check:30000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.92,0.92,1.08,1.1,1.02,0.85],neg:["бесплатно","сам"],utm:"target",struct:["Поиск_Таргет","РСЯ_Маркетологи"],hooks:["Таргет ВК и Инстаграм","Лиды от 300 ₽"],keys:["таргетированная реклама вк","таргет инстаграм"]},
+],
+"Wellness и ЗОЖ":[
+  {name:"Массаж и SPA",cpc:38,ctrS:7.0,ctrR:1.4,crMin:6,crMax:14,split:40,check:5000,s:[0.88,0.9,1.0,1.05,1.05,1.0,0.92,0.92,1.05,1.08,1.05,0.95],neg:["дома","обучение"],utm:"massage",struct:["Поиск_Массаж","РСЯ_Релакс"],hooks:["Антистресс 60 мин — 2 500 ₽","Первый визит −20%"],keys:["массаж цена","записаться на массаж","расслабляющий массаж"]},
+  {name:"Нутрициология",cpc:45,ctrS:6.0,ctrR:1.3,crMin:5,crMax:10,split:42,check:10000,s:[1.05,1.0,1.02,1.0,1.0,0.9,0.82,0.85,1.0,1.05,1.0,0.9],neg:["бесплатно","рецепты","сам"],utm:"nutrition",struct:["Поиск_Нутрициолог","РСЯ_ЗОЖ"],hooks:["Индивидуальный план питания","Минус 5 кг за месяц"],keys:["нутрициолог онлайн","консультация диетолога"]},
+],
+"Цветы и флористика":[
+  {name:"Доставка цветов",cpc:55,ctrS:8.5,ctrR:1.8,crMin:8,crMax:18,split:50,check:4500,s:[0.88,1.8,3.0,1.1,1.3,0.82,0.80,0.82,1.6,0.88,0.88,1.25],neg:["искусственные","пластик","дёшево"],utm:"flowers",struct:["Поиск_Доставка_Цветов","Поиск_Букет","РСЯ_Мужчины"],hooks:["Доставка за 60 минут","Букет от 990 ₽","Доставка 24/7"],keys:["доставка цветов","букет с доставкой","цветы срочно"]},
+  {name:"Флористика на заказ",cpc:42,ctrS:7.2,ctrR:1.5,crMin:6,crMax:14,split:45,check:8000,s:[0.88,1.7,2.8,1.1,1.25,0.85,0.82,0.82,1.5,0.9,0.9,1.2],neg:["искусственные","пластик","сам"],utm:"florist",struct:["Поиск_Флорист","Поиск_Авторский_Букет"],hooks:["Авторские букеты от флориста","Монобукеты и композиции"],keys:["флорист заказать","авторский букет"]},
+  {name:"Свадебная флористика",cpc:60,ctrS:5.5,ctrR:1.0,crMin:3,crMax:7,split:48,check:60000,s:[0.4,0.48,0.85,1.1,1.3,1.4,1.35,1.2,1.05,0.82,0.58,0.42],neg:["сам","мастер класс"],utm:"weddingflowers",struct:["Поиск_Свадебная_Флористика"],hooks:["Свадебная флористика под ключ","Букет невесты + бутоньерка"],keys:["букет невесты заказать","свадебная флористика цена"]},
+],
+"Еда и рестораны":[
+  {name:"Доставка еды",cpc:35,ctrS:9.0,ctrR:2.0,crMin:8,crMax:20,split:45,check:2500,s:[0.92,0.92,0.95,0.98,1.0,1.02,1.05,1.05,1.0,0.98,1.0,1.08],neg:["рецепт","самому","купить продукты"],utm:"food",struct:["Поиск_Доставка","Поиск_Пицца","РСЯ_Голодные"],hooks:["Доставка за 45 минут","Первый заказ −20%"],keys:["доставка еды на дом","заказать еду","еда с доставкой"]},
+  {name:"Суши / Роллы",cpc:40,ctrS:8.5,ctrR:1.8,crMin:7,crMax:18,split:45,check:2800,s:[0.9,0.9,0.95,0.98,1.0,1.02,1.05,1.05,1.0,0.98,1.0,1.05],neg:["рецепт","готовить дома"],utm:"sushi",struct:["Поиск_Суши","Поиск_Роллы","РСЯ_Японская"],hooks:["Роллы от 80 ₽ — за 45 мин","Акция 2 по цене 1"],keys:["суши доставка","роллы заказать","японская кухня доставка"]},
+  {name:"Пицца",cpc:32,ctrS:9.0,ctrR:2.0,crMin:8,crMax:20,split:45,check:2000,s:[0.92,0.92,0.95,0.98,1.0,1.02,1.05,1.05,1.0,0.98,1.0,1.1],neg:["рецепт","тесто дома"],utm:"pizza",struct:["Поиск_Пицца","РСЯ_Голодные"],hooks:["За 30 минут — или бесплатно","От 350 ₽"],keys:["пицца доставка","заказать пиццу","пицца на дом"]},
+  {name:"Кейтеринг",cpc:65,ctrS:5.5,ctrR:0.9,crMin:2,crMax:6,split:55,check:80000,s:[0.75,0.78,0.88,0.95,1.0,1.05,1.05,1.05,1.05,1.05,1.1,0.88],neg:["самому приготовить","рецепт"],utm:"catering",struct:["Поиск_Кейтеринг","РСЯ_HR"],hooks:["От 50 человек","Шеф-повар выезжает","Посуда включена"],keys:["кейтеринг на мероприятие","выездное питание"]},
+],
+"Сертификация продукции":[
+  {name:"Сертификация (ГОСТ, ТР ТС)",cpc:95,ctrS:6.2,ctrR:0.9,crMin:3,crMax:6,split:65,check:50000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.95,0.95,1.05,1.08,1.02,0.9],neg:["бесплатно","самому","что такое"],utm:"cert",struct:["Поиск_Сертификат","Поиск_ТР_ТС"],hooks:["Сертификат ТР ТС за 5 дней","Гарантия выдачи","Аккредитация Росстандарт"],keys:["сертификация продукции","сертификат соответствия","тр тс сертификат"]},
+  {name:"Декларирование соответствия",cpc:85,ctrS:6.0,ctrR:0.9,crMin:3,crMax:6,split:65,check:35000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.95,0.95,1.05,1.08,1.02,0.9],neg:["бесплатно","шаблон"],utm:"decl",struct:["Поиск_Декларация"],hooks:["Декларация за 3 дня","Реестровая запись ФСА"],keys:["декларация соответствия оформить"]},
+  {name:"Нотификация",cpc:75,ctrS:5.5,ctrR:0.8,crMin:2,crMax:5,split:65,check:40000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.95,0.95,1.05,1.08,1.02,0.9],neg:["бесплатно","что такое"],utm:"notif",struct:["Поиск_Нотификация","Поиск_ФСТЭК"],hooks:["Нотификация ФСБ/ФСТЭК под ключ","Срок от 10 дней"],keys:["нотификация фсб","нотификация фстэк"]},
+  {name:"Маркировка товаров",cpc:70,ctrS:6.0,ctrR:0.9,crMin:3,crMax:6,split:65,check:25000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.95,0.95,1.05,1.08,1.02,0.9],neg:["бесплатно","шаблон"],utm:"marking",struct:["Поиск_Маркировка"],hooks:["Честный Знак под ключ","За 3 дня"],keys:["маркировка товаров честный знак","регистрация честный знак"]},
+],
+"Дача, сад и огород":[
+  {name:"Теплицы и парники",cpc:45,ctrS:6.5,ctrR:1.2,crMin:4,crMax:9,split:55,check:35000,s:[0.3,0.4,0.85,1.2,1.25,1.1,0.9,0.85,0.9,0.75,0.4,0.25],neg:["своими руками","чертёж","сам построить"],utm:"greenhouse",struct:["Поиск_Теплица","Поиск_Теплица_Поликарбонат"],hooks:["Теплица под ключ за 2 дня","Поликарбонат с гарантией 10 лет","Любые размеры по вашим меркам"],keys:["теплица из поликарбоната цена","купить теплицу","теплица под ключ","парник монтаж"]},
+  {name:"Рассада и семена",cpc:22,ctrS:7.0,ctrR:1.5,crMin:6,crMax:14,split:40,check:2500,s:[0.2,0.3,0.95,1.4,1.35,1.1,0.8,0.7,0.85,0.7,0.3,0.15],neg:["своими руками","бесплатно","скачать"],utm:"seedlings",struct:["Поиск_Рассада","Поиск_Семена_Огород","РСЯ_Дачники"],hooks:["Рассада из питомника — без болезней","Сорта с гарантией всхожести 95%+","Доставка по всей России"],keys:["рассада томатов купить","семена овощей","рассада перца огурцов"]},
+  {name:"Системы полива",cpc:55,ctrS:6.0,ctrR:1.0,crMin:3,crMax:7,split:58,check:45000,s:[0.25,0.3,0.75,1.15,1.3,1.2,1.1,1.05,0.95,0.75,0.35,0.2],neg:["своими руками","схема бесплатно"],utm:"irrigation",struct:["Поиск_Капельный_Полив","Поиск_Автополив","РСЯ_Дача_Огород"],hooks:["Автополив под ключ за 1 день","Экономия воды 50%","Проектирование — бесплатно"],keys:["система капельного полива","автоматический полив участка","автополив монтаж"]},
+  {name:"Садовая техника",cpc:35,ctrS:7.0,ctrR:1.3,crMin:5,crMax:11,split:50,check:20000,s:[0.3,0.35,0.85,1.25,1.3,1.15,1.05,1.0,0.95,0.75,0.35,0.2],neg:["б/у","ремонт самому","инструкция"],utm:"garden_tech",struct:["Поиск_Газонокосилка","Поиск_Культиватор","РСЯ_Садоводы"],hooks:["Техника для сада с доставкой","Гарантийный сервис","Рассрочка 0%"],keys:["газонокосилка купить","культиватор цена","садовая техника интернет магазин"]},
+  {name:"Товары для дачи",cpc:28,ctrS:7.5,ctrR:1.5,crMin:5,crMax:12,split:45,check:8000,s:[0.3,0.35,0.9,1.3,1.3,1.15,1.05,1.0,0.9,0.7,0.3,0.2],neg:["своими руками","чертёж","бесплатно"],utm:"dacha_goods",struct:["Поиск_Товары_Дача","РСЯ_Дачники"],hooks:["Всё для дачи с доставкой","Каталог 5 000+ позиций","Оптовые цены"],keys:["товары для дачи интернет магазин","дачные товары с доставкой","инструменты для огорода"]},
+],
+"Дизайн":[
+  {name:"Дизайн интерьера",cpc:75,ctrS:5.5,ctrR:1.0,crMin:3,crMax:7,split:52,check:180000,s:[0.72,0.78,0.95,1.1,1.12,1.05,0.95,0.95,1.08,1.1,0.92,0.7],neg:["своими руками","идеи бесплатно","шаблон"],utm:"interior",struct:["Поиск_Дизайн_Интерьера","Поиск_Дизайнер","РСЯ_Ремонт_Новостройка"],hooks:["Дизайн-проект за 14 дней","3D-визуализация каждой комнаты","Авторский надзор за ремонтом","Бесплатная консультация"],keys:["дизайн интерьера квартиры","дизайнер интерьера цена","дизайн проект заказать"]},
+  {name:"Ландшафтный дизайн",cpc:55,ctrS:5.5,ctrR:1.0,crMin:3,crMax:6,split:52,check:150000,s:[0.3,0.35,0.7,1.1,1.25,1.2,1.15,1.1,1.05,0.8,0.5,0.3],neg:["своими руками","план бесплатно"],utm:"landscape",struct:["Поиск_Ландшафт","Поиск_Дизайн_Участка"],hooks:["Проект участка за 5 дней","3D-визуализация включена"],keys:["ландшафтный дизайн участка","дизайн сада","озеленение участка"]},
+  {name:"Графический дизайн",cpc:50,ctrS:5.8,ctrR:1.0,crMin:3,crMax:8,split:48,check:25000,s:[0.88,0.9,1.0,1.05,1.05,1.0,0.9,0.9,1.08,1.1,1.02,0.88],neg:["бесплатно","сам","шаблон"],utm:"graphic",struct:["Поиск_Графический_Дизайн","Поиск_Логотип","РСЯ_Бизнес"],hooks:["Логотип + фирменный стиль за 5 дней","Портфолио 500+ проектов","Правки включены","Исходники в подарок"],keys:["графический дизайнер заказать","создание логотипа","фирменный стиль разработка"]},
+  {name:"Веб-дизайн / UI-UX",cpc:90,ctrS:5.0,ctrR:0.9,crMin:2,crMax:6,split:55,check:80000,s:[0.85,0.88,1.0,1.05,1.05,0.98,0.88,0.88,1.1,1.1,1.02,0.82],neg:["шаблон","конструктор","сам"],utm:"uxui",struct:["Поиск_UX_Дизайн","Поиск_Веб_Дизайнер","РСЯ_IT"],hooks:["UX-аудит бесплатно","Прототип за 3 дня","Дизайн, который продаёт"],keys:["ux ui дизайн заказать","веб дизайнер цена","дизайн интерфейса"]},
+  {name:"3D-визуализация",cpc:65,ctrS:5.5,ctrR:1.0,crMin:3,crMax:7,split:52,check:40000,s:[0.82,0.85,1.0,1.05,1.05,0.98,0.9,0.9,1.08,1.1,1.0,0.8],neg:["бесплатно","шаблон","сам"],utm:"viz3d",struct:["Поиск_3D_Визуализация","Поиск_Архитектурная_Визуализация"],hooks:["Фотореалистичная 3D за 3 дня","Для интерьера, экстерьера, продукта","Правки включены"],keys:["3d визуализация цена","архитектурная визуализация","3д рендер заказать"]},
+],
+"Аптеки":[
+  {name:"Онлайн-аптека / Доставка лекарств",cpc:55,ctrS:8.0,ctrR:1.6,crMin:7,crMax:15,split:55,check:2500,s:[1.05,1.02,0.98,0.95,0.92,0.9,0.88,0.9,0.98,1.05,1.1,1.15],neg:["рецепт","состав","инструкция скачать"],utm:"pharmacy_delivery",struct:["Поиск_Аптека_Доставка","Поиск_Лекарства_Онлайн","РСЯ_Здоровье"],hooks:["Доставка лекарств за 1 час","15 000+ препаратов в наличии","Цены как в аптеке"],keys:["доставка лекарств на дом","аптека онлайн заказ","купить лекарства с доставкой"]},
+  {name:"Аптека / Фармтовары",cpc:40,ctrS:8.5,ctrR:1.7,crMin:8,crMax:18,split:50,check:1800,s:[1.05,1.02,0.98,0.95,0.92,0.9,0.88,0.9,0.98,1.05,1.1,1.15],neg:["рецепт бесплатно","состав изучить"],utm:"pharmacy",struct:["Поиск_Аптека_Рядом","РСЯ_Болезни"],hooks:["Аптека открыта 24/7","Скидки по карте лояльности","Заказ онлайн — готово за 30 мин"],keys:["аптека рядом круглосуточно","где купить лекарство","аптека цена препарата"]},
+],
+"Маркетплейсы и селлеры":[
+  {name:"Выход на Wildberries",cpc:110,ctrS:4.5,ctrR:0.8,crMin:2,crMax:5,split:58,check:80000,s:[0.9,0.88,1.0,1.05,1.05,1.0,0.92,0.95,1.08,1.1,1.05,0.98],neg:["самому","инструкция бесплатно"],utm:"wb_launch",struct:["Поиск_Выход_WB","Поиск_Wildberries_Менеджер","РСЯ_Предприниматели"],hooks:["Запуск на WB под ключ за 14 дней","Первые продажи гарантируем","Работаем за % от прибыли"],keys:["выход на wildberries","wildberries как продавать","запуск на вб","менеджер маркетплейс wb"]},
+  {name:"Выход на Ozon",cpc:100,ctrS:4.8,ctrR:0.9,crMin:2,crMax:5,split:56,check:70000,s:[0.9,0.88,1.0,1.05,1.05,1.0,0.92,0.95,1.08,1.1,1.05,0.98],neg:["самому","инструкция бесплатно"],utm:"ozon_launch",struct:["Поиск_Выход_Ozon","Поиск_Ozon_Менеджер"],hooks:["Регистрация и запуск на Ozon","Настройка рекламы Ozon Performance"],keys:["выход на ozon","как продавать на озон","запуск ozon seller"]},
+  {name:"Реклама на маркетплейсах",cpc:120,ctrS:4.5,ctrR:0.8,crMin:2,crMax:5,split:60,check:50000,s:[0.9,0.88,1.0,1.05,1.05,1.0,0.92,0.95,1.08,1.1,1.05,0.98],neg:["бесплатно","сам настроить"],utm:"mp_ads",struct:["Поиск_Реклама_Маркетплейс","РСЯ_Продавцы_МП"],hooks:["Увеличим продажи на WB/Ozon в 3 раза","ROI рекламы — гарантия"],keys:["реклама на wildberries","продвижение на маркетплейсах","реклама ozon performance"]},
+  {name:"Управление карточками товаров",cpc:85,ctrS:5.0,ctrR:0.9,crMin:3,crMax:6,split:55,check:30000,s:[0.9,0.88,1.0,1.05,1.05,1.0,0.92,0.95,1.08,1.1,1.05,0.98],neg:["шаблон","сам","бесплатно"],utm:"card_mgmt",struct:["Поиск_Карточки_Товаров","Поиск_SEO_Маркетплейс"],hooks:["Оформление карточек под ключ","SEO описаний для топа выдачи"],keys:["оформление карточек маркетплейс","seo карточек товаров","фото для маркетплейса"]},
+],
+"Климат и вентиляция":[
+  {name:"Кондиционеры (продажа и монтаж)",cpc:65,ctrS:7.0,ctrR:1.3,crMin:5,crMax:11,split:60,check:45000,s:[0.5,0.52,0.8,1.1,1.35,1.4,1.3,1.15,0.95,0.75,0.55,0.45],neg:["ремонт самому","инструкция","отзывы"],utm:"conditioner",struct:["Поиск_Кондиционер_Монтаж","Поиск_Кондиционер_Купить","РСЯ_Ретаргетинг"],hooks:["Кондиционер под ключ за 1 день","Гарантия монтажа 3 года","Лучшие бренды — Mitsubishi, Daikin","Бесплатный замер и расчёт"],keys:["установка кондиционера цена","кондиционер купить монтаж","монтаж кондиционера"]},
+  {name:"Вентиляция и очистка воздуха",cpc:70,ctrS:6.0,ctrR:1.0,crMin:3,crMax:7,split:60,check:80000,s:[0.75,0.78,0.95,1.05,1.1,1.05,0.95,0.92,1.05,1.0,0.88,0.78],neg:["своими руками","схема","инструкция"],utm:"ventilation",struct:["Поиск_Вентиляция","Поиск_Рекуператор","РСЯ_Строители"],hooks:["Проектирование вентиляции","Монтаж под ключ","Чистый воздух для вашего офиса"],keys:["вентиляция монтаж","приточная вентиляция цена","рекуператор воздуха"]},
+  {name:"Тёплый пол",cpc:55,ctrS:6.5,ctrR:1.1,crMin:4,crMax:9,split:58,check:35000,s:[0.85,0.85,0.9,0.95,0.88,0.75,0.65,0.7,0.9,1.1,1.2,1.15],neg:["своими руками","инструкция","схема"],utm:"warmfloor",struct:["Поиск_Тёплый_Пол","Поиск_Электрический_Тёплый_Пол"],hooks:["Тёплый пол под ключ","Электрический и водяной","Монтаж за 1 день"],keys:["тёплый пол монтаж цена","электрический тёплый пол","водяной тёплый пол"]},
+],
+"Ритуальные услуги":[
+  {name:"Похороны и кремация",cpc:95,ctrS:9.0,ctrR:2.0,crMin:8,crMax:18,split:75,check:60000,s:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],neg:["бесплатно","самому","что такое"],utm:"funeral",struct:["Поиск_Похороны","Поиск_Кремация","Поиск_Ритуальные_Услуги"],hooks:["Организация похорон 24/7","Весь комплекс от 45 000 ₽","Помогаем оформить документы"],keys:["ритуальные услуги","организация похорон цена","кремация стоимость","похороны под ключ"]},
+  {name:"Памятники и надгробия",cpc:55,ctrS:7.5,ctrR:1.4,crMin:5,crMax:12,split:60,check:35000,s:[0.9,0.85,1.0,1.05,1.05,1.0,0.98,0.98,1.05,1.08,1.02,0.9],neg:["своими руками","фото"],utm:"monuments",struct:["Поиск_Памятник_На_Могилу","Поиск_Надгробие"],hooks:["Гранитные памятники от 8 000 ₽","Гравировка портрета — бесплатно","Гарантия 10 лет"],keys:["памятник на могилу цена","гранитный памятник","надгробие заказать"]},
+  {name:"Уход за захоронениями",cpc:35,ctrS:7.0,ctrR:1.3,crMin:5,crMax:12,split:55,check:15000,s:[0.85,0.85,1.0,1.1,1.1,1.05,0.98,0.98,1.05,1.08,0.95,0.88],neg:["бесплатно","сам"],utm:"grave_care",struct:["Поиск_Уход_Захоронение","РСЯ_Ритуальные"],hooks:["Уход за могилой ежемесячно","Фотоотчёт после каждого визита"],keys:["уход за захоронением","обслуживание могилы","благоустройство захоронения"]},
+],
+"Ювелирные изделия":[
+  {name:"Ювелирный магазин / Украшения",cpc:60,ctrS:6.5,ctrR:1.2,crMin:4,crMax:10,split:48,check:25000,s:[0.85,0.95,0.9,0.95,1.0,1.0,0.88,0.9,0.95,0.95,1.0,1.3],neg:["б/у","ломбард","дёшево подделка"],utm:"jewelry_shop",struct:["Поиск_Ювелирные_Украшения","Поиск_Кольца_Серьги","РСЯ_Подарки"],hooks:["Ювелирные украшения от производителя","Сертификаты подлинности","Гравировка в подарок","Рассрочка 0%"],keys:["ювелирные украшения купить","кольцо с бриллиантом цена","золотые серьги"]},
+  {name:"Украшения на заказ",cpc:75,ctrS:5.5,ctrR:1.0,crMin:3,crMax:7,split:50,check:45000,s:[0.85,0.9,0.9,0.95,1.0,1.0,0.88,0.9,0.95,0.95,1.0,1.25],neg:["своими руками","обучение","схема"],utm:"custom_jewelry",struct:["Поиск_Украшения_На_Заказ","Поиск_Обручальные_Кольца"],hooks:["Украшение по вашему эскизу","Обручальные кольца — партнёрская скидка","3D-моделирование перед литьём"],keys:["украшения на заказ","обручальные кольца на заказ","ювелир индивидуальный заказ"]},
+  {name:"Ремонт и реставрация украшений",cpc:45,ctrS:7.5,ctrR:1.5,crMin:6,crMax:14,split:65,check:8000,s:[0.88,0.9,0.98,1.0,1.0,0.98,0.95,0.95,1.0,1.02,1.0,0.95],neg:["самому","видео"],utm:"jewelry_repair",struct:["Поиск_Ремонт_Ювелирных","Поиск_Перепайка"],hooks:["Ремонт украшений за 1 час","Не видно следов ремонта","Гарантия 1 год"],keys:["ремонт ювелирных украшений","перепайка кольца","реставрация украшений"]},
+],
+"Антиквариат":[
+  {name:"Скупка антиквариата",cpc:50,ctrS:7.5,ctrR:1.4,crMin:5,crMax:12,split:70,check:30000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.95,0.95,1.05,1.05,0.98,0.9],neg:["самому оценить","форум","бесплатно"],utm:"antique_buy",struct:["Поиск_Скупка_Антиквариата","Поиск_Оценка_Старинных"],hooks:["Оценка антиквариата — бесплатно","Выезд оценщика на дом","Дорого и честно"],keys:["скупка антиквариата","оценка антиквариата","продать старинные вещи"]},
+  {name:"Антикварный магазин",cpc:40,ctrS:6.5,ctrR:1.2,crMin:4,crMax:9,split:50,check:50000,s:[0.88,0.9,1.0,1.05,1.05,1.0,0.95,0.95,1.05,1.05,0.98,0.9],neg:["б/у","реплика","подделка"],utm:"antique_shop",struct:["Поиск_Антикварный_Магазин","РСЯ_Коллекционеры"],hooks:["Антиквариат с экспертизой подлинности","3 000+ предметов в наличии"],keys:["антикварный магазин","купить антиквариат","старинные предметы купить"]},
+],
+"Коворкинги":[
+  {name:"Аренда рабочего места",cpc:45,ctrS:7.5,ctrR:1.4,crMin:6,crMax:13,split:55,check:8000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.85,0.88,1.1,1.12,1.05,0.85],neg:["домашний офис","бесплатно","кафе"],utm:"cowork_desk",struct:["Поиск_Коворкинг","Поиск_Рабочее_Место_Аренда","РСЯ_Фрилансеры"],hooks:["Рабочее место от 500 ₽/день","Скоростной интернет + кофе","Первый день — бесплатно"],keys:["коворкинг аренда рабочего места","коворкинг цена","снять рабочее место"]},
+  {name:"Аренда переговорной / офиса",cpc:60,ctrS:6.5,ctrR:1.1,crMin:4,crMax:9,split:58,check:15000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.85,0.88,1.1,1.12,1.05,0.85],neg:["бесплатно","онлайн"],utm:"cowork_office",struct:["Поиск_Переговорная_Аренда","Поиск_Офис_На_День"],hooks:["Переговорная на 5–20 человек","Проектор и экран включены","Бронирование онлайн"],keys:["переговорная комната аренда","офис на день аренда"]},
+],
+"Франшизы":[
+  {name:"Купить франшизу",cpc:80,ctrS:5.5,ctrR:0.9,crMin:2,crMax:6,split:55,check:500000,s:[0.88,0.88,1.0,1.05,1.08,1.05,0.95,0.95,1.08,1.1,1.02,0.88],neg:["бесплатно","что такое","отзывы плохие"],utm:"franchise_buy",struct:["Поиск_Франшиза_Купить","Поиск_Франшиза_Недорого","РСЯ_Предприниматели"],hooks:["Каталог 500+ франшиз с реальными отзывами","Юридическая проверка франшизодателя","Подберём под ваш бюджет бесплатно"],keys:["купить франшизу недорого","франшиза для малого бизнеса","каталог франшиз"]},
+  {name:"Упаковка и продажа франшизы",cpc:100,ctrS:4.5,ctrR:0.8,crMin:2,crMax:5,split:58,check:300000,s:[0.88,0.88,1.0,1.05,1.08,1.05,0.95,0.95,1.08,1.1,1.02,0.88],neg:["самому","шаблон","инструкция"],utm:"franchise_sell",struct:["Поиск_Упаковка_Франшизы","Поиск_Продать_Франшизу"],hooks:["Упакуем вашу франшизу за 30 дней","100+ продаж франшиз в портфолио"],keys:["упаковка франшизы","как продать франшизу","развитие бизнеса по франшизе"]},
+],
+"Полиграфия":[
+  {name:"Наружная реклама / Баннеры",cpc:42,ctrS:7.0,ctrR:1.3,crMin:5,crMax:11,split:55,check:15000,s:[0.75,0.78,1.0,1.1,1.12,1.1,1.05,1.05,1.08,1.05,0.9,0.72],neg:["бесплатно","своими руками","скачать шаблон"],utm:"outdoor",struct:["Поиск_Печать_Баннеров","Поиск_Наружная_Реклама"],hooks:["Баннер за 2 часа","Печать + монтаж под ключ","Широкоформатная печать от 150 ₽/м²"],keys:["печать баннеров цена","наружная реклама заказать","широкоформатная печать"]},
+  {name:"Визитки и листовки",cpc:28,ctrS:8.0,ctrR:1.6,crMin:7,crMax:16,split:50,check:3500,s:[0.88,0.9,1.0,1.05,1.05,1.0,0.9,0.9,1.08,1.1,1.02,0.88],neg:["бесплатно","шаблон дома","скачать"],utm:"cards",struct:["Поиск_Визитки","Поиск_Листовки_Печать"],hooks:["Визитки 1000 шт от 790 ₽","Дизайн + печать за 1 день","Любой тираж"],keys:["печать визиток цена","листовки заказать","флаеры печать тираж"]},
+  {name:"Корпоративная полиграфия",cpc:55,ctrS:5.5,ctrR:0.9,crMin:3,crMax:7,split:55,check:30000,s:[0.88,0.9,1.0,1.05,1.05,1.0,0.9,0.9,1.08,1.1,1.02,0.88],neg:["бесплатно","шаблон","дома"],utm:"corp_print",struct:["Поиск_Корпоративная_Полиграфия","Поиск_Брендинг_Печать"],hooks:["Фирменный стиль + вся полиграфия","Сувениры и мерч с логотипом"],keys:["корпоративная полиграфия","папки бланки фирменный стиль"]},
+],
+"Хендмейд":[
+  {name:"Изделия ручной работы на заказ",cpc:32,ctrS:6.5,ctrR:1.3,crMin:5,crMax:12,split:42,check:8000,s:[0.85,0.95,0.92,0.95,1.0,1.0,0.88,0.88,1.0,1.0,1.05,1.2],neg:["бесплатно","своими руками","мастер-класс"],utm:"handmade",struct:["Поиск_Хендмейд_Заказ","Поиск_Украшения_Ручная_Работа","РСЯ_Подарки"],hooks:["Уникальный подарок ручной работы","Именная гравировка","Изготовление по фото"],keys:["хендмейд на заказ","изделия ручной работы","украшения ручная работа"]},
+  {name:"Мастер-классы хендмейд",cpc:28,ctrS:7.0,ctrR:1.4,crMin:6,crMax:14,split:40,check:4000,s:[0.85,0.88,0.95,1.0,1.05,1.0,0.88,0.88,1.05,1.05,1.0,1.15],neg:["видео ютуб","бесплатно","схема"],utm:"mk_handmade",struct:["Поиск_Мастер_Класс","РСЯ_Хобби"],hooks:["Мастер-класс на любой вкус","Для новичков и опытных","Корпоративные МК"],keys:["мастер класс хендмейд","мастер класс творчество","мк по рукоделию"]},
+],
+"Страхование":[
+  {name:"Страхование жизни и здоровья",cpc:75,ctrS:5.5,ctrR:0.9,crMin:2,crMax:6,split:58,check:25000,s:[0.88,0.9,1.0,1.05,1.02,0.98,0.9,0.9,1.05,1.08,1.05,1.0],neg:["государственное бесплатно","калькулятор"],utm:"life_ins",struct:["Поиск_Страхование_Жизни","Поиск_НСЖ_ИСЖ","РСЯ_Семья"],hooks:["Страхование жизни — защита семьи","От 300 ₽/мес","Выплата до 5 млн ₽","Бесплатная консультация"],keys:["страхование жизни","накопительное страхование","страховка от несчастного случая"]},
+  {name:"ДМС для сотрудников",cpc:110,ctrS:4.5,ctrR:0.7,crMin:2,crMax:5,split:60,check:80000,s:[0.88,0.9,1.0,1.05,1.02,0.98,0.9,0.9,1.05,1.08,1.05,1.0],neg:["государственный полис","ОМС"],utm:"dms",struct:["Поиск_ДМС_Сотрудники","Поиск_Корпоративное_Страхование","РСЯ_HR"],hooks:["ДМС для команды от 8 000 ₽/чел","Сравним 10 страховщиков","Оформление за 1 день"],keys:["дмс для сотрудников","корпоративное медицинское страхование","дмс цена"]},
+  {name:"Страхование имущества",cpc:55,ctrS:6.5,ctrR:1.1,crMin:3,crMax:8,split:55,check:15000,s:[0.88,0.9,1.0,1.05,1.05,1.0,0.9,0.9,1.05,1.08,1.02,0.95],neg:["онлайн сам","расчёт калькулятор"],utm:"property_ins",struct:["Поиск_Страхование_Квартиры","Поиск_Страхование_Загородного"],hooks:["Страховка квартиры от 1 500 ₽/год","Онлайн оформление за 5 минут"],keys:["страхование квартиры цена","страховка дома","страхование загородной недвижимости"]},
+],
+"Связь и телеком":[
+  {name:"Интернет для дома",cpc:55,ctrS:7.5,ctrR:1.5,crMin:6,crMax:14,split:55,check:4000,s:[0.95,0.92,0.98,1.0,1.0,1.0,0.98,0.98,1.02,1.05,1.05,1.05],neg:["бесплатно","wi-fi бесплатно"],utm:"home_internet",struct:["Поиск_Интернет_Дом","Поиск_Подключить_Интернет","РСЯ_Переезд"],hooks:["Интернет до 1 Гбит/с","Подключение за 1 день","Роутер в подарок"],keys:["подключить интернет домой","интернет провайдер","интернет для квартиры тарифы"]},
+  {name:"Интернет для бизнеса",cpc:85,ctrS:6.0,ctrR:1.0,crMin:3,crMax:7,split:60,check:15000,s:[0.95,0.92,0.98,1.0,1.0,1.0,0.95,0.95,1.05,1.08,1.05,0.98],neg:["бесплатно","домашний тариф"],utm:"biz_internet",struct:["Поиск_Интернет_Офис","Поиск_Бизнес_Связь","РСЯ_Директора"],hooks:["Корпоративный интернет от 1 500 ₽/мес","SLA 99.9% — гарантия доступности"],keys:["интернет для офиса","корпоративный интернет","бизнес тариф интернет"]},
+  {name:"IP-телефония / АТС",cpc:90,ctrS:5.5,ctrR:0.9,crMin:2,crMax:6,split:60,check:25000,s:[0.92,0.92,1.0,1.05,1.05,1.0,0.92,0.92,1.08,1.1,1.05,0.92],neg:["бесплатно","приложение","вайбер"],utm:"ip_telephony",struct:["Поиск_IP_Телефония","Поиск_Виртуальная_АТС","РСЯ_Бизнес"],hooks:["Виртуальная АТС за 1 день","Все звонки в CRM автоматически","Запись разговоров в подарок"],keys:["ip телефония для бизнеса","виртуальная атс","облачная телефония цена"]},
+],
+"Творчество и музыка":[
+  {name:"Музыкальная школа",cpc:38,ctrS:7.0,ctrR:1.4,crMin:6,crMax:13,split:42,check:7000,s:[0.72,0.75,0.92,1.05,1.05,0.82,0.68,0.82,1.2,1.18,1.05,0.78],neg:["бесплатно","ютуб","дома"],utm:"music_school",struct:["Поиск_Музыкальная_Школа","Поиск_Уроки_Гитары","РСЯ_Родители"],hooks:["Уроки музыки с 4 лет","Подберём инструмент и педагога","Первый урок — бесплатно"],keys:["музыкальная школа запись","уроки игры на гитаре","уроки фортепиано"]},
+  {name:"Вокальная студия",cpc:35,ctrS:6.8,ctrR:1.3,crMin:6,crMax:13,split:42,check:6000,s:[0.75,0.78,0.95,1.05,1.05,0.85,0.72,0.82,1.18,1.15,1.05,0.8],neg:["бесплатно","ютуб","дома"],utm:"vocal",struct:["Поиск_Вокал","Поиск_Уроки_Вокала","РСЯ_Музыканты"],hooks:["Научитесь петь за 3 месяца","Постановка голоса и дыхание","Для детей и взрослых"],keys:["уроки вокала","вокальная студия цена","научиться петь"]},
+  {name:"Школа рисования",cpc:32,ctrS:7.0,ctrR:1.4,crMin:6,crMax:14,split:40,check:5500,s:[0.72,0.75,0.92,1.08,1.08,0.88,0.72,0.85,1.22,1.18,1.05,0.75],neg:["бесплатно","ютуб","дома"],utm:"art_school",struct:["Поиск_Школа_Рисования","РСЯ_Родители_Творчество"],hooks:["Рисование с нуля за 10 уроков","Акварель, масло, графика","Для детей и взрослых"],keys:["школа рисования","уроки рисования для детей","научиться рисовать"]},
+  {name:"Актёрское мастерство / Театр",cpc:30,ctrS:6.5,ctrR:1.3,crMin:5,crMax:12,split:40,check:6500,s:[0.72,0.75,0.92,1.08,1.05,0.85,0.7,0.82,1.2,1.18,1.05,0.75],neg:["бесплатно","ютуб","смотреть"],utm:"acting",struct:["Поиск_Актёрское_Мастерство","РСЯ_Творчество"],hooks:["Актёрская студия для взрослых и детей","Раскрепощение и уверенность","Первое занятие — бесплатно"],keys:["актёрское мастерство курсы","театральная студия","курсы актёрского мастерства"]},
+  {name:"Танцевальная студия",cpc:35,ctrS:7.2,ctrR:1.4,crMin:6,crMax:14,split:42,check:6000,s:[0.75,0.78,0.95,1.05,1.05,0.88,0.75,0.82,1.18,1.15,1.05,0.78],neg:["бесплатно","ютуб","дома"],utm:"dance",struct:["Поиск_Танцы","Поиск_Школа_Танцев","РСЯ_Активный_Досуг"],hooks:["Танцы для начинающих","Сальса, хастл, стрип-пластика","Первое занятие — бесплатно"],keys:["школа танцев запись","танцы для взрослых","уроки танцев цена"]},
+],
+"Охрана и безопасность":[
+  {name:"Охранное агентство / ЧОП",cpc:75,ctrS:5.5,ctrR:0.9,crMin:3,crMax:6,split:62,check:50000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.95,0.95,1.05,1.08,1.02,0.9],neg:["самому","лицензия"],utm:"security",struct:["Поиск_Охрана","Поиск_Пульт"],hooks:["Охрана от 35 000 ₽/мес","24/7"],keys:["охранное агентство","охрана объекта","пультовая охрана"]},
+  {name:"Видеонаблюдение / СКУД",cpc:55,ctrS:6.5,ctrR:1.1,crMin:4,crMax:8,split:60,check:45000,s:[0.85,0.88,1.0,1.05,1.05,1.0,0.95,0.95,1.08,1.1,1.02,0.88],neg:["камеру сам","настроить"],utm:"cctv",struct:["Поиск_Видеонаблюдение","Поиск_СКУД"],hooks:["Под ключ от 15 000 ₽","Монтаж за 1 день"],keys:["система видеонаблюдения","камеры монтаж"]},
+],
+"Промышленность B2B":[
+  {name:"Металлообработка / ЧПУ",cpc:70,ctrS:4.5,ctrR:0.7,crMin:2,crMax:4,split:68,check:150000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.95,0.95,1.05,1.08,1.02,0.88],neg:["самому","видео"],utm:"metal",struct:["Поиск_Токарные","Поиск_ЧПУ"],hooks:["По чертежам за 3 дня","Точность 0.01 мм","Партия от 1 шт"],keys:["токарные работы","фрезерная обработка","чпу фрезеровка"]},
+  {name:"Аренда спецтехники",cpc:75,ctrS:5.5,ctrR:0.9,crMin:3,crMax:6,split:65,check:80000,s:[0.45,0.5,0.88,1.12,1.15,1.1,1.05,1.0,1.0,0.9,0.7,0.42],neg:["купить технику","б/у"],utm:"equip",struct:["Поиск_Экскаватор","Поиск_Кран"],hooks:["Экскаватор с оператором от 2 500 ₽/час","Доставка 0 ₽"],keys:["аренда экскаватора","аренда крана","спецтехника аренда"]},
+  {name:"Промышленное оборудование",cpc:95,ctrS:4.0,ctrR:0.6,crMin:1,crMax:3,split:65,check:500000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.95,0.95,1.05,1.08,1.02,0.88],neg:["б/у","подержанное","самому"],utm:"ind_equip",struct:["Поиск_Промышленное_Оборудование","Поиск_Станки_Производство","РСЯ_Производственники"],hooks:["Промышленное оборудование под ключ","Поставка и монтаж","Сервисное обслуживание"],keys:["промышленное оборудование купить","станки для производства","технологическое оборудование"]},
+],
+"Копирайтинг и контент":[
+  {name:"Копирайтинг / Тексты",cpc:45,ctrS:5.0,ctrR:0.9,crMin:3,crMax:7,split:48,check:15000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.9,0.9,1.1,1.1,1.02,0.85],neg:["бесплатно","шаблон","сам"],utm:"copy",struct:["Поиск_Копирайтер","Поиск_Тексты"],hooks:["Тексты, которые продают","Сдача в срок — гарантия"],keys:["копирайтер заказать текст","написание текстов для сайта"]},
+  {name:"Сценарии / Рилс",cpc:40,ctrS:5.5,ctrR:1.0,crMin:3,crMax:8,split:45,check:8000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.9,0.9,1.1,1.1,1.02,0.85],neg:["бесплатно","шаблон"],utm:"scripts",struct:["Поиск_Сценарий","РСЯ_Блогеры"],hooks:["Сценарий Reels/YouTube","Вирусный крючок в 3 секунды"],keys:["сценарий для reels","написать сценарий видео"]},
+],
+"Переводы":[
+  {name:"Письменный перевод",cpc:50,ctrS:6.0,ctrR:1.1,crMin:4,crMax:9,split:55,check:8000,s:[0.88,0.88,1.0,1.05,1.05,1.0,0.9,0.9,1.08,1.1,1.02,0.88],neg:["гугл","бесплатно","сам"],utm:"translate",struct:["Поиск_Перевод","Поиск_Нотариальный"],hooks:["Перевод за 1 день","Нотариальное заверение","50+ языков"],keys:["перевод документов","бюро переводов","нотариальный перевод"]},
+],
+"HR и персонал":[
+  {name:"Подбор персонала",cpc:90,ctrS:4.8,ctrR:0.8,crMin:2,crMax:5,split:60,check:45000,s:[0.82,0.85,1.05,1.1,1.08,1.0,0.88,0.88,1.1,1.12,1.05,0.78],neg:["вакансии","работа","hh"],utm:"hr",struct:["Поиск_Персонал","РСЯ_Директора"],hooks:["Подберём за 5 дней","Гарантия замены 3 мес"],keys:["кадровое агентство","подбор персонала цена"]},
+],
+};
+
+let sub=null,res=null,cAI='deepseek',cFS=15,hbY=0;
+let selRegs=new Set(['moscow']);
+
+(function init(){
+  const sel=document.getElementById('cat');
+  Object.keys(C).forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=k;sel.appendChild(o);});
+  buildRegPanel();
+  upCalc();renderHB(0);bUTM();renderCL();
+  document.addEventListener('click',function(e){
+    const panel=document.getElementById('reg-panel'),btn=document.getElementById('reg-btn');
+    if(panel&&!panel.contains(e.target)&&btn&&!btn.contains(e.target)){panel.classList.remove('show');btn.classList.remove('open');}
+  });
+})();
+
+function buildRegPanel(){
+  const panel=document.getElementById('reg-panel');
+  let html=`<div class="reg-actions"><button class="reg-act-btn" onclick="regSelectAll()">Выбрать все</button><button class="reg-act-btn" onclick="regClear()">Сбросить</button></div>`;
+  RT.forEach((dist,di)=>{
+    html+=`<div class="reg-district"><div class="rdt" id="rdt-${di}" onclick="toggleDist(${di})"><span class="rdt-arrow">▾</span> ${dist.d}</div><div class="reg-cities" id="rdc-${di}">${dist.r.map(city=>`<label class="rcity"><input type="checkbox" value="${city.v}" ${selRegs.has(city.v)?'checked':''} onchange="toggleCity('${city.v}',this.checked)"><span>${city.n}</span><span class="reg-mult-badge">×${city.m}</span></label>`).join('')}</div></div>`;
+  });
+  panel.innerHTML=html;
+  updateRegDisplay();
+}
+function toggleReg(e){
+  e.stopPropagation();
+  const panel=document.getElementById('reg-panel'),btn=document.getElementById('reg-btn');
+  const isOpen=panel.classList.contains('show');
+  panel.classList.toggle('show',!isOpen);btn.classList.toggle('open',!isOpen);
+}
+function toggleDist(di){
+  document.getElementById('rdc-'+di).classList.toggle('hidden');
+  document.getElementById('rdt-'+di).classList.toggle('collapsed');
+}
+function toggleCity(v,checked){
+  if(checked)selRegs.add(v);else selRegs.delete(v);
+  if(selRegs.size===0){selRegs.add('moscow');const cb=document.querySelector('input[value="moscow"]');if(cb)cb.checked=true;}
+  updateRegDisplay();
+}
+function regSelectAll(){
+  RT.forEach(d=>d.r.forEach(c=>{selRegs.add(c.v);}));
+  document.querySelectorAll('.reg-cities input[type=checkbox]').forEach(cb=>cb.checked=true);
+  updateRegDisplay();
+}
+function regClear(){
+  selRegs.clear();selRegs.add('moscow');
+  document.querySelectorAll('.reg-cities input[type=checkbox]').forEach(cb=>{cb.checked=cb.value==='moscow';});
+  updateRegDisplay();
+}
+function getRegMult(){
+  const all=RT.flatMap(d=>d.r),sel=all.filter(c=>selRegs.has(c.v));
+  if(!sel.length)return 1.0;
+  return +(sel.reduce((s,c)=>s+c.m,0)/sel.length).toFixed(3);
+}
+function getRegName(){
+  const all=RT.flatMap(d=>d.r),sel=all.filter(c=>selRegs.has(c.v));
+  if(!sel.length)return 'Москва';
+  if(sel.length===1)return sel[0].n;
+  if(sel.length<=3)return sel.map(c=>c.n).join(', ');
+  return sel.length+' регионов (avg ×'+getRegMult()+')';
+}
+function updateRegDisplay(){
+  const m=getRegMult(),name=getRegName();
+  document.getElementById('reg-display').textContent=selRegs.size===1?name+' (×'+m+')':name;
+}
+function togTheme(){
+  const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';
+  h.setAttribute('data-theme',d?'light':'dark');
+  document.getElementById('thbtn').textContent=d?'☀️ Светлая':'🌙 Тёмная';
+}
+function chFS(d){cFS=Math.max(12,Math.min(20,cFS+d));document.documentElement.style.setProperty('--base-fs',cFS+'px');}
+function openI(){document.getElementById('im').classList.add('show');}
+function closeI(){document.getElementById('im').classList.remove('show');}
+document.getElementById('im').addEventListener('click',function(e){if(e.target===this)closeI();});
+function searchN(q){
+  const b=document.getElementById('sr');
+  if(!q||q.length<2){b.style.display='none';return;}
+  const r=[];
+  Object.entries(C).forEach(([cat,subs])=>subs.forEach(s=>{if(s.name.toLowerCase().includes(q.toLowerCase())||cat.toLowerCase().includes(q.toLowerCase()))r.push({cat,s});}));
+  if(!r.length){b.style.display='none';return;}
+  b.innerHTML=r.slice(0,12).map(x=>`<div class="sri" onmousedown="selSR('${x.cat}','${encodeURIComponent(x.s.name)}')"><span class="src">${x.cat}</span><span class="srn">${x.s.name}</span></div>`).join('');
+  b.style.display='block';
+}
+function hideSR(){document.getElementById('sr').style.display='none';}
+function selSR(cat,enc){
+  const name=decodeURIComponent(enc);hideSR();
+  document.getElementById('ns').value='';
+  document.getElementById('cat').value=cat;updSN();
+  setTimeout(()=>document.querySelectorAll('.snb').forEach(b=>{if(b.textContent===name)b.click();}),60);
+}
+function updSN(){
+  const cat=document.getElementById('cat').value,w=document.getElementById('snw');
+  w.innerHTML='';sub=null;
+  if(!cat){w.innerHTML='<span style="color:var(--text3);font-size:0.79rem">Выберите категорию</span>';return;}
+  C[cat].forEach(s=>{
+    const b=document.createElement('button');b.className='snb';b.textContent=s.name;
+    b.onclick=()=>{document.querySelectorAll('.snb').forEach(x=>x.classList.remove('active'));b.classList.add('active');sub=s;
+      const cf=document.getElementById('chk');if(!cf.value||cf.dataset.auto){cf.value=s.check;cf.dataset.auto='1';}
+      document.getElementById('uc').value=s.utm+'_search';bUTM();};
+    w.appendChild(b);
+  });
+}
+function togAdv(){document.getElementById('af').classList.toggle('show');document.getElementById('at').classList.toggle('open');}
+function swTab(i){
+  document.querySelectorAll('.tb').forEach((b,j)=>b.classList.toggle('active',i===j));
+  document.querySelectorAll('.tp').forEach((p,j)=>p.classList.toggle('active',i===j));
+}
+function translit(str){
+  const m={'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo','ж':'zh','з':'z',
+  'и':'i','й':'y','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s',
+  'т':'t','у':'u','ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch','ъ':'',
+  'ы':'y','ь':'','э':'e','ю':'yu','я':'ya'};
+  return str.toLowerCase().split('').map(c=>m[c]!==undefined?m[c]:c).join('').replace(/[^a-z0-9_{}]/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'');
+}
+function bUTM(){
+  const v=(id)=>(document.getElementById(id)||{}).value||'';
+  const rawUrl=v('uu');
+  if(rawUrl&&!rawUrl.match(/^https?:\/\//i)){const el=document.getElementById('ures');if(el)el.textContent='⚠️ URL должен начинаться с https://';return;}
+  const url=v('uu'),src=v('us'),med=v('um'),camp=v('uc'),cont=v('uct'),term=v('ut');
+  // Transliterate all fields
+  const tSrc=translit(src),tMed=translit(med),tCamp=translit(camp),tCont=translit(cont),tTerm=translit(term);
+  const p=[];
+  if(tSrc)p.push('utm_source='+tSrc);if(tMed)p.push('utm_medium='+tMed);
+  if(tCamp)p.push('utm_campaign='+tCamp);if(tCont)p.push('utm_content='+tCont);
+  const yaP='type={source_type}&source={source}&block={position_type}&position={position}';
+  if(tTerm)p.push(yaP+'&utm_term='+tTerm);else p.push(yaP);
+  const r=url+(p.length?(url.includes('?')?'&':'?')+p.join('&'):'');
+  const el=document.getElementById('ures');if(el)el.textContent=r;
+}
+function cpUTM(){
+  const btn=document.getElementById('cpb-utm');
+  navigator.clipboard.writeText(document.getElementById('ures').textContent).then(()=>{
+    btn.textContent='✅ Скопировано!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📋 Скопировать ссылку';btn.classList.remove('copied');},2000);
+  });
+}
+function cpNeg(id,btnId,label){
+  const btn=document.getElementById(btnId);
+  navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{
+    btn.textContent='✅ Скопировано!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📋 Скопировать '+label;btn.classList.remove('copied');},2000);
+  });
+}
+function swHB(y){hbY=y;document.querySelectorAll('.hbtb').forEach((t,i)=>t.classList.toggle('active',i===y));renderHB(y);}
+function renderHB(y){
+  const d=y===0?KPI25:KPI26,yr=y===0?'2025':'2026';
+  document.getElementById('hbtw').innerHTML=`<p style="font-size:0.73rem;color:var(--text3);margin-bottom:9px">Средняя статистика по рынку РФ за ${yr} г. CV сайта = конверсия в лид, CV продажи = конверсия лид → деньги.</p><div class="tw"><table class="dt"><thead><tr><th>Ниша</th><th>CV сайта (в лид)</th><th>CV продажи (в деньги)</th></tr></thead><tbody>${d.map(x=>`<tr><td>${x.n}</td><td class="n" style="color:var(--green)">${x.a}%</td><td class="n" style="color:var(--accent)">${x.b}%</td></tr>`).join('')}</tbody></table></div>`;
+}
+function renderCL(){
+  let total=0;
+  const html=CLD.map(sec=>{
+    const items=sec.i.map((it,i)=>{total++;const id='cl_'+sec.s.replace(/\W/g,'')+'_'+i;
+      return `<label class="cli" id="l${id}"><input type="checkbox" id="${id}" onchange="upCL()"> ${it}</label>`;
+    }).join('');
+    return `<div class="cls"><div class="clst">${sec.s}</div>${items}</div>`;
+  }).join('');
+  document.getElementById('clc').innerHTML=html;
+  document.getElementById('clt').textContent=total;
+}
+function upCL(){
+  const done=document.querySelectorAll('#t10 input:checked').length;
+  document.getElementById('cld').textContent=done;
+  document.querySelectorAll('#t10 input[type=checkbox]').forEach(cb=>{const l=cb.closest('.cli');if(l)l.classList.toggle('done',cb.checked);});
+}
+function upCalc(){
+  const cpc=parseInt(document.getElementById('sl-cpc').value)||100;
+  const crRaw=parseInt(document.getElementById('sl-cr').value)||30;
+  const cr=crRaw/10/100;
+  const bud=parseInt(document.getElementById('sl-bud').value)||100000;
+  const chk=parseInt(document.getElementById('sl-chk').value)||50000;
+  const mrg=parseInt(document.getElementById('sl-mrg').value)||35;
+  document.getElementById('sv-cpc').textContent='₽'+cpc;
+  document.getElementById('sv-cr').textContent=(crRaw/10).toFixed(1)+'%';
+  document.getElementById('sv-bud').textContent=fmt(bud)+' ₽';
+  document.getElementById('sv-chk').textContent=fmt(chk)+' ₽';
+  document.getElementById('sv-mrg').textContent=mrg+'%';
+  const clicks=Math.round(bud/cpc),leads=Math.round(clicks*cr),cpl=leads>0?Math.round(bud/leads):0;
+  const sales=Math.round(leads*0.3),rev=sales*chk,profit=rev*(mrg/100)-bud;
+  const romi=bud>0?Math.round((profit/bud)*100):0;
+  const rc=romi>100?'var(--green)':romi>0?'var(--orange)':'var(--red)';
+  document.getElementById('crr').innerHTML=`<div class="ck"><div class="ckv">${fmt(clicks)}</div><div class="ckl">Кликов/мес</div></div><div class="ck"><div class="ckv">${fmt(leads)}</div><div class="ckl">Лидов/мес</div></div><div class="ck"><div class="ckv">₽${fmt(cpl)}</div><div class="ckl">Стоимость лида</div></div><div class="ck"><div class="ckv">${fmt(sales)}</div><div class="ckl">Продаж</div></div><div class="ck"><div class="ckv">₽${fmt(rev)}</div><div class="ckl">Выручка</div></div><div class="ck"><div class="ckv" style="color:${rc}">${romi}%</div><div class="ckl">ROMI</div></div>`;
+  const vrd=romi>200?'🟢 Отличный! Масштабируйте бюджет +20% еженедельно.':romi>100?'🟡 Хороший ROMI. Оптимизируйте объявления.':romi>0?'🟠 Слабый ROMI. Снизьте CPC или повысьте конверсию.':'🔴 Убыточно. Пересмотрите CPC, оффер или аудиторию.';
+  document.getElementById('cvrd').innerHTML=`<b style="color:${rc}">${vrd}</b><br><span style="font-size:0.73rem;color:var(--text3)">Расход: ₽${fmt(bud)} · Прибыль: ₽${fmt(Math.round(profit))} · ROMI: ${romi}%</span>`;
+}
+function calc(){
+  if(!sub){alert('Выберите поднишу');return;}
+  const bud=parseFloat(document.getElementById('bud').value)||100000;
+  const rmult=getRegMult(),regName=getRegName();
+  const chk=Math.max(0,parseFloat(document.getElementById('chk').value)||sub.check);
+  const mrg=parseFloat(document.getElementById('mrg').value)||35;
+  const lm=parseFloat(document.getElementById('ltvm').value)||3;
+  const clr=parseFloat(document.getElementById('cr').value)||30;
+  const sm=parseInt(document.getElementById('sm').value)||0;
+  const su=document.getElementById('surl').value||'https://yourdomain.ru';
+  const cpcS=+(sub.cpc*rmult).toFixed(0),cpcR=+(cpcS*0.28).toFixed(0);
+  const bS=+(bud*sub.split/100).toFixed(0),bR=bud-bS;
+  const cS=Math.round(bS/cpcS),cR=Math.round(bR/Math.max(1,cpcR));
+  const crMid=(sub.crMin+sub.crMax)/2/100;
+  const lS=Math.round(cS*crMid),lR=Math.round(cR*crMid*0.6),lT=lS+lR;
+  const cpl=lT>0?+(bud/lT).toFixed(0):0;
+  const sales=Math.round(lT*clr/100),rev=sales*chk,pft=rev*mrg/100;
+  const romi=bud>0?+((pft-bud)/bud*100).toFixed(0):0;
+  const ltv=chk*mrg/100*lm,ltvR=bud>0?+((sales*ltv-bud)/bud*100).toFixed(0):0;
+  const pS={lS:Math.round(lS*0.49),lR:Math.round(lR*0.49),c:Math.round((cS+cR)*0.6)};
+  const oS={lS:Math.round(lS*1.755),lR:Math.round(lR*1.755),c:Math.round((cS+cR)*1.4)};
+  res={bud,cpcS,cpcR,bS,bR,cS,cR,lS,lR,lT,cpl,sales,rev,pft,romi,ltv,ltvR,sub,sm,su,chk,mrg,lm,clr,reg:regName,rmult,pS,oS};
+  document.getElementById('sl-cpc').value=Math.min(1000,cpcS);
+  document.getElementById('sl-bud').value=Math.min(3000000,bud);
+  document.getElementById('sl-chk').value=Math.min(10000000,chk);
+  document.getElementById('sl-mrg').value=mrg;
+  document.getElementById('uu').value=su;
+  document.getElementById('uc').value=sub.utm+'_search';
+  bUTM();upCalc();renderAll();
+  document.getElementById('results').classList.add('show');
+  swTab(0);
+  setTimeout(()=>document.getElementById('results').scrollIntoView({behavior:'smooth'}),100);
+}
+function fmt(n){return Number(n).toLocaleString('ru-RU');}
+function renderAll(){
+  const r=res;
+  document.getElementById('krow').innerHTML=[{l:'Бюджет',v:'₽'+fmt(r.bud),s:'в месяц',c:'blue'},{l:'Кликов',v:fmt(r.cS+r.cR),s:'Поиск+РСЯ',c:'cyan'},{l:'Лидов',v:fmt(r.lT),s:'CPL ₽'+fmt(r.cpl),c:'green'},{l:'Продаж',v:fmt(r.sales),s:'CR '+r.clr+'%',c:'orange'},{l:'Выручка',v:'₽'+fmt(r.rev),s:'чек ₽'+fmt(r.chk),c:'purple'},{l:'ROMI',v:r.romi+'%',s:r.romi>0?'прибыльно':'убыточно',c:r.romi>100?'green':r.romi>0?'orange':'red'}].map(k=>`<div class="kpi ${k.c}"><div class="kl">${k.l}</div><div class="kv">${k.v}</div><div class="ks">${k.s}</div></div>`).join('');
+  document.getElementById('sc3').innerHTML=[{t:'🔴 Пессимист',c:'',r:[['Клики',fmt(r.pS.c)],['Лиды',fmt(r.pS.lS+r.pS.lR)],['Продаж',fmt(Math.round((r.pS.lS+r.pS.lR)*r.clr/100))]]},{t:'🟡 Базовый',c:'base',r:[['Клики',fmt(r.cS+r.cR)],['Лиды',fmt(r.lT)],['Продаж',fmt(r.sales)]]},{t:'🟢 Оптимист',c:'',r:[['Клики',fmt(r.oS.c)],['Лиды',fmt(r.oS.lS+r.oS.lR)],['Продаж',fmt(Math.round((r.oS.lS+r.oS.lR)*r.clr/100))]]}].map(s=>`<div class="sc ${s.c}"><div class="sct">${s.t}</div>${s.r.map(x=>`<div class="scr"><span>${x[0]}</span><span>${x[1]}</span></div>`).join('')}</div>`).join('');
+  document.getElementById('cht').innerHTML=`<thead><tr><th>Канал</th><th>Бюджет ₽</th><th>CPC ₽</th><th>Клики</th><th>CTR</th><th>Лиды</th><th>CPL</th></tr></thead><tbody>${[['🔍 Поиск',fmt(r.bS),r.cpcS,fmt(r.cS),r.sub.ctrS+'%',fmt(r.lS),'₽'+fmt(Math.round(r.bS/(r.lS||1)))],['📱 РСЯ',fmt(r.bR),r.cpcR,fmt(r.cR),r.sub.ctrR+'%',fmt(r.lR),'₽'+fmt(Math.round(r.bR/(r.lR||1)))],['Σ Итого',fmt(r.bud),'—',fmt(r.cS+r.cR),'—',fmt(r.lT),'₽'+fmt(r.cpl)]].map((row,i)=>`<tr${i===2?' style="font-weight:600"':''}>${row.map((c,j)=>`<td${j>1?' class="n"':''}>${c}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  const sn=r.sub.s[new Date().getMonth()];
+  const st=sn>=1.05?'🔥 Высокий сезон — увеличивайте бюджет':sn<=0.75?'❄️ Низкий сезон — переходите на ретаргетинг':'🌤 Сезон средний — хорошее время для тестов';
+  document.getElementById('ntips').innerHTML=`<b style="color:var(--text)">💡 Советы для «${r.sub.name}»</b><br><br>${st}<br>• Корректировка: +50% обед (11–14ч) и +40% вечер (18–21ч)<br>• Минимальный тест: ₽${fmt(r.cpcS*100)} (100 кликов)<br>• Сплит Поиск/РСЯ: ${r.sub.split}%/${100-r.sub.split}% — оптимально для ниши<br>• Регион: ${r.reg} (коэф. ×${r.rmult})<br>• ${r.romi<0?'⚠️ ROMI отрицательный — проверьте оффер':r.romi<100?'📈 Оптимизируйте объявления для роста':'🚀 Масштабируйте постепенно +20%/нед'}<br>• Данные прогнозные, отклонение ±25–35% — норма.`;
+  const ms=[];for(let i=0;i<12;i++)ms.push((r.sm+i)%12);
+  const buds=ms.map(m=>Math.round(r.bud*r.sub.s[m]));
+  const clicks2=ms.map(m=>Math.round(r.cS*r.sub.s[m]));
+  const leads2=ms.map(m=>Math.round(r.lT*r.sub.s[m]));
+  const revs=ms.map(m=>Math.round(r.rev*r.sub.s[m]));
+  const maxB=Math.max(...buds);
+  document.getElementById('sch').innerHTML=ms.map((m,i)=>{const h=Math.round((buds[i]/maxB)*100);const col=buds[i]>=r.bud*1.05?'var(--green)':buds[i]<=r.bud*0.75?'var(--red)':'var(--primary)';return`<div class="bw"><div class="bv">${Math.round(buds[i]/1000)}k</div><div class="bar" style="height:${h}%;background:${col}"></div><div class="bl">${MN[m]}</div></div>`;}).join('');
+  document.getElementById('sct').innerHTML=`<thead><tr><th>Месяц</th><th>Сезон %</th><th>Бюджет ₽</th><th>Клики</th><th>Лиды</th><th>Выручка ₽</th></tr></thead><tbody>${ms.map((m,i)=>{const cf=r.sub.s[m];const st2=cf>=1.05?' style="color:var(--green)"':cf<=0.75?' style="color:var(--red)"':'';return`<tr><td>${MN[m]}</td><td class="n"${st2}>${Math.round(cf*100)}%</td><td class="n">${fmt(buds[i])}</td><td class="n">${fmt(clicks2[i])}</td><td class="n">${fmt(leads2[i])}</td><td class="n">${fmt(revs[i])}</td></tr>`;}).join('')}<tr style="font-weight:600"><td>ГОД</td><td>—</td><td class="n">${fmt(buds.reduce((a,b)=>a+b,0))}</td><td class="n">${fmt(clicks2.reduce((a,b)=>a+b,0))}</td><td class="n">${fmt(leads2.reduce((a,b)=>a+b,0))}</td><td class="n">${fmt(revs.reduce((a,b)=>a+b,0))}</td></tr></tbody>`;
+  const s2=r.sub;
+  document.getElementById('ctree').innerHTML=`<div class="cn l0">📂 ${s2.name}</div>${s2.struct.map(s=>`<div class="cl"><div class="cn l1">${s.includes('Поиск')?'🔍':'📱'} ${s.replace(/_/g,' ')}</div><div class="cl"><div class="cn l2">📁 Горячие — точные запросы (высокие ставки)</div><div class="cn l2">📁 Тёплые — широкие запросы</div><div class="cl"><div class="cn l3">💬 3–5 объявлений на группу</div><div class="cn l3">🔗 4 быстрые ссылки + уточнения</div></div></div></div>`).join('')}`;
+  document.getElementById('advs').innerHTML=[{tag:'Вариант 1 — Ключ + цена',h1:`${s2.name} — от ₽${fmt(Math.round(s2.check*0.1))}`,h2:s2.hooks[0]||'',txt:`${s2.name} профессионально. ${s2.hooks[1]||'Звоните!'}`,why:'AIDA: ключевой запрос + цена в заголовке привлекает внимание, оффер вызывает интерес.'},{tag:'Вариант 2 — Ключ + доверие',h1:`${s2.name} ★4.9 · ${Math.floor(Math.random()*2000+500)} отзывов`,h2:s2.hooks[1]||'Работаем с 2015 года',txt:`${s2.name}. ${s2.hooks[2]||'Гарантия результата!'}`,why:'Социальное доказательство: рейтинг и отзывы снижают барьер входа на 40–60%.'},{tag:'Вариант 3 — Ключ + срочность',h1:`${s2.name} — Запишитесь Сегодня`,h2:s2.hooks[s2.hooks.length-1]||'Свободные места ограничены!',txt:`${s2.name} — не ждите! ${s2.hooks[0]||''}`,why:'Дефицит и срочность повышают CTR на 15–25%.'}].map(v=>`<div class="adv"><div class="advtag">${v.tag}</div><div class="adh1">${v.h1}</div><div class="adh2">${v.h2}</div><div style="font-size:0.71rem;color:var(--green);margin-bottom:4px">yourdomain.ru/${s2.utm}/</div><div class="adtxt">${v.txt}</div><div class="adlnk">⚡ О нас · Цены · Акции · Контакты</div><div class="adwhy">💡 <b>Почему работает:</b> ${v.why}</div></div>`).join('');
+  const keys=s2.keys||[s2.name+' цена',s2.name+' заказать',s2.name+' срочно'];
+  const compT=r.cpcS>100?'Высокая':r.cpcS>50?'Средняя':'Низкая';
+  const compC=r.cpcS>100?'comp-high':r.cpcS>50?'comp-mid':'comp-low';
+  function kwGrp(title,type,desc,ks){const tc=type==='Поиск'?'var(--primary)':'var(--accent)';return`<div class="kwg"><div class="kwgt"><span style="color:${tc}">${title}</span><span class="kwb">${type}</span></div><div class="kwgd">${desc}</div>${ks.map(k=>`<div class="kwi"><span class="kwn">🔎 ${k}</span><a class="wsl" href="https://wordstat.yandex.ru/?words=${encodeURIComponent(k)}" target="_blank">→ Wordstat</a></div>`).join('')}</div>`;}
+  document.getElementById('kws').innerHTML=`<div class="cob"><span style="font-size:0.73rem;color:var(--text2)">Конкуренция:</span><span class="cobadge ${compC}">${compT}</span><span style="font-size:0.73rem;color:var(--text2);margin-left:9px">CPC:</span><span style="font-family:'JetBrains Mono',monospace;font-size:0.8rem">₽${Math.round(r.cpcS*0.7)}–₽${fmt(Math.round(r.cpcS*1.3))}</span><span style="font-size:0.73rem;color:var(--text2);margin-left:9px">Мин. тест:</span><span style="font-family:'JetBrains Mono',monospace;font-size:0.8rem">₽${fmt(r.cpcS*100)}/мес</span></div>${kwGrp('🔥 Горячие','Поиск','Человек готов купить. Максимальные ставки.',keys.slice(0,2))}${kwGrp('🌡 Тёплые','Поиск','Изучает варианты. Средние ставки.',keys.slice(2,4))}${kwGrp('💰 Ценовые','Поиск','Ищут дешевле. Посадочная со скидкой.',keys.map(k=>k+' недорого').slice(0,2))}${kwGrp('📱 РСЯ — новая аудитория','РСЯ','Показы на сайтах-партнёрах.',keys.map(k=>k.split(' ')[0]).slice(0,3))}`;
+  document.getElementById('nn').textContent=(s2.neg||[]).map(w=>'−'+w).join('  ');
+  document.getElementById('nc').textContent=CNEG.map(w=>'−'+w).join('  ');
+  const svg=document.getElementById('rg');
+  const rv2=Math.max(-100,Math.min(500,r.romi));
+  const pct=Math.min(1,(rv2+100)/600);
+  const ang=-180+pct*180,rad=ang*Math.PI/180;
+  const cx=140,cy=125,radius=110;
+  const nx=cx+radius*Math.cos(rad),ny=cy+radius*Math.sin(rad);
+  const col2=r.romi>100?'#10b981':r.romi>0?'#f59e0b':'#ef4444';
+  svg.innerHTML=`<path d="M30,125 A110,110 0 0,1 250,125" fill="none" stroke="#1e293b" stroke-width="22" stroke-linecap="round"/><path d="M30,125 A110,110 0 0,1 ${nx.toFixed(1)},${ny.toFixed(1)}" fill="none" stroke="${col2}" stroke-width="22" stroke-linecap="round"/><line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="9" fill="${col2}"/><text x="${cx}" y="${cy+40}" text-anchor="middle" fill="${col2}" font-size="28" font-weight="bold" font-family="JetBrains Mono,monospace">${r.romi}%</text><text x="${cx}" y="${cy+60}" text-anchor="middle" fill="#94a3b8" font-size="13">ROMI</text><text x="32" y="148" fill="#64748b" font-size="11">−100%</text><text x="213" y="148" fill="#64748b" font-size="11">500%</text>`;
+  document.getElementById('pnl').innerHTML=`<thead><tr><th>Показатель</th><th>Значение</th><th>Комментарий</th></tr></thead><tbody>${[['Рекламный бюджет','₽'+fmt(r.bud),'затраты'],['Продаж прогноз',fmt(r.sales)+' шт',''],['Выручка','₽'+fmt(r.rev),''],['Прибыль ('+r.mrg+'%)','₽'+fmt(Math.round(r.pft)),''],['ROMI',r.romi+'%',r.romi>100?'✅ Отличный':r.romi>0?'⚠️ Слабый':'❌ Убыток'],['LTV клиента','₽'+fmt(Math.round(r.ltv)),'×'+r.lm+' мес'],['ROMI с LTV',r.ltvR+'%','']].map(x=>`<tr><td>${x[0]}</td><td class="n">${x[1]}</td><td style="color:var(--text3);font-size:0.73rem">${x[2]}</td></tr>`).join('')}</tbody>`;
+  document.getElementById('ltvb').innerHTML=`<b>LTV = Чек × Маржа × Повторы</b><br>₽${fmt(r.chk)} × ${r.mrg}% × ${r.lm} мес = <b style="color:var(--accent)">₽${fmt(Math.round(r.ltv))}</b><br><br><b>Макс. допустимая CPL:</b> ₽${fmt(Math.round(r.ltv*r.clr/100*0.5))}<br><b>Ваша CPL:</b> ₽${fmt(r.cpl)} ${r.cpl<r.ltv*0.3?'<span style="color:var(--green)">— отлично!</span>':'<span style="color:var(--orange)">— приемлемо</span>'}<br><br><b>ROMI с учётом LTV = ${r.ltvR}%</b>`;
+  document.getElementById('prai').innerHTML=`<b>🎯 Офферы для «${s2.name}»:</b><br>${s2.hooks.map(h=>`• ${h}`).join('<br>')}<br><br><b>📊 CPC поиск: ₽${fmt(r.cpcS)} | РСЯ: ₽${fmt(r.cpcR)} | Сплит: ${s2.split}%/${100-s2.split}% | CPL: ₽${fmt(r.cpl)} | ROMI: ${r.romi}%</b><br><br><b>⚡ Рекомендации:</b><br>• Запускайте в Пн–Вт — лучший отклик<br>• Добавьте цену в заголовок: CTR +15–25%<br>• Разделите мобиль/десктоп: мобиль дешевле на 30%<br>• +50% обед (11–14ч), +40% вечер (18–21ч)<br><br><b>🚫 Типичные ошибки:</b><br>• Широкие минус-слова блокируют горячий трафик<br>• Один оффер для всех сегментов — разделяйте`;
+  document.getElementById('rpt').innerHTML=`<h2 style="font-family:'Syne',sans-serif;margin-bottom:11px">Медиаплан — ${s2.name}</h2><p style="color:var(--text2);margin-bottom:14px">Дата: ${new Date().toLocaleDateString('ru-RU')} · Регион: ${r.reg}</p><div class="stitle">Параметры</div><div class="tw"><table class="dt"><tbody><tr><td>Ниша</td><td><b>${s2.name}</b></td></tr><tr><td>Регион</td><td>${r.reg}</td></tr><tr><td>Бюджет</td><td>₽${fmt(r.bud)}/мес</td></tr><tr><td>Чек</td><td>₽${fmt(r.chk)}</td></tr><tr><td>Маржа</td><td>${r.mrg}%</td></tr></tbody></table></div><div class="stitle" style="margin-top:14px">Основные показатели</div><div class="tw"><table class="dt"><thead><tr><th>Показатель</th><th>Поиск</th><th>РСЯ</th><th>Итого</th></tr></thead><tbody><tr><td>Бюджет ₽</td><td class="n">${fmt(r.bS)}</td><td class="n">${fmt(r.bR)}</td><td class="n"><b>${fmt(r.bud)}</b></td></tr><tr><td>CPC ₽</td><td class="n">${r.cpcS}</td><td class="n">${r.cpcR}</td><td>—</td></tr><tr><td>Клики</td><td class="n">${fmt(r.cS)}</td><td class="n">${fmt(r.cR)}</td><td class="n"><b>${fmt(r.cS+r.cR)}</b></td></tr><tr><td>Лиды</td><td class="n">${fmt(r.lS)}</td><td class="n">${fmt(r.lR)}</td><td class="n"><b>${fmt(r.lT)}</b></td></tr><tr><td>CPL ₽</td><td class="n">${fmt(Math.round(r.bS/(r.lS||1)))}</td><td class="n">${fmt(Math.round(r.bR/(r.lR||1)))}</td><td class="n"><b>${fmt(r.cpl)}</b></td></tr></tbody></table></div><div class="stitle" style="margin-top:14px">Финансовый прогноз</div><div class="tw"><table class="dt"><tbody><tr><td>Продаж</td><td class="n"><b>${fmt(r.sales)} шт</b></td></tr><tr><td>Выручка</td><td class="n"><b>₽${fmt(r.rev)}</b></td></tr><tr><td>Прибыль</td><td class="n"><b>₽${fmt(Math.round(r.pft))}</b></td></tr><tr><td>ROMI</td><td class="n" style="color:${r.romi>100?'var(--green)':r.romi>0?'var(--orange)':'var(--red)'}"><b>${r.romi}%</b></td></tr></tbody></table></div><p style="font-size:0.71rem;color:var(--text3);margin-top:11px">* Данные прогнозные, отклонение ±25–35% — норма.</p>`;
+}
+function selAI(p){
+  cAI=p;document.querySelectorAll('.apb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('p'+p[0]).classList.add('active');
+  document.getElementById('dkr').classList.toggle('show',p==='deepseek');
+}
+async function askAI(){
+  if(!res)return;
+  const q=document.getElementById('aiq').value.trim();
+  if(!q){alert('Введите вопрос');return;}
+  const btn=document.getElementById('aisb'),rsp=document.getElementById('air');
+  btn.disabled=true;btn.textContent='Думаю...';rsp.style.display='block';rsp.textContent='⏳ Запрашиваю...';
+  const r=res,prompt=`Ты эксперт по Яндекс.Директ. Параметры: Ниша: ${r.sub.name}, Регион: ${r.reg}, Бюджет: ${r.bud}₽/мес, CPC: ${r.cpcS}₽, CPL: ${r.cpl}₽, ROMI: ${r.romi}%, Чек: ${r.chk}₽.\n\nВопрос: ${q}\n\nДай конкретный практический совет на русском языке.`;
+  try{
+    if(!_sb){rsp.textContent='Ошибка: сервис недоступен.';btn.disabled=false;btn.textContent='Спросить';return;}
+    const {data:{session}} = await _sb.auth.getSession();
+    if(!session){rsp.textContent='Войдите в аккаунт для использования ИИ-советов.';btn.disabled=false;btn.textContent='Спросить';return;}
+    const rs=await fetch(SB_URL+'/functions/v1/ai-advice',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token},
+      body:JSON.stringify({prompt,provider:cAI})
+    });
+    const d=await rs.json();
+    if(d.error){rsp.textContent='Ошибка: '+d.error;}
+    else{
+      rsp.textContent='';
+      (d.text||'').split('\n').forEach((line,i)=>{if(i>0)rsp.appendChild(document.createElement('br'));rsp.appendChild(document.createTextNode(line));});
+    }
+  }catch(e){rsp.textContent='Ошибка подключения.';}
+  btn.disabled=false;btn.textContent='Спросить';
+  btn.disabled=true;
+  let cd=5;
+  const timer=setInterval(()=>{cd--;btn.textContent=cd>0?'Спросить ('+cd+'с)':'Спросить';if(cd<=0){clearInterval(timer);btn.disabled=false;}},1000);
+}
+function expXLSX(){
+  if(!res){ alert('Сначала сделайте расчёт'); return; }
+  if(typeof XLSX === 'undefined'){ alert('Библиотека Excel не загрузилась. Проверьте интернет и обновите страницу.'); return; }
+  try {
+  const r=res,wb=XLSX.utils.book_new();
+  const ws1=XLSX.utils.aoa_to_sheet([['МедиаПлан Pro — '+r.sub.name],[''],['Ниша',r.sub.name],['Регион',r.reg],['Бюджет ₽',r.bud],['Чек ₽',r.chk],['Маржа %',r.mrg],[''],['Канал','Бюджет','CPC','Клики','Лиды','CPL'],['Поиск',r.bS,r.cpcS,r.cS,r.lS,Math.round(r.bS/(r.lS||1))],['РСЯ',r.bR,r.cpcR,r.cR,r.lR,Math.round(r.bR/(r.lR||1))],['ИТОГО',r.bud,'—',r.cS+r.cR,r.lT,r.cpl],[''],['Продаж',r.sales],['Выручка ₽',r.rev],['Прибыль ₽',Math.round(r.pft)],['ROMI %',r.romi],['LTV ₽',Math.round(r.ltv)]]);
+  XLSX.utils.book_append_sheet(wb,ws1,'Прогноз');
+  const sm=r.sm,ms2=[];for(let i=0;i<12;i++)ms2.push((sm+i)%12);
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Месяц','Сезон %','Бюджет ₽','Клики','Лиды','Выручка ₽'],...ms2.map(m=>[MN[m],Math.round(r.sub.s[m]*100)+'%',Math.round(r.bud*r.sub.s[m]),Math.round(r.cS*r.sub.s[m]),Math.round(r.lT*r.sub.s[m]),Math.round(r.rev*r.sub.s[m])])]),'Сезонность');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Кампания'],...r.sub.struct.map(s=>[s.replace(/_/g,' ')])]),'Кампании');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Нишевые'],...(r.sub.neg||[]).map(w=>['-'+w]),[''],['Общие'],...CNEG.map(w=>['-'+w])]),'Минус-слова');
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Ключевые запросы'],...(r.sub.keys||[]).map(k=>[k])]),'Ключи');
+  XLSX.writeFile(wb,'MediaPlan_'+r.sub.name.replace(/\s/g,'_')+'.xlsx');
+  } catch(e){ console.error('XLSX error:',e); alert('Ошибка при создании файла: '+e.message); }
+}
+
+
+// =====================================================================
+//  MONETIZATION — МедиаПлан Pro
+//  Supabase Auth + ЮКасса Payments
+// =====================================================================
+
+// ⚠️  НАСТРОЙКА: замените на ваши реальные ключи
+const SB_URL  = 'https://zjjfwagcocuqdhwzwzgd.supabase.co';
+const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqamZ3YWdjb2N1cWRod3p3emdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2OTExMTcsImV4cCI6MjA5NTI2NzExN30.VV5LqVsX_DLpRR3WI2Es0DTtryUHio8_-DIIeGFYLsc';   // eyJhbG...
+const YK_EDGE = SB_URL + '/functions/v1/create-payment';
+
+// ---- state ----
+let _sb = null;
+let _user = null;
+let _tier = null;   // null | 'basic' | 'pro' | 'annual'
+let _isPaid = false;
+let _demoUsed = 0; try { _demoUsed = parseInt(localStorage.getItem('mp_dc') || '0'); } catch(e) {}
+const DEMO_LIMIT = 1;
+
+// ---- init ----
+(async function initMoney(){
+  // Init Supabase if configured
+  if (SB_URL && SB_URL.includes('supabase.co')) {
+    try {
+      const { createClient } = window.supabase;
+      _sb = createClient(SB_URL, SB_KEY);
+      await _checkSession();
+    } catch(e) { console.warn('Supabase init error:', e); }
+  }
+  _updateUI();
+  _showDemoBanner();
+
+  // Handle payment return
+  const p = new URLSearchParams(window.location.search);
+  if (p.get('payment_id') && p.get('payment_status') === 'succeeded') {
+    _handlePaymentReturn(p.get('payment_id'), p.get('tier'));
+  }
+})();
+
+async function _checkSession(){
+  if(!_sb) return;
+  const { data:{ session } } = await _sb.auth.getSession();
+  if(session){
+    _user = session.user;
+    await _loadTier();
+  }
+}
+
+async function _loadTier(){
+  if(!_sb || !_user) return;
+
+  // ── Бесплатный доступ для владельца ──────────────────────────────
+  const OWNER_EMAILS = ['uliarabocaa75@gmail.com', 'yuliya-poshheva@mail.ru'];
+  if(OWNER_EMAILS.includes((_user.email||'').toLowerCase().trim())){
+    _tier = 'annual';
+    _isPaid = true;
+    return;
+  }
+  // ─────────────────────────────────────────────────────────────────
+
+  try {
+    const { data } = await _sb
+      .from('subscriptions')
+      .select('tier, expires_at')
+      .eq('user_id', _user.id)
+      .maybeSingle();
+    if(data && new Date(data.expires_at) > new Date()){
+      _tier = data.tier;
+      _isPaid = true;
+    }
+  } catch(e){ console.warn('Tier load error', e); }
+}
+
+function _updateUI(){
+  const badge = document.getElementById('tier-badge');
+  const wrap  = document.getElementById('auth-btn-wrap');
+  if(!badge || !wrap) return;
+
+  if(_user){
+    // Show user bar
+    const email = _user.email || '';
+    const tierLabel = _tier === 'annual' ? '🏆 Про Год'
+                    : _tier === 'pro'    ? '⚡ Про'
+                    : _tier === 'basic'  ? '☕ Базовый'
+                    : '✓ ДЕМО';
+    const tierCls = _isPaid ? 'badge tier-pro' : 'badge';
+    badge.className = tierCls;
+    badge.textContent = tierLabel;
+    wrap.innerHTML = `<div class="user-bar"><span class="email">${email}</span><button class="logout-btn" onclick="doLogout()">Выйти</button></div>`;
+  } else {
+    badge.className = 'badge';
+    badge.textContent = '✓ ДЕМО';
+    wrap.innerHTML = '<button class="cb" id="auth-open-btn" onclick="openAuth()">👤 Войти</button>';
+  }
+}
+
+function _showDemoBanner(){
+  const banner = document.getElementById('demo-banner');
+  if(!banner) return;
+  if(!_isPaid){
+    const left = Math.max(0, DEMO_LIMIT - _demoUsed);
+    document.getElementById('demo-left').textContent = left;
+    banner.style.display = left > 0 ? 'block' : 'none';
+    if(left === 0){
+      // show sticky bottom bar
+      const el = document.createElement('div');
+      el.id = 'demo-end-bar';
+      el.style.cssText='position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--orange);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;z-index:500;gap:12px;flex-wrap:wrap';
+      el.innerHTML = '<span style="font-size:0.81rem;color:var(--text2)">🔒 <b style="color:var(--orange)">Демо-лимит исчерпан.</b> Для продолжения нужна подписка.</span><button onclick="openPaywall()" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border:none;padding:8px 18px;border-radius:8px;font-family:Syne,sans-serif;font-weight:700;cursor:pointer;font-size:0.82rem">Открыть тарифы</button>';
+      if(!document.getElementById('demo-end-bar')) document.body.appendChild(el);
+    }
+  } else {
+    banner.style.display = 'none';
+    const el = document.getElementById('demo-end-bar');
+    if(el) el.remove();
+  }
+}
+
+// ---- GATED CALC ----
+function calcWithGate(){
+  if(!_isPaid && _demoUsed >= DEMO_LIMIT){
+    openPaywall();
+    return;
+  }
+  // Check if niche is selected before running
+  const selNiche = document.querySelector('.sub-btn.active, .subbtn.active, [class*="sub"][class*="active"]');
+  const searchVal = (document.getElementById('search-input') || {}).value || '';
+  const catVal = (document.getElementById('cat') || {}).value || '';
+  if(!catVal || catVal === ''){
+    // No niche selected - show hint instead of paywall
+    const hint = document.getElementById('no-niche-hint');
+    if(hint) hint.style.display='block';
+    return;
+  }
+  calc(); // original calc function
+  if(!_isPaid){
+    _demoUsed++;
+    try { localStorage.setItem('mp_dc', _demoUsed); } catch(e) {}
+    _showDemoBanner();
+    if(_demoUsed >= DEMO_LIMIT){
+      setTimeout(() => openPaywall(true), 15000);
+    }
+  }
+}
+
+// ---- PAYWALL ----
+function openPaywall(soft){
+  const modal = document.getElementById('pw-modal');
+  const msg   = document.getElementById('pw-demo-msg');
+  if(soft){
+    document.querySelector('#pw-modal .pw-title').textContent = '✨ Понравилось?';
+    document.querySelector('#pw-modal .pw-sub').textContent = 'Откройте безлимитный доступ к 300+ нишам, ИИ-советам и XLSX-экспорту.';
+  } else {
+    document.querySelector('#pw-modal .pw-title').textContent = '🚀 Полный доступ';
+    document.querySelector('#pw-modal .pw-sub').textContent = 'Демо-расчёт использован. Выберите тариф — и считайте без ограничений.';
+    if(msg) msg.style.display = 'block';
+  }
+  modal.classList.add('show');
+}
+function closePaywall(){
+  document.getElementById('pw-modal').classList.remove('show');
+  document.getElementById('pw-payment-area').style.display='none';
+}
+
+// ---- PAYMENT ----
+async function startPayment(tier){
+  if(!_user){
+    closePaywall();
+    openAuth(tier);
+    return;
+  }
+  document.getElementById('pw-payment-area').style.display='block';
+  document.getElementById('pay-loading').style.display='block';
+  document.getElementById('pay-loading').textContent='⏳ Создаю платёж...';
+
+  const priceMap = { basic: 299, pro: 599, annual: 5999 };
+  const labelMap = { basic: 'МедиаПлан Pro — Базовый (1 мес)', pro: 'МедиаПлан Pro — Про (1 мес)', annual: 'МедиаПлан Pro — Про (12 мес)' };
+
+  const returnUrl = 'https://yuliya-vyshla-iz-sistemy.github.io/mediaplan-pro/app.html'
+    + '?payment_status=succeeded&tier=' + tier + '&payment_id={payment.id}';
+
+  try {
+    const { data: { session } } = await _sb.auth.getSession();
+    const resp = await fetch(YK_EDGE, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer '+ session.access_token },
+      body: JSON.stringify({ tier, amount: priceMap[tier], description: labelMap[tier], return_url: returnUrl })
+    });
+    const json = await resp.json();
+    if(json.confirmation_url){
+      document.getElementById('pay-loading').textContent='✅ Перехожу к оплате...';
+      setTimeout(()=>{ window.location.href = json.confirmation_url; }, 800);
+    } else {
+      document.getElementById('pay-loading').textContent='❌ Ошибка: '+(json.error||'неизвестно');
+    }
+  } catch(e){
+    document.getElementById('pay-loading').textContent='❌ Ошибка подключения. Проверьте Edge Function.';
+    console.error(e);
+  }
+}
+
+async function _handlePaymentReturn(paymentId, tier){
+  // Edge case: вернулись с ЮКассы, но сессия истекла — ждём авторизации
+  if(!_sb){ history.replaceState(null,'', window.location.pathname); return; }
+  if(!_user){
+    _pendingPaymentId = paymentId;
+    _pendingPaymentTier = tier;
+    openAuth();
+    return;
+  }
+  _showPaymentVerifying();
+  try {
+    const { data: { session } } = await _sb.auth.getSession();
+    const resp = await fetch(SB_URL + '/functions/v1/verify-payment', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer '+ session.access_token },
+      body: JSON.stringify({ payment_id: paymentId, tier })
+    });
+    const json = await resp.json();
+    if(json.ok){
+      _tier = tier;
+      _isPaid = true;
+      _updateUI();
+      _showDemoBanner();
+      history.replaceState(null,'', window.location.pathname);
+      _showPaymentSuccess(tier);
+    } else {
+      history.replaceState(null,'', window.location.pathname);
+      _showPaymentError(json.error || 'Не удалось подтвердить платёж. Напишите в поддержку.');
+    }
+  } catch(e){
+    console.warn('Payment verify error', e);
+    history.replaceState(null,'', window.location.pathname);
+    _showPaymentError('Ошибка соединения. Попробуйте обновить страницу.');
+  }
+}
+
+let _pendingPaymentId = null;
+let _pendingPaymentTier = null;
+
+function _showPaymentVerifying(){
+  const modal = document.getElementById('pw-modal');
+  const content = document.getElementById('pw-content');
+  content.innerHTML = `
+    <div style="text-align:center;padding:20px 0">
+      <div style="font-size:2.5rem;margin-bottom:12px">⏳</div>
+      <div class="pw-title" style="margin-bottom:8px">Проверяем оплату...</div>
+      <div style="color:var(--text2);font-size:0.84rem">Подождите несколько секунд</div>
+      <div style="margin-top:20px;height:4px;background:var(--border2);border-radius:2px;overflow:hidden">
+        <div style="height:100%;width:60%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:2px;animation:progressAnim 1.5s ease-in-out infinite"></div>
+      </div>
+    </div>`;
+  modal.classList.add('show');
+}
+
+function _showPaymentSuccess(tier){
+  const tierLabel = tier === 'annual' ? '🏆 Про (год)' : tier === 'pro' ? '⚡ Про' : '☕ Базовый';
+  const content = document.getElementById('pw-content');
+  content.innerHTML = `
+    <div style="text-align:center;padding:16px 0">
+      <div style="font-size:3rem;margin-bottom:10px">🎉</div>
+      <div class="pw-title" style="color:var(--green);margin-bottom:8px">Оплата прошла!</div>
+      <div style="color:var(--text2);font-size:0.9rem;margin-bottom:16px">Добро пожаловать в <b style="color:var(--text)">МедиаПлан Pro</b></div>
+      <div style="background:var(--green-dim);border:1px solid var(--green);border-radius:10px;padding:12px 20px;margin-bottom:20px;display:inline-block">
+        <span style="color:var(--green);font-weight:700;font-size:1rem">${tierLabel}</span><br>
+        <span style="color:var(--text2);font-size:0.77rem">Подписка активирована</span>
+      </div>
+      <br>
+      <button onclick="closePaywall()" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border:none;padding:11px 28px;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer">
+        Начать работу →
+      </button>
+    </div>`;
+}
+
+function _showPaymentError(msg){
+  const content = document.getElementById('pw-content');
+  content.innerHTML = `
+    <div style="text-align:center;padding:16px 0">
+      <div style="font-size:2.5rem;margin-bottom:10px">⚠️</div>
+      <div class="pw-title" style="margin-bottom:8px">Что-то пошло не так</div>
+      <div style="color:var(--text2);font-size:0.84rem;margin-bottom:20px">${msg}</div>
+      <button onclick="restoreSubscription()" style="background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary);padding:9px 20px;border-radius:9px;font-family:'Onest',sans-serif;font-size:0.84rem;cursor:pointer;margin-bottom:10px;display:block;width:100%">
+        🔄 Проверить снова
+      </button>
+      <button onclick="closePaywall()" style="background:none;border:none;color:var(--text3);font-size:0.8rem;cursor:pointer;text-decoration:underline">Закрыть</button>
+    </div>`;
+}
+
+// ---- ВОССТАНОВИТЬ ПОДПИСКУ ----
+async function restoreSubscription(){
+  if(!_user){ openAuth(); return; }
+  if(!_sb) return;
+  // Перезагружаем тариф из БД
+  _isPaid = false; _tier = null;
+  await _loadTier();
+  _updateUI();
+  _showDemoBanner();
+  if(_isPaid){
+    _showPaymentSuccess(_tier);
+  } else {
+    const content = document.getElementById('pw-content');
+    if(content){
+      document.getElementById('pw-modal').classList.add('show');
+      content.innerHTML = `
+        <div style="text-align:center;padding:16px 0">
+          <div style="font-size:2rem;margin-bottom:10px">🔍</div>
+          <div class="pw-title" style="margin-bottom:8px">Подписка не найдена</div>
+          <div style="color:var(--text2);font-size:0.84rem;margin-bottom:20px">Активная подписка для этого аккаунта не обнаружена.<br>Если вы только что оплатили — подождите 1–2 минуты и попробуйте снова.</div>
+          <button onclick="restoreSubscription()" style="background:var(--primary-dim);border:1px solid var(--primary);color:var(--primary);padding:9px 20px;border-radius:9px;font-family:'Onest',sans-serif;font-size:0.84rem;cursor:pointer;margin-bottom:10px;display:block;width:100%">🔄 Проверить ещё раз</button>
+          <button onclick="closePaywall()" style="background:none;border:none;color:var(--text3);font-size:0.8rem;cursor:pointer;text-decoration:underline">Закрыть</button>
+        </div>`;
+    }
+  }
+}
+
+// ---- AUTH MODAL ----
+let _pendingTier = null;
+function openAuth(tier){
+  _pendingTier = tier || null;
+  document.getElementById('auth-modal').classList.add('show');
+}
+function closeAuth(){
+  document.getElementById('auth-modal').classList.remove('show');
+  document.getElementById('auth-msg').textContent='';
+}
+function switchAuthTab(tab){
+  document.getElementById('tab-login').classList.toggle('active', tab==='login');
+  document.getElementById('tab-reg').classList.toggle('active', tab==='reg');
+  document.getElementById('auth-login-form').style.display = tab==='login'?'block':'none';
+  document.getElementById('auth-reg-form').style.display = tab==='reg'?'block':'none';
+  document.getElementById('auth-msg').textContent='';
+}
+
+function _setAuthMsg(msg, isErr){
+  const el = document.getElementById('auth-msg');
+  el.textContent = msg;
+  el.className = 'auth-msg ' + (isErr?'err':'ok');
+}
+
+async function doLogin(){
+  if(!_sb){ _setAuthMsg('Supabase не настроен — обратитесь к администратору.',true); return; }
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  if(!email||!pass){ _setAuthMsg('Заполните все поля',true); return; }
+  _setAuthMsg('Входим...',false);
+  const { data, error } = await _sb.auth.signInWithPassword({ email, password: pass });
+  if(error){ _setAuthMsg('Ошибка: '+error.message,true); return; }
+  _user = data.user;
+  await _loadTier();
+  _updateUI();
+  _showDemoBanner();
+  _setAuthMsg('✅ Добро пожаловать!',false);
+  setTimeout(()=>{
+    closeAuth();
+    if(_pendingPaymentId){ // вернулись с ЮКассы и нужно проверить платёж
+      _handlePaymentReturn(_pendingPaymentId, _pendingPaymentTier);
+      _pendingPaymentId = null; _pendingPaymentTier = null;
+    } else if(_pendingTier) startPayment(_pendingTier);
+  }, 1200);
+}
+
+async function doMagicLink(){
+  if(!_sb){ _setAuthMsg('Supabase не настроен.',true); return; }
+  const email = document.getElementById('login-email').value.trim();
+  if(!email){ _setAuthMsg('Введите email',true); return; }
+  const { error } = await _sb.auth.signInWithOtp({ email });
+  if(error){ _setAuthMsg('Ошибка: '+error.message,true); return; }
+  _setAuthMsg('✅ Ссылка отправлена на '+email,false);
+}
+
+async function doRegister(){
+  if(!_sb){ _setAuthMsg('Supabase не настроен.',true); return; }
+  const email = document.getElementById('reg-email').value.trim();
+  const pass  = document.getElementById('reg-pass').value;
+  if(!email||!pass){ _setAuthMsg('Заполните все поля',true); return; }
+  if(pass.length<8){ _setAuthMsg('Пароль минимум 8 символов',true); return; }
+  _setAuthMsg('Создаём аккаунт...',false);
+  const { data, error } = await _sb.auth.signUp({ email, password: pass });
+  if(error){ _setAuthMsg('Ошибка: '+error.message,true); return; }
+  _user = data.user;
+  _updateUI();
+  _setAuthMsg('✅ Аккаунт создан! Проверьте email для подтверждения.',false);
+  setTimeout(()=>{
+    closeAuth();
+    if(_pendingPaymentId){
+      _handlePaymentReturn(_pendingPaymentId, _pendingPaymentTier);
+      _pendingPaymentId = null; _pendingPaymentTier = null;
+    } else if(_pendingTier) startPayment(_pendingTier);
+  }, 1800);
+}
+
+async function doLogout(){
+  if(_sb) await _sb.auth.signOut();
+  _user = null;
+  _tier = null;
+  _isPaid = false;
+  _updateUI();
+  _showDemoBanner();
+}
+
+// Close modals on overlay click
+document.getElementById('pw-modal').addEventListener('click', function(e){ if(e.target===this) closePaywall(); });
+document.getElementById('auth-modal').addEventListener('click', function(e){ if(e.target===this) closeAuth(); });
+// ── WELCOME POPUP ──
+// Welcome popup - show after page fully loads
+window.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    try {
+      if(!localStorage.getItem('mp_welcomed')){
+        const el=document.getElementById('wl-overlay');
+        if(el){ el.style.display='flex'; }
+      }
+    } catch(e) {
+      const el=document.getElementById('wl-overlay');
+      if(el){ el.style.display='flex'; }
+    }
+  }, 400);
+});
+function closeWelcome(){
+  try { localStorage.setItem('mp_welcomed','1'); } catch(e) {}
+  const el=document.getElementById('wl-overlay');
+  if(!el) return;
+  el.style.opacity='0';
+  el.style.transition='opacity .25s';
+  setTimeout(()=>{ if(el.parentNode) el.parentNode.removeChild(el); },260);
+}
+
+
+
+</script>
+
+<!-- ╔══════════════════════════════╗ -->
+<!-- ║     WELCOME POPUP           ║ -->
+<!-- ╚══════════════════════════════╝ -->
+<div class="wl-overlay" id="wl-overlay">
+  <div class="wl-box">
+    <div class="wl-title">👋 Добро пожаловать в МедиаПлан Pro</div>
+    <div class="wl-sub">Профессиональный медиаплан для Яндекс.Директ за 60 секунд.<br>Вот что вас ждёт внутри:</div>
+    <div class="wl-grid">
+      <div class="wl-feat"><div class="wl-icon">📈</div><div class="wl-fname">Прогноз KPI</div><div class="wl-fdesc">Клики, лиды, CPL, выручка и ROMI с учётом региона и сезонности</div></div>
+      <div class="wl-feat"><div class="wl-icon">📅</div><div class="wl-fname">Сезонность</div><div class="wl-fdesc">Годовой прогноз по месяцам — знайте когда увеличивать бюджет</div></div>
+      <div class="wl-feat"><div class="wl-icon">🏗</div><div class="wl-fname">Структура кампаний</div><div class="wl-fdesc">Готовая структура Поиск + РСЯ с генератором объявлений</div></div>
+      <div class="wl-feat"><div class="wl-icon">🔑</div><div class="wl-fname">Ключевые слова</div><div class="wl-fdesc">Горячие, тёплые и ценовые группы со ссылками в Вордстат</div></div>
+      <div class="wl-feat"><div class="wl-icon">🔗</div><div class="wl-fname">UTM-конструктор</div><div class="wl-fdesc">Автосборка UTM с динамическими параметрами Яндекс.Директ</div></div>
+      <div class="wl-feat"><div class="wl-icon">🤖</div><div class="wl-fname">ИИ-советы</div><div class="wl-fdesc">Рекомендации от DeepSeek по вашей нише</div></div>
+      <div class="wl-feat"><div class="wl-icon">💰</div><div class="wl-fname">ROMI и LTV</div><div class="wl-fdesc">P&L таблица и анализ прибыли с учётом повторных покупок</div></div>
+      <div class="wl-feat"><div class="wl-icon">💹</div><div class="wl-fname">Калькулятор прибыли</div><div class="wl-fdesc">Ползунки CPC, конверсия, бюджет — мгновенный пересчёт</div></div>
+      <div class="wl-feat"><div class="wl-icon">📊</div><div class="wl-fname">Справочник KPI</div><div class="wl-fdesc">Средние конверсии по 50+ нишам за 2025–2026 год</div></div>
+    </div>
+    <button class="wl-start" onclick="closeWelcome()">⚡ Начать расчёт — это бесплатно</button>
+    <span class="wl-skip" onclick="closeWelcome()">Уже знаком — пропустить</span>
+  </div>
+</div>
+</body>
+</html>
